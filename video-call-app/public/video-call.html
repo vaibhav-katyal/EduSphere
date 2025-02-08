@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Call</title>
+    <link rel="stylesheet" href="navbar.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            color: #00FF66;
+            margin-bottom: 20px;
+        }
+
+        .controls {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        button,
+        input {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #1877f2;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #166fe5;
+        }
+
+        input {
+            border: 1px solid #dddfe2;
+        }
+
+        .video-container {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .video-wrapper {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        video {
+            width: 400px;
+            height: 300px;
+            background-color: #000;
+            object-fit: cover;
+        }
+
+        h2 {
+            color: #1877f2;
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        .toggle-btn {
+            background-color: #42b72a;
+            margin-right: 10px;
+        }
+
+        .toggle-btn.off {
+            background-color: #fa3e3e;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #e0f2be;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background-color: #c5e1a5;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .navbar .title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2e7d32;
+        }
+
+        .navbar ul {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 63px;
+            padding: 0;
+            margin: 0;
+        }
+
+        .navbar ul li {
+            cursor: pointer;
+            color: #2e7d32;
+            font-weight: 600;
+        }
+
+        .navbar ul li:hover {
+            color: #1b5e20;
+        }
+
+        .menu-toggle {
+            font-size: 24px;
+            cursor: pointer;
+            color: #2e7d32;
+            display: none;
+            z-index: 10;
+        }
+
+        .login-btn {
+            background-color: #2e7d32;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .login-btn:hover {
+            background-color: #1b5e20;
+        }
+
+        .navbar ul a {
+            text-decoration: none;
+        }
+
+        @media (max-width: 1024px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            .navbar ul {
+                display: flex;
+                flex-direction: column;
+                position: fixed;
+                top: 0;
+                right: -100%;
+                background-color: #c5e1a5;
+                height: 100%;
+                width: 25%;
+                text-align: center;
+                padding-top: 60px;
+                transition: right 0.3s ease-in-out;
+                gap: 30px;
+            }
+
+            .navbar ul.show {
+                right: 0;
+            }
+        }
+
+        @media (max-width: 493px) {
+            .navbar ul {
+                width: 55%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="title">EDUSPHERE</div>
+        <div class="menu-toggle">☰</div>
+        <ul>
+            <a href="landing.html">
+                <li>Home</li>
+            </a>
+            <a href="groupPage.html">
+                <li>Group Study</li>
+            </a>
+            <a href="library.html">
+                <li>Library</li>
+            </a>
+            <a href="quiz.html">
+                <li>Quiz</li>
+            </a>
+            <a href="feedback.html">
+                <li>Contact Us</li>
+            </a>
+            <a href="sign.html">
+                <li><button class="login-btn">Login</button></li>
+            </a>
+        </ul>
+    </nav>
+    <h1>Real-Time Video Calling</h1>
+
+    <div class="controls">
+        <button id="toggleCamera" class="toggle-btn">Camera On</button>
+        <button id="toggleMic" class="toggle-btn">Mic On</button>
+        <button id="createCall">Create Call</button>
+        <input type="text" id="callId" placeholder="Enter Call ID">
+        <button id="joinCall">Join Call</button>
+    </div>
+
+    <div class="video-container">
+        <div class="video-wrapper">
+            <h2>Your Video</h2>
+            <video id="myVideo" autoplay muted></video>
+        </div>
+
+        <div class="video-wrapper">
+            <h2>Other Participant</h2>
+            <video id="peerVideo" autoplay></video>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/peerjs@1.3.2/dist/peerjs.min.js"></script>
+    <script>
+        const SERVER_URL = "https://edusphere-dvyv.onrender.com";
+
+        const peer = new Peer(undefined, {
+            host: SERVER_URL.replace("https://", ""),
+            port: 443,
+            secure: true
+        });
+
+        const myVideo = document.getElementById('myVideo');
+        const peerVideo = document.getElementById('peerVideo');
+        const createCallBtn = document.getElementById('createCall');
+        const joinCallBtn = document.getElementById('joinCall');
+        const callIdInput = document.getElementById('callId');
+        const toggleCameraBtn = document.getElementById('toggleCamera');
+        const toggleMicBtn = document.getElementById('toggleMic');
+
+        let myStream;
+        let isCameraOn = true;
+        let isMicOn = true;
+
+        navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(stream => {
+            myStream = stream;
+            myVideo.srcObject = stream;
+
+            peer.on('call', call => {
+                call.answer(stream);
+                call.on('stream', userVideoStream => {
+                    peerVideo.srcObject = userVideoStream;
+                });
+            });
+        });
+
+        createCallBtn.addEventListener('click', () => {
+            alert(`Your Call ID: ${peer.id}`);
+        });
+
+        joinCallBtn.addEventListener('click', () => {
+            const callId = callIdInput.value;
+            if (!callId) return alert('Enter a Call ID');
+
+            const call = peer.call(callId, myStream);
+            call.on('stream', userVideoStream => {
+                peerVideo.srcObject = userVideoStream;
+            });
+        });
+
+        peer.on('open', id => {
+            console.log(`Connected with Peer ID: ${id}`);
+        });
+    </script>
+</body>
+
+</html>
