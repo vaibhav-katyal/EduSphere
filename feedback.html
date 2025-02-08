@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback Form with Rating</title>
+    <link rel="stylesheet" href="navbar.css">
+
+    <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+    </script>
+    <script type="text/javascript">
+       (function(){
+          emailjs.init({
+            publicKey: "zILkZ_3ZBkr91uaYh",
+          });
+       })();
+    </script>
+    <style>
+        :root {
+            --background-color: #f4f4f4;
+            --text-color: #333;
+            --container-bg: #fff;
+            --input-border: #ddd;
+            --button-bg: #5cb85c;
+            --button-color: white;
+            --button-hover: #4cae4c;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0px;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body.dark-mode {
+            --background-color: #1a1a1a;
+            --text-color: #f4f4f4;
+            --container-bg: #2a2a2a;
+            --input-border: #444;
+            --button-bg: #4a4a4a;
+            --button-hover: #5a5a5a;
+        }
+
+        .container {
+            max-width: 100%;
+            margin: auto;
+            padding: 20px;
+            background-color: var(--container-bg);
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s;
+        }
+
+        h2 {
+            text-align: center;
+            color: var(--text-color);
+            font-size: 1.5em;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-top: 10px;
+            color: var(--text-color);
+        }
+
+        input, textarea {
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid var(--input-border);
+            border-radius: 4px;
+            background-color: var(--container-bg);
+            color: var(--text-color);
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: var(--button-bg);
+            color: var(--button-color);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: var(--button-hover);
+        }
+
+        .error {
+            color: red;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+
+        #thankYouMessage {
+            display: none;
+            text-align: center;
+            color: var(--button-bg);
+            margin-top: 20px;
+        }
+
+        .star-rating {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .star-rating input {
+            display: none;
+        }
+
+        .star-rating label {
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='126.729' height='126.73'%3e%3cpath fill='%23e3e3e3' d='M121.215 44.212l-34.899-3.3c-2.2-.2-4.101-1.6-5-3.7l-12.5-30.3c-2-5-9.101-5-11.101 0l-12.4 30.3c-.8 2.1-2.8 3.5-5 3.7l-34.9 3.3c-5.2.5-7.3 7-3.4 10.5l26.3 23.1c1.7 1.5 2.4 3.7 1.9 5.9l-7.9 32.399c-1.2 5.101 4.3 9.3 8.9 6.601l29.1-17.101c1.9-1.1 4.2-1.1 6.1 0l29.101 17.101c4.6 2.699 10.1-1.4 8.899-6.601l-7.8-32.399c-.5-2.2.2-4.4 1.9-5.9l26.3-23.1c3.8-3.5 1.6-10-3.6-10.5z'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 76%;
+            transition: .3s;
+        }
+
+        .star-rating input:checked ~ label,
+        .star-rating label:hover,
+        .star-rating label:hover ~ label {
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='126.729' height='126.73'%3e%3cpath fill='%23fcd93a' d='M121.215 44.212l-34.899-3.3c-2.2-.2-4.101-1.6-5-3.7l-12.5-30.3c-2-5-9.101-5-11.101 0l-12.4 30.3c-.8 2.1-2.8 3.5-5 3.7l-34.9 3.3c-5.2.5-7.3 7-3.4 10.5l26.3 23.1c1.7 1.5 2.4 3.7 1.9 5.9l-7.9 32.399c-1.2 5.101 4.3 9.3 8.9 6.601l29.1-17.101c1.9-1.1 4.2-1.1 6.1 0l29.101 17.101c4.6 2.699 10.1-1.4 8.899-6.601l-7.8-32.399c-.5-2.2.2-4.4 1.9-5.9l26.3-23.1c3.8-3.5 1.6-10-3.6-10.5z'/%3e%3c/svg%3e");
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            background-color: var(--button-bg);
+            color: var(--button-color);
+            border: none;
+            padding: 6px 12px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: background-color 0.3s;
+            
+        }
+
+        .theme-toggle:hover {
+            background-color: var(--button-hover);
+        }
+
+        /* Responsive styling */
+        @media (min-width: 600px) {
+            .container {
+                max-width: 500px;
+            }
+            h2 {
+                font-size: 1.8em;
+            }
+            .theme-toggle {
+                padding: 8px 16px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="title">EDUSPHERE</div>
+        <div class="menu-toggle">☰</div>
+        <ul>
+            <a href="landing.html"><li>Home</li></a>
+            <a href="groupPage.html"><li>Group Study</li></a>
+            <a href="library.html"><li>Library</li></a>
+            <a href="quiz.html"><li>Quiz</li></a>
+            <a href="feedback.html"><li>Contact Us</li></a>
+            <a href="sign.html"><li><button class="login-btn">Login</button></li></a>
+        </ul>
+    </nav> 
+    <br><br>
+    <!-- <button class="theme-toggle" onclick="toggleTheme()" style="width: 150px;">Dark Mode</button> -->
+    <div class="container">
+        <h2>Feedback Form</h2>
+        <form id="feedbackForm">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+            
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            
+            <label>Rating:</label>
+            <div class="star-rating">
+                <input type="radio" id="star5" name="rating" value="5" required/>
+                <label for="star5" title="5 stars"></label>
+                <input type="radio" id="star4" name="rating" value="4" />
+                <label for="star4" title="4 stars"></label>
+                <input type="radio" id="star3" name="rating" value="3" />
+                <label for="star3" title="3 stars"></label>
+                <input type="radio" id="star2" name="rating" value="2" />
+                <label for="star2" title="2 stars"></label>
+                <input type="radio" id="star1" name="rating" value="1" />
+                <label for="star1" title="1 star"></label>
+            </div>
+            
+            <label for="feedback">Feedback:</label>
+            <textarea id="feedback" name="feedback" rows="5" required></textarea>
+            
+            <button type="submit">Submit Feedback</button>
+        </form>
+        <div id="thankYouMessage">
+            <h3>Thank you for your feedback!</h3>
+            <p>We appreciate your input and will review it shortly.</p>
+        </div>
+    </div>
+
+    <script>
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            const themeToggle = document.querySelector('.theme-toggle');
+            if (document.body.classList.contains('dark-mode')) {
+                themeToggle.textContent = 'Light Mode';
+            } else {
+                themeToggle.textContent = 'Dark Mode';
+            }
+        }
+
+        document.getElementById('feedbackForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Form validation
+            let name = document.getElementById('name').value;
+            let email = document.getElementById('email').value;
+            let rating = document.querySelector('input[name="rating"]:checked');
+            let feedback = document.getElementById('feedback').value;
+            
+            if (name && email && rating && feedback) {
+                // Send email using EmailJS
+                let parms = {
+                    name: name,
+                    email: email,
+                    subject: "Feedback Submission",
+                    message: `Rating: ${rating.value}/5\n\nFeedback: ${feedback}`
+                }
+
+                emailjs.send("service_fln936g","template_u0u7bxe",parms).then(function() {
+                    console.log('Feedback submitted:', { 
+                        name, 
+                        email, 
+                        rating: rating.value, 
+                        feedback 
+                    });
+                    
+                    // Show thank you message
+                    document.getElementById('feedbackForm').style.display = 'none';
+                    document.getElementById('thankYouMessage').style.display = 'block';
+                    
+                    alert("Email sent!!");
+                }).catch(function(error) {
+                    console.error('Email send failed:', error);
+                    alert('Failed to send feedback. Please try again later.');
+                });
+            } else {
+                alert('Please fill in all fields, including the star rating');
+            }
+        });
+    </script>
+
+    <script src="navbar.js"></script>
+</body>
+</html>
+
