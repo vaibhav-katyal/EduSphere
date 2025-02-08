@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyBuddy</title>
+    <link rel="stylesheet" href="sign.css">
+</head>
+<body>
+
+    <div id="popup"></div>
+
+    <div id="wrapper">
+        <div id="left">
+            <div id="auth-form">
+                <div class="heading">STUDYBUDDY</div>
+                <form id="signin-form">
+                    <div>
+                        <label>Email</label>
+                        <input type="email" id="signin-email" class="text-input" placeholder="Enter email">
+                    </div>
+                    <div>
+                        <label>Password</label>
+                        <input type="password" id="signin-password" class="text-input" placeholder="Enter password">
+                    </div>
+                    <button type="submit" class="primary-btn">Sign In</button>
+                </form>
+                <form id="signup-form" style="display: none;">
+                    <div>
+                        <label>Username</label>
+                        <input type="text" id="signup-username" class="text-input" placeholder="Enter username">
+                    </div>
+                    <div>
+                        <label>Email</label>
+                        <input type="email" id="signup-email" class="text-input" placeholder="Enter email">
+                    </div>
+                    <div>
+                        <label>Password</label>
+                        <input type="password" id="signup-password" class="text-input" placeholder="Enter password">
+                    </div>
+                    <button type="submit" class="primary-btn">Sign Up</button>
+                </form>
+                <div class="links">
+                    <a href="javascript:void(0);" id="toggle-auth">Create an Account</a>
+                </div>
+            </div>
+        </div> 
+
+        <div id="right">
+            <div id="showcase">
+                <div class="showcase-content">
+                    <h1 class="showcase-text">Let's Create the Future <strong>Together</strong></h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="sign.js"></script>
+</body>
+</html>
