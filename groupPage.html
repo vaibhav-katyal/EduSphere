@@ -247,10 +247,11 @@
     <div class="sidebar">
         <h2>🌿 EduSphere</h2>
         <button onclick="createGroup()">Create New Study Group</button>
-        <input type="text" placeholder="🔍 Search Study Groups...">
+        <input type="text" id="searchBox" placeholder="🔍 Search Study Groups..." oninput="searchGroups()">
         <h3>Filters</h3>
-        <label><input type="radio" name="groupType" value="public"> Public Groups</label>
-        <label><input type="radio" name="groupType" value="private"> Private Groups</label>
+        <label><input type="radio" name="groupType" value="public" onclick="filterGroups('public')"> Public Groups</label>
+        <label><input type="radio" name="groupType" value="private" onclick="filterGroups('private')"> Private Groups</label>
+        <label><input type="radio" name="groupType" value="all" onclick="filterGroups('all')" checked> All Groups</label>
         <h3>Sort By</h3>
         <label><input type="radio" name="sort" value="active"> Most Active</label>
         <label><input type="radio" name="sort" value="newest"> Newest First</label>
@@ -261,41 +262,36 @@
             <!-- Groups will be dynamically added here -->
         </div>
         <div class="footer">
-            © 2025 EduSphere• Empowering Collaborative Learning
+            © 2025 EduSphere • Empowering Collaborative Learning
         </div>
     </div>
     <script>
-        let groups = [
-            { 
-                name: "Physics Gurus", 
-                description: "Join our vibrant community of physics enthusiasts! Explore complex concepts, solve challenging problems, and prepare for exams together.", 
-                type: "public" 
-            },
-            { 
-                name: "Math Wizards", 
-                description: "Master mathematics through collaborative problem-solving. From calculus to linear algebra, we're here to help each other succeed.", 
-                type: "public" 
-            },
-            { 
-                name: "Biology Enthusiasts", 
-                description: "Dive deep into the fascinating world of biology. Share knowledge, discuss latest research, and prepare for bio-related courses together.", 
-                type: "private" 
-            }
-        ];
+        let groups = JSON.parse(localStorage.getItem("groups")) || [];
+        let currentUser = "User" + Math.floor(Math.random() * 1000);
 
-        function displayGroups() {
+        function generateInviteCode() {
+            return Math.random().toString(36).substring(2, 8).toUpperCase();
+        }
+
+        function saveGroups() {
+            localStorage.setItem("groups", JSON.stringify(groups));
+        }
+
+        function displayGroups(filter = "all") {
             const groupList = document.getElementById("groupList");
             groupList.innerHTML = "";
-            groups.forEach((group, index) => {
+            groups.filter(group => filter === "all" || group.type === filter)
+                  .forEach(group => {
                 const div = document.createElement("div");
                 div.classList.add("group-card");
-                div.style.animationDelay = `${index * 0.1}s`;
                 div.innerHTML = `
-                    <div>
-                        <h3>${group.name}</h3>
-                        <p>${group.description}</p>
-                    </div>
-                    <button onclick="viewGroup('${group.name}')">Join Group →</button>
+                    <h3>${group.name}</h3>
+                    <p>${group.description}</p>
+                    <p>Type: ${group.type}</p>
+                    ${group.type === "private" ? `<p>Invite Code: <strong>${group.inviteCode}</strong></p>` : ""}
+                    <p>Leader: <strong>${group.leader}</strong></p>
+                    <p id="members-${group.name.replace(/\s+/g, '-')}">Members: ${group.members.join(", ")}</p>
+                    <button onclick="joinGroup('${group.name}', '${group.type}', '${group.inviteCode}')">Join Group →</button>
                 `;
                 groupList.appendChild(div);
             });
@@ -303,18 +299,57 @@
 
         function createGroup() {
             const groupName = prompt("Enter your study group name:");
-            if (groupName) {
-                groups.push({ 
-                    name: groupName, 
-                    description: "A new collaborative study group for sharing knowledge and learning together.", 
-                    type: "public" 
-                });
-                displayGroups();
-            }
+            if (!groupName) return;
+            
+            const groupType = confirm("Make this group private? Click OK for Private, Cancel for Public") ? "private" : "public";
+            const inviteCode = groupType === "private" ? generateInviteCode() : "";
+            
+            groups.push({ 
+                name: groupName, 
+                description: "A new collaborative study group for sharing knowledge and learning together.", 
+                type: groupType,
+                inviteCode: inviteCode,
+                leader: currentUser,
+                members: [currentUser]
+            });
+            saveGroups();
+            displayGroups();
         }
 
-        function viewGroup(groupName) {
-            window.location.href = `group-details.html?group=${groupName}`;
+        function joinGroup(groupName, groupType, inviteCode) {
+            const group = groups.find(g => g.name === groupName);
+            if (!group) return;
+
+            if (groupType === "private") {
+                const userCode = prompt("Enter the invite code to join the private group:");
+                if (userCode !== inviteCode) {
+                    alert("Invalid invite code!");
+                    return;
+                }
+            }
+            
+            if (!group.members.includes(currentUser)) {
+                group.members.push(currentUser);
+                saveGroups();
+            }
+            
+            localStorage.setItem("currentGroup", JSON.stringify(group));
+            window.location.href = 'group-details.html';
+        }
+
+        function searchGroups() {
+            const query = document.getElementById("searchBox").value.toLowerCase();
+            displayGroups();
+            document.querySelectorAll(".group-card").forEach(card => {
+                const groupName = card.querySelector("h3").textContent.toLowerCase();
+                if (!groupName.includes(query)) {
+                    card.style.display = "none";
+                }
+            });
+        }
+
+        function filterGroups(type) {
+            displayGroups(type);
         }
 
         displayGroups();

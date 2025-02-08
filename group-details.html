@@ -108,30 +108,66 @@
         </div>
     </div>
     <script>
-        function generateInviteCode() {
-            return Math.random().toString(36).substr(2, 6).toUpperCase();
+        function loadGroupDetails() {
+            const group = JSON.parse(localStorage.getItem("currentGroup"));
+            if (!group) {
+                alert("No group data found!");
+                return;
+            }
+            document.getElementById("groupName").textContent = group.name;
+            document.getElementById("inviteCode").textContent = group.inviteCode || "N/A";
+            updateMemberList(group.members);
         }
-        
-        let inviteCode = generateInviteCode();
-        let members = [];
-        let uploadedFiles = JSON.parse(localStorage.getItem("uploadedFiles")) || [];
-        
+
+        function updateMemberList(members) {
+            const memberList = document.getElementById("memberList");
+            memberList.innerHTML = "";
+            members.forEach(member => {
+                const li = document.createElement("li");
+                li.textContent = member;
+                memberList.appendChild(li);
+            });
+        }
+
+        window.onload = loadGroupDetails;
+
         function inviteMembers() {
-            alert("Share this invite code: " + inviteCode);
+            const group = JSON.parse(localStorage.getItem("currentGroup"));
+            alert("Share this invite code: " + group.inviteCode);
         }
+
         function joinGroup() {
+            const group = JSON.parse(localStorage.getItem("currentGroup"));
             const code = prompt("Enter the invite code:");
-            if (code === inviteCode) {
+            if (code === group.inviteCode) {
                 const newMember = prompt("Enter your name:");
                 if (newMember) {
-                    members.push(newMember);
-                    updateMemberList();
-                    alert("You have successfully joined the group!");
+                    if (!group.members.includes(newMember)) {
+                        group.members.push(newMember);
+                        localStorage.setItem("currentGroup", JSON.stringify(group));
+                        saveGroups(group);
+                        updateMemberList(group.members);
+                        alert("You have successfully joined the group!");
+                    } else {
+                        alert("You are already a member of this group.");
+                    }
                 }
             } else {
                 alert("Invalid code. Please try again.");
             }
         }
+
+        function saveGroups(updatedGroup) {
+            let groups = JSON.parse(localStorage.getItem("groups")) || [];
+            const groupIndex = groups.findIndex(g => g.name === updatedGroup.name);
+            if (groupIndex !== -1) {
+                groups[groupIndex] = updatedGroup;
+            } else {
+                groups.push(updatedGroup);
+            }
+            localStorage.setItem("groups", JSON.stringify(groups));
+        }
+
         function uploadFile() {
             const fileInput = document.getElementById("fileInput");
             if (fileInput.files.length > 0) {
@@ -146,6 +182,7 @@
                 reader.readAsDataURL(file);
             }
         }
+
         function sendMessage() {
             const messageInput = document.getElementById("messageInput");
             const messageText = messageInput.value.trim();
@@ -158,6 +195,7 @@
                 chatMessages.scrollTop = chatMessages.scrollHeight;
             }
         }
+
         function updateFileList() {
             const fileList = document.getElementById("fileList");
             fileList.innerHTML = "";
@@ -173,6 +211,7 @@
                 fileList.appendChild(li);
             });
         }
+
         updateFileList();
     </script>
 </body>
