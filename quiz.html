@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduSphere- Quiz</title>
+    <link rel="stylesheet" href="quiz.css">
+</head>
+<body>
+    <div class="main">
+        <div class="popup">
+            <h2>Select Quiz Details</h2>
+            <div class="choices">
+                <div class="lang">
+                    <span>Select Programming Language:</span>
+                    <select name="Select the Language" id="lang">
+                        <option value="Python">Python</option>
+                        <option value="C">C</option>
+                        <option value="C++">C++</option>
+                        <option value="Java">Java</option>
+                        <option value="JavaScript">JavaScript</option>
+                    </select>
+                </div>
+    
+                <div class="noques">
+                    <span>Select Number of Questions:</span>
+                    <select name="No. of Questions" id="noofques">
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="15">15</option>
+                        <option value="20">20</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="gen-quiz">
+                <button>Generate Quiz</button>
+            </div>
+        </div>
+        <div class="card hidden">
+            <div class="heading">
+                <h3>--- Quiz</h3>
+                <div class="dark-mode">
+                    <button>🌙</button>
+                </div>
+            </div>
+            <div class="question">
+                Q1: Lorem ipsum, dolor sit amet consectetur adipisicing elit. Distinctio ipsum quaerat obcaecati recusandae vel nisi sapiente. Aperiam dolorum ipsum, magnam minus unde blanditiis.
+            </div>
+            <div class="options">
+                <div class="opt opt1">Lorem ipsum dolor sit amet consectetur.</div>
+                <div class="opt opt2">Lorem ipsum dolor sit amet consectetur.</div>
+                <div class="opt opt3">Lorem ipsum dolor sit amet consectetur.</div>
+                <div class="opt opt4">Lorem ipsum dolor sit amet consectetur.</div>
+            </div>
+
+            <div class="nxt-btn">
+                <button>Next</button>
+            </div>
+
+            <div class="results">
+                You scored 5 out of 5 !
+                <button>Restart Test</button>
+            </div>
+        </div>
+    </div>
+    <script src="quiz.js"></script>
+</body>
+</html>

@@ -1,0 +1,427 @@
+[
+    {
+        "question": "Which of the following is a valid keyword in C?",
+        "options": ["int", "value", "string", "None of the above"],
+        "answer": "int"
+    },
+    {
+        "question": "Which header file is used for input and output in C?",
+        "options": ["stdio.h", "stdlib.h", "conio.h", "math.h"],
+        "answer": "stdio.h"
+    },
+    {
+        "question": "What is the output of `printf(\"%d\", 10+20);`?",
+        "options": ["10", "20", "30", "Compilation error"],
+        "answer": "30"
+    },
+    {
+        "question": "What is the size of an `int` in C on most 32-bit systems?",
+        "options": ["2 bytes", "4 bytes", "8 bytes", "Depends on the system"],
+        "answer": "4 bytes"
+    },
+    {
+        "question": "Which data type is used to store characters in C?",
+        "options": ["char", "int", "float", "double"],
+        "answer": "char"
+    },
+    {
+        "question": "How do you start the main function in C?",
+        "options": ["main()", "start()", "int main()", "void main()"],
+        "answer": "int main()"
+    },
+    {
+        "question": "Which of the following loops is guaranteed to execute at least once?",
+        "options": ["for loop", "while loop", "do-while loop", "None of the above"],
+        "answer": "do-while loop"
+    },
+    {
+        "question": "What is the output of `sizeof('A')`?",
+        "options": ["1", "2", "4", "8"],
+        "answer": "4"
+    },
+    {
+        "question": "What does the `return` statement do in C?",
+        "options": ["Exits the program", "Returns a value from a function", "Continues the program", "None of the above"],
+        "answer": "Returns a value from a function"
+    },
+    {
+        "question": "What is the correct way to declare a pointer?",
+        "options": ["int ptr", "int *ptr", "int ptr*", "pointer int"],
+        "answer": "int *ptr"
+    },
+    {
+        "question": "Which of the following is used to allocate memory dynamically in C?",
+        "options": ["malloc", "calloc", "realloc", "All of the above"],
+        "answer": "All of the above"
+    },
+    {
+        "question": "Which operator is used to access the value of a variable through a pointer?",
+        "options": ["&", "*", "->", "."],
+        "answer": "*"
+    },
+    {
+        "question": "Which function is used to compare two strings in C?",
+        "options": ["strcmp", "strcpy", "strlen", "strcat"],
+        "answer": "strcmp"
+    },
+    {
+        "question": "What is the output of `printf(\"%d\", 5%2);`?",
+        "options": ["0", "1", "2", "5"],
+        "answer": "1"
+    },
+    {
+        "question": "What does the `#include` directive do?",
+        "options": ["Includes header files", "Declares a function", "Defines a macro", "None of the above"],
+        "answer": "Includes header files"
+    },
+    {
+        "question": "Which of the following is not a valid storage class in C?",
+        "options": ["auto", "register", "static", "mutable"],
+        "answer": "mutable"
+    },
+    {
+        "question": "How are multi-line comments written in C?",
+        "options": ["// comment", "/* comment */", "# comment", "-- comment"],
+        "answer": "/* comment */"
+    },
+    {
+        "question": "Which of the following is not a valid identifier in C?",
+        "options": ["_variable", "variable123", "123variable", "variable_"],
+        "answer": "123variable"
+    },
+    {
+        "question": "Which function is used to find the length of a string?",
+        "options": ["strlen", "strcpy", "strcat", "strcmp"],
+        "answer": "strlen"
+    },
+    {
+        "question": "What is the output of `printf(\"%.2f\", 10.0 / 3);`?",
+        "options": ["3.333", "3.33", "3", "Error"],
+        "answer": "3.33"
+    },
+    {
+        "question": "What does the `break` statement do in a loop?",
+        "options": ["Stops the loop", "Skips an iteration", "Continues the loop", "None of the above"],
+        "answer": "Stops the loop"
+    },
+    {
+        "question": "Which of the following is used to format output in C?",
+        "options": ["printf", "scanf", "gets", "puts"],
+        "answer": "printf"
+    },
+    {
+        "question": "Which of the following is not a valid escape sequence in C?",
+        "options": ["\\n", "\\t", "\\b", "\\a"],
+        "answer": "\\b"
+    },
+    {
+        "question": "What is the output of `5 << 1`?",
+        "options": ["10", "5", "1", "0"],
+        "answer": "10"
+    },
+    {
+        "question": "Which function is used to generate random numbers in C?",
+        "options": ["rand", "random", "srand", "generate"],
+        "answer": "rand"
+    },
+    {
+        "question": "What is the output of `printf(\"%c\", 65);`?",
+        "options": ["65", "A", "Error", "None"],
+        "answer": "A"
+    },
+    {
+        "question": "Which of the following is a logical operator in C?",
+        "options": ["&&", "||", "!", "All of the above"],
+        "answer": "All of the above"
+    },
+    {
+        "question": "What is the output of `printf(\"%d\", sizeof(float));` on most systems?",
+        "options": ["2", "4", "8", "Depends on the system"],
+        "answer": "4"
+    },
+    {
+        "question": "What is the purpose of the `sizeof` operator in C?",
+        "options": ["To calculate the size of a data type", "To allocate memory", "To compare data types", "None of the above"],
+        "answer": "To calculate the size of a data type"
+    },
+    {
+        "question": "What is the result of `5 > 3 && 2 < 4`?",
+        "options": ["True", "False", "Error", "None"],
+        "answer": "True"
+    },
+    {
+        "question": "Which of these is not a data type in C?",
+        "options": ["char", "int", "string", "float"],
+        "answer": "string"
+    },
+    {
+        "question": "What does the `continue` statement do in a loop?",
+        "options": ["Exits the loop", "Skips to the next iteration", "Stops the program", "None of the above"],
+        "answer": "Skips to the next iteration"
+    },
+    {
+        "question": "What is the default value of an uninitialized local variable in C?",
+        "options": ["0", "Garbage value", "Null", "Depends on the compiler"],
+        "answer": "Garbage value"
+    },
+    {
+        "question": "What is the output of `printf(\"%s\", NULL);`?",
+        "options": ["NULL", "Error", "Segmentation fault", "None"],
+        "answer": "Segmentation fault"
+    },
+    {
+        "question": "What is the extension of a C source file?",
+        "options": [".c", ".cpp", ".h", ".o"],
+        "answer": ".c"
+    },
+    {
+        "question": "Which of these is a valid loop in C?",
+        "options": ["for", "while", "do-while", "All of the above"],
+        "answer": "All of the above"
+    },
+    {
+        "question": "Which header file is used for string manipulation in C?",
+        "options": ["string.h", "strings.h", "str.h", "strlib.h"],
+        "answer": "string.h"
+    },
+    {
+        "question": "What is the output of `printf(\"%f\", 3/2);`?",
+        "options": ["1.5", "1.0", "Error", "None"],
+        "answer": "1.0"
+    },
+    {
+        "question": "What does the `free()` function do in C?",
+        "options": ["Releases allocated memory", "Creates dynamic memory", "Increases memory size", "None of the above"],
+        "answer": "Releases allocated memory"
+    },
+    {
+        "question": "What is the output of `10 & 7`?",
+        "options": ["7", "2", "10", "None"],
+        "answer": "2"
+    },
+    {
+        "question": "Which keyword is used to prevent modification of a variable in C?",
+        "options": ["const", "static", "volatile", "immutable"],
+        "answer": "const"
+    },
+    {
+        "question": "What is the output of `printf(\"%d\", 10 >> 1);`?",
+        "options": ["5", "10", "1", "0"],
+        "answer": "5"
+    },
+    {
+        "question": "What does `fopen` return if it fails to open a file?",
+        "options": ["NULL", "EOF", "0", "-1"],
+        "answer": "NULL"
+    },
+    {
+        "question": "Which function is used to read a single character from a file in C?",
+        "options": ["fgetc", "getc", "getchar", "None of the above"],
+        "answer": "fgetc"
+    },
+    {
+        "question": "Which preprocessor directive is used to define constants?",
+        "options": ["#define", "#const", "#constant", "#def"],
+        "answer": "#define"
+    },
+    {
+        "question": "Which of the following is a unary operator in C?",
+        "options": ["+", "-", "*", "!"],
+        "answer": "!"
+    },
+    {
+        "question": "Which of the following is not a valid logical operator in C?",
+        "options": ["&&", "||", "!", "&"],
+        "answer": "&"
+    },
+    {
+        "question": "Which function is used to write formatted output to a string?",
+        "options": ["sprintf", "fprintf", "snprintf", "None of the above"],
+        "answer": "sprintf"
+    },
+    {
+        "question": "Which type of memory allocation is done at compile-time?",
+        "options": ["Static", "Dynamic", "Automatic", "Manual"],
+        "answer": "Static"
+    },
+    {
+        "question": "What is the purpose of the `#ifdef` directive in C?",
+        "options": ["To include a block of code conditionally", "To define macros", "To initialize variables", "None of the above"],
+        "answer": "To include a block of code conditionally"
+    },
+    {
+        "question": "What will be the output of `printf(\"%d\", sizeof(0));`?",
+        "options": ["1", "2", "4", "Depends on the system"],
+        "answer": "4"
+    },
+    {
+        "question": "Which function is used to position the file pointer at a specific location?",
+        "options": ["fseek", "ftell", "rewind", "None of the above"],
+        "answer": "fseek"
+    },
+    {
+        "question": "Which loop is ideal when the number of iterations is known?",
+        "options": ["for", "while", "do-while", "None of the above"],
+        "answer": "for"
+    },
+    {
+        "question": "Which keyword is used to jump out of a loop in C?",
+        "options": ["break", "continue", "return", "exit"],
+        "answer": "break"
+    },
+    {
+        "question": "Which operator has the highest precedence in C?",
+        "options": ["*", "+", "=", "()"],
+        "answer": "()"
+    },
+    {
+        "question": "What is the output of `printf(\"%c\", 97);`?",
+        "options": ["a", "A", "97", "Error"],
+        "answer": "a"
+    },
+    {
+        "question": "Which of the following is a function declaration?",
+        "options": ["int func();", "int func = 0;", "func();", "None of the above"],
+        "answer": "int func();"
+    },
+    {
+        "question": "What is the default value of a global variable in C?",
+        "options": ["0", "1", "Garbage value", "Undefined"],
+        "answer": "0"
+    },
+    {
+        "question": "Which function is used to read a string from the user in C?",
+        "options": ["gets", "scanf", "fgets", "All of the above"],
+        "answer": "gets"
+    },
+    {
+        "question": "What is the correct syntax to create a single-line comment in C?",
+        "options": ["// comment", "/* comment */", "# comment", "-- comment"],
+        "answer": "// comment"
+    },
+    {
+        "question": "Which function is used to calculate the power of a number in C?",
+        "options": ["pow", "power", "sqrt", "exp"],
+        "answer": "pow"
+    },
+    {
+        "question": "Which of the following is a valid file mode in C?",
+        "options": ["r", "w", "a", "All of the above"],
+        "answer": "All of the above"
+    },
+    {
+        "question": "What is the result of `printf(\"%d\", 10 == 10);`?",
+        "options": ["0", "1", "10", "Error"],
+        "answer": "1"
+    },
+    {
+        "question": "Which function is used to flush the output buffer in C?",
+        "options": ["fflush", "fclose", "flush", "None of the above"],
+        "answer": "fflush"
+    },
+    {
+        "question": "What is the result of `5 && 0`?",
+        "options": ["1", "0", "5", "Error"],
+        "answer": "0"
+    },
+    {
+        "question": "What is the size of a `double` on most systems?",
+        "options": ["4 bytes", "8 bytes", "10 bytes", "Depends on the system"],
+        "answer": "8 bytes"
+    },
+    {
+        "question": "Which keyword is used to define a macro in C?",
+        "options": ["#define", "macro", "const", "#macro"],
+        "answer": "#define"
+    },
+    {
+        "question": "Which library function is used to convert a string to an integer?",
+        "options": ["atoi", "itoa", "atof", "strtol"],
+        "answer": "atoi"
+    },
+    {
+        "question": "Which operator is used to get the address of a variable in C?",
+        "options": ["&", "*", "@", "%"],
+        "answer": "&"
+    },
+    {
+        "question": "What is the output of `printf(\"%d\", 5 < 3 || 2 > 1);`?",
+        "options": ["0", "1", "2", "Error"],
+        "answer": "1"
+    },
+    {
+        "question": "What does `void` mean in a function declaration?",
+        "options": ["No return value", "No arguments", "Both", "None"],
+        "answer": "No return value"
+    },
+    {
+        "question": "Which of the following cannot be used as a variable name in C?",
+        "options": ["int", "variable", "_temp", "count1"],
+        "answer": "int"
+    },
+    {
+        "question": "Which of the following is not a valid bitwise operator in C?",
+        "options": ["&", "|", "&&", "^"],
+        "answer": "&&"
+    },
+    {
+        "question": "Which loop is used when the condition is checked after the loop body?",
+        "options": ["do-while", "for", "while", "None of the above"],
+        "answer": "do-while"
+    },
+    {
+        "question": "Which format specifier is used for `unsigned int` in C?",
+        "options": ["%u", "%d", "%x", "%f"],
+        "answer": "%u"
+    },
+    {
+        "question": "What does `strcat` do in C?",
+        "options": ["Concatenates two strings", "Compares two strings", "Finds string length", "Copies one string to another"],
+        "answer": "Concatenates two strings"
+    },
+    {
+        "question": "Which of the following is used to terminate a string in C?",
+        "options": ["\\0", "\\n", "\\t", "EOF"],
+        "answer": "\\0"
+    },
+    {
+        "question": "What is the maximum value of `unsigned char`?",
+        "options": ["127", "255", "32767", "65535"],
+        "answer": "255"
+    },
+    {
+        "question": "Which of the following is a valid conditional statement in C?",
+        "options": ["if-else", "switch", "Both", "None"],
+        "answer": "Both"
+    },
+    {
+        "question": "What is the output of `printf(\"%d\", ~0);`?",
+        "options": ["-1", "0", "1", "None"],
+        "answer": "-1"
+    },
+    {
+        "question": "Which of the following is not a looping construct in C?",
+        "options": ["do-while", "for", "loop", "while"],
+        "answer": "loop"
+    },
+    {
+        "question": "What does the `ftell` function return?",
+        "options": ["The current position of the file pointer", "The total size of the file", "The first character in the file", "None of the above"],
+        "answer": "The current position of the file pointer"
+    },
+    {
+        "question": "What is the output of `sizeof(\"C\");`?",
+        "options": ["1", "2", "3", "4"],
+        "answer": "2"
+    },
+    {
+        "question": "Which of the following functions is used to allocate memory in C?",
+        "options": ["malloc", "calloc", "realloc", "All of the above"],
+        "answer": "All of the above"
+    },
+    {
+        "question": "What is the output of `printf(\"%d\", 4 | 1);`?",
+        "options": ["4", "1", "5", "0"],
+        "answer": "5"
+    }
+]

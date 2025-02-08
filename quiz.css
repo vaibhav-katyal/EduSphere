@@ -1,0 +1,276 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root{
+    --primary-color: #fff;
+    --secondary-color: #000;
+    --question-color: #2e7d32;
+}
+
+.dark-theme{
+    --primary-color: #121212;
+    --secondary-color : #fff;
+    --question-color: #1b5e20;
+}
+
+body {
+    background: var(--primary-color);
+    /* background-color: #121212; */
+    /* color: ; */
+    transition: background-color 0.2s ease;
+}
+
+.main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.popup{
+    display: block;
+    z-index: 1000;
+    position: fixed;
+    border: 1px solid var(--secondary-color);
+    background-color: var(--primary-color);
+    padding: 10px;
+    width: 28vw;
+    border-radius: 7px;
+    /* background-color: rgba(0, 0, 0, 0.5); */
+}
+
+.choices{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* gap: 73px; */
+    margin-bottom: 18px;
+    align-items: center;
+}
+
+.choices span{
+    color: var(--secondary-color);
+    font-size: 18px;
+}
+
+.lang, .noques{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.noques{
+    margin-bottom: 6px;
+}
+
+.popup select{
+    width: 100%;
+}
+
+.gen-quiz{
+    text-align: center;
+}
+
+.gen-quiz button{
+    padding: 10px;
+    width: 170px;
+    cursor: pointer;
+    background-color: var(--question-color);
+    border: none;
+    outline: none;
+    color: white;
+    border-radius: 3px;
+}
+
+.gen-quiz button:hover{
+    background-color: #2e7d32;
+}
+
+.choices select{
+    height: 30px;
+    cursor: pointer;
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    border-radius: 4px;
+    padding: 5px;
+    border: 1px solid var(--question-color);
+}
+
+.popup h2{
+    color: var(--secondary-color);
+    text-align: center;
+    margin: 0px 7px 15px 7px;
+    border-bottom: 3px solid var(--question-color);
+    padding: 0px 0px 5px 0px;
+}
+
+.card {
+    border: 1px solid var(--secondary-color);
+    background: var(--primary-color);
+    padding: 14px;
+    width: 40vw;
+    border-radius: 7px;
+}
+
+.heading {
+    color: var(--question-color);
+    border-bottom: 3px solid var(--question-color);
+    /* border: 1px solid; */
+    padding: 9px 9px 9px 4px;
+    /* display: none; */
+    display: flex;
+    justify-content: space-between;
+}
+
+.heading button{
+    border-radius: 50%;
+    padding: 10px;
+    cursor: pointer;
+    margin-top: -14px;
+    font-size: 16px;
+    border: none;
+    outline: none;
+}
+
+.heading button:hover{
+    background-color: rgb(212, 212, 212);
+}
+
+.question{
+    border: 2px solid var(--question-color);
+    margin-top: 14px;
+    padding: 10px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    color: var(--secondary-color) ;
+    font-weight: 500;
+    border-radius: 3px;
+    /* display: none   ; */
+}
+
+.options{
+    /* border: 1px solid; */
+    margin-top: 17px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    /* display: none; */
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+}
+
+.options .opt{
+    cursor: pointer;
+    border: 1px solid;
+    min-height: 35px;
+    padding: 5px;
+    padding-left: 12px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    overflow: visible;
+    border-radius: 6px;
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+}
+
+.opt:hover{
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+}
+
+.nxt-btn{
+    /* border: 1px solid; */
+    text-align: center;
+    margin-top: 14px;
+    /* display: none; */
+}
+
+.nxt-btn button{
+    padding: 10px;
+    width: 110px;
+    cursor: pointer;
+    background-color: var(--question-color);
+    border: none;
+    outline: none;
+    color: white;
+    border-radius: 3px;
+}
+
+.nxt-btn button:hover{
+    background-color: #2e7d32;
+}
+
+.results{
+    display: flex;
+    flex-direction: column;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 26px;
+    color: var(--question-color);
+    text-align: center;
+    font-weight: 600;
+    line-height: 2;
+    display: none;
+}
+
+.results button{
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 15px;
+    padding: 10px;
+    width: 110px;
+    cursor: pointer;
+    background-color: var(--question-color);
+    border: none;
+    outline: none;
+    color: white;
+    border-radius: 3px;
+}
+
+.results button:hover{
+    background-color: #1b5e20;
+}
+@media only screen and (max-width:390px) {
+    .card{
+        width: 95%;
+    }
+
+    .popup{
+        width: 90vw;
+    }
+}
+
+@media only screen and (min-width:390px) and (max-width:570px) {
+    .card{
+        width: 90%;
+    }
+
+    .popup{
+        width: 85vw;
+    }
+}
+
+@media only screen and (min-width:570px) and (max-width:850px) {
+    .card{
+        width: 65vw;
+    }
+
+    .popup{
+        width: 60vw;
+    }
+}
+
+@media only screen and (min-width:851px) and (max-width:957px) {
+    .card{
+        width: 60vw;
+    }
+
+    .popup{
+        width: 40vw;
+    }
+}
+
+.hidden{
+    display: none;
+}

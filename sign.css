@@ -4,6 +4,18 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    transition: 0.5s ease;
+}
+
+@keyframes main-anim {
+    from{
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to{
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
 body {
@@ -19,6 +31,9 @@ body {
     font-size: 50px;
     color: #2e7d32;
     margin-bottom: 20px;
+    animation-name : main-anim;
+    animation-duration: 0.9s;
+    animation-iteration-count: 1;
 }
 
 h1,
@@ -70,13 +85,16 @@ h6 {
     width: 200px;
 }
 
-#signin label {
+label {
     font-size: 0.9rem;
     line-height: 2rem;
     font-weight: 500;
+    animation-name : main-anim;
+    animation-duration: 0.9s;
+    animation-iteration-count: 1;
 }
 
-#signin .text-input {
+.text-input {
     margin-bottom: 1.3rem;
     width: 100%;
     line-height: 1.3rem;
@@ -88,6 +106,9 @@ h6 {
     font-size: 16px;
     outline: none;
     transition: 0.3s;
+    animation-name : main-anim;
+    animation-duration: 0.5s;
+    animation-iteration-count: 1;
 }
 
 #signin .text-input:focus {
@@ -106,6 +127,9 @@ h6 {
     cursor: pointer;
     transition: 0.3s;
     margin-top: 10px;
+    animation-name : main-anim;
+    animation-duration: 0.9s;
+    animation-iteration-count: 1;
 }
 
 .primary-btn:hover {
@@ -126,6 +150,9 @@ h6 {
     text-align: center;
     display: block;
     text-decoration: none;
+    animation-name : main-anim;
+    animation-duration: 0.9s;
+    animation-iteration-count: 1;
 }
 
 .secondary-btn:hover {
@@ -293,11 +320,11 @@ body {
 
 /* Page Transitions */
 .slide-left {
-    animation: slideLeft 0.5s forwards;
+    animation: slideLeft 0.9s forwards;
 }
 
 .slide-right {
-    animation: slideRight 0.5s forwards;
+    animation: slideRight 0.9s forwards;
 }
 
 @keyframes slideLeft {
@@ -358,7 +385,8 @@ body {
 }
 
 .heading {
-    font-size: 50px;
+    font-size: 64px;
+    font-weight: 500;
     color: #2e7d32;
     margin-bottom: 20px;
 }
