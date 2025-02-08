@@ -1,9 +1,10 @@
-\<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Feedback Form with Rating</title>
+    <link rel="stylesheet" href="navbar.css">
 
     <script type="text/javascript"
         src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
@@ -30,7 +31,7 @@
             font-family: Arial, sans-serif;
             line-height: 1.6;
             margin: 0;
-            padding: 20px;
+            padding: 0px;
             background-color: var(--background-color);
             color: var(--text-color);
             transition: background-color 0.3s, color 0.3s;
@@ -174,7 +175,21 @@
     </style>
 </head>
 <body>
-    <button class="theme-toggle" onclick="toggleTheme()" style="width: 150px;">Dark Mode</button>
+
+    <nav class="navbar">
+        <div class="title">EDUSPHERE</div>
+        <div class="menu-toggle">☰</div>
+        <ul>
+            <a href="landing.html"><li>Home</li></a>
+            <a href="groupPage.html"><li>Group Study</li></a>
+            <a href="library.html"><li>Library</li></a>
+            <a href="quiz.html"><li>Quiz</li></a>
+            <a href="feedback.html"><li>Contact Us</li></a>
+            <a href="sign.html"><li><button class="login-btn">Login</button></li></a>
+        </ul>
+    </nav> 
+    <br><br>
+    <!-- <button class="theme-toggle" onclick="toggleTheme()" style="width: 150px;">Dark Mode</button> -->
     <div class="container">
         <h2>Feedback Form</h2>
         <form id="feedbackForm">
@@ -260,6 +275,8 @@
             }
         });
     </script>
+
+    <script src="navbar.js"></script>
 </body>
 </html>
 
