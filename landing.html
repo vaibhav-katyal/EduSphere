@@ -3,299 +3,148 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StudyBuddy</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            text-align: center;
-            background: #f9f9f9;
-        }
-        header {
-            background: #c1f0c1;
-            padding: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: relative;
-        }
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-        }
-        .nav-links {
-            list-style: none;
-            padding: 0;
-            display: flex;
-        }
-        .nav-links li {
-            margin: 0 15px;
-        }
-        .nav-links a {
-            text-decoration: none;
-            color: black;
-        }
-        .auth-buttons button {
-            margin: 5px;
-            padding: 10px 15px;
-            border: none;
-            cursor: pointer;
-            font-size: 14px;
-        }
-        .signup {
-            background: green;
-            color: white;
-        }
-        .menu-toggle {
-            display: none;
-            font-size: 24px;
-            cursor: pointer;
-        }
-        .hero {
-            padding: 60px;
-            background: #e0ffe0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .cta {
-            padding: 15px 30px;
-            background: green;
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-size: 18px;
-            margin-top: 10px;
-        }
-        .features, .testimonials, .pricing {
-            padding: 40px;
-        }
-        .features {
-            display: flex;
-            justify-content: space-around;
-            background: #d9ffd9;
-            padding: 30px;
-        }
-        .feature {
-            width: 30%;
-        }
-        .testimonials {
-            background: white;
-        }
-        .testimonial {
-            margin: 20px auto;
-            width: 80%;
-            padding: 10px;
-            background: #f0f0f0;
-            border-radius: 8px;
-        }
-        .pricing {
-            background: #d9ffd9;
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-        }
-        .plan {
-            width: 30%;
-            padding: 20px;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        footer {
-            background: #c1f0c1;
-            padding: 15px;
-            margin-top: 20px;
-        }
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-                flex-direction: column;
-                background: #c1f0c1;
-                position: absolute;
-                top: 60px;
-                right: 0;
-                width: 100%;
-                text-align: center;
-            }
-            .nav-links.active {
-                display: flex;
-            }
-            .nav-links li {
-                margin: 10px 0;
-            }
-            .menu-toggle {
-                display: block;
-            }
-            .features, .pricing {
-                flex-direction: column;
-                align-items: center;
-            }
-            .feature, .plan {
-                width: 80%;
-                margin-bottom: 20px;
-            }
-        }
-
-
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            text-align: center;
-            background: #f9f9f9;
-        }
-        header {
-            background: #c1f0c1;
-            padding: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: relative;
-        }
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-        }
-        .nav-links {
-            list-style: none;
-            padding: 0;
-            display: flex;
-        }
-        .nav-links li {
-            margin: 0 15px;
-        }
-        .nav-links a {
-            text-decoration: none;
-            color: black;
-        }
-        .auth-buttons button {
-            margin: 5px;
-            padding: 10px 15px;
-            border: none;
-            cursor: pointer;
-            font-size: 14px;
-        }
-        .signup {
-            background: green;
-            color: white;
-        }
-        .menu-toggle {
-            display: none;
-            font-size: 24px;
-            cursor: pointer;
-        }
-        @media (max-width: 768px) {
-            header {
-                flex-direction: column;
-                text-align: center;
-            }
-            .logo {
-                order: 1;
-            }
-            .menu-toggle {
-                display: block;
-                order: 2;
-                position: absolute;
-                top: 15px;
-                right: 20px;
-            }
-            .nav-links {
-                display: none;
-                flex-direction: column;
-                background: #c1f0c1;
-                position: absolute;
-                top: 60px;
-                right: 0;
-                width: 100%;
-                text-align: center;
-            }
-            .nav-links.active {
-                display: flex;
-            }
-            .nav-links li {
-                margin: 10px 0;
-            }
-            .auth-buttons {
-                order: 3;
-            }
-        }
-    </style>
+    <title>EduSphere</title>
+    <link rel="stylesheet" href="landing.css">
+    <link rel="stylesheet" href="navbar.css">
 </head>
 <body>
-    <header>
-                <!-- <div class="auth-buttons">
-            <button class="login">Log In</button>
-            <button class="signup">Sign Up</button>
-        </div> -->
-        <div class="logo">StudyBuddy</div>
+    <nav class="navbar">
+        <div class="title">EDUSPHERE</div>
         <div class="menu-toggle">☰</div>
-        <ul class="nav-links">
-            <li><a href="#">Group Study</a></li>
-            <li><a href="#">Video Calls</a></li>
-            <li><a href="#">Resources</a></li>
-            <li><a href="#">Newsletter</a></li>
-            <li class="auth-buttons"><button class="login">Log In</button>
-            <button class="signup">Sign Up</button></li>
+        <ul>
+            <li>Home</li>
+            <li>Group Study</li>
+            <li>Library</li>
+            <a href="quiz.html"><li>Quiz</li></a>
+            <li>Contact Us</li>
+            <a href="sign.html"><li><button class="login-btn">Login</button></li></a>
         </ul>
-        <!-- <div class="auth-buttons">
-            <button class="login">Log In</button>
-            <button class="signup">Sign Up</button>
-        </div> -->
-    </header>
-    <section class="hero">
-        <h1>Study together with video calls and chat</h1>
-        <button class="cta">Get Started</button>
-    </section>
+    </nav>
+    <div class="hero">
+        <div class="container">
+            <img src="video.png" alt="">
+            <h1>Study together with<br>video calls and chat</h1>
+            <a href="#" class="cta-button">Get started</a>
+        </div>
+    </div>
+
     <section class="features">
-        <div class="feature">
-            <h3>Find the perfect study group for you</h3>
-        </div>
-        <div class="feature">
-            <h3>Better Sleep</h3>
-        </div>
-        <div class="feature">
-            <h3>Less Stress</h3>
+        <div class="container">
+            <div class="features-grid">
+                <div class="feature">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-Nk1YaITp9hrGhvlCqiThJ5y5dp2d0f.png" alt="Search icon">
+                    <div>
+                        <h3>Find the perfect study group for you</h3>
+                        <p>Match based on interests and availability</p>
+                    </div>
+                </div>
+                <div class="feature">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-Nk1YaITp9hrGhvlCqiThJ5y5dp2d0f.png" alt="Better study icon">
+                    <div>
+                        <h3>Better Study</h3>
+                        <p>Improve your study time and analyze progress</p>
+                    </div>
+                </div>
+                <div class="feature">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-Nk1YaITp9hrGhvlCqiThJ5y5dp2d0f.png" alt="Less stress icon">
+                    <div>
+                        <h3>Less Stress</h3>
+                        <p>Reduce stress and anxiety with StudyBuddy</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
+
     <section class="testimonials">
-        <h2>Join the StudyBuddy community and connect with other learners</h2>
-        <div class="testimonial">
-            <p>"I love using StudyBuddy for group study"</p>
-        </div>
-        <div class="testimonial">
-            <p>"StudyBuddy has made my life so much easier!"</p>
-        </div>
-        <div class="testimonial">
-            <p>"I use StudyBuddy every day for group study"</p>
-        </div>
-        <div class="testimonial">
-            <p>"StudyBuddy has helped me improve my grades"</p>
+        <div class="container">
+            <h2>Join the StudyBuddy community and connect with other learners</h2>
+            <div class="testimonials-slider">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>I love using StudyBuddy for group study</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-Nk1YaITp9hrGhvlCqiThJ5y5dp2d0f.png" alt="" class="author-avatar">
+                        <div>John S.</div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>StudyBuddy has made my life so much easier!</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-Nk1YaITp9hrGhvlCqiThJ5y5dp2d0f.png" alt="" class="author-avatar">
+                        <div>Emily P.</div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>I use StudyBuddy every day for group study</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-Nk1YaITp9hrGhvlCqiThJ5y5dp2d0f.png" alt="" class="author-avatar">
+                        <div>Mike L.</div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>StudyBuddy has helped me improve my grades</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-Nk1YaITp9hrGhvlCqiThJ5y5dp2d0f.png" alt="" class="author-avatar">
+                        <div>Sarah T.</div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
+
     <section class="pricing">
-        <h2>Choose your plan</h2>
-        <div class="plan">
-            <h3>Basic</h3>
-            <p>$9.99/month</p>
-        </div>
-        <div class="plan">
-            <h3>Pro Membership</h3>
-            <p>$46/month for advanced</p>
-        </div>
-        <div class="plan">
-            <h3>Premium Membership</h3>
-            <p>$64/month for exclusive</p>
+        <div class="container">
+            <h2>Choose your plan</h2>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <div class="pricing-name">Basic</div>
+                        <div class="pricing-price">Free</div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li>Collaborate seamlessly with 10 study buddies</li>
+                        <li>Connect freely for all your study needs</li>
+                        <li>Access basic study tools</li>
+                    </ul>
+                    <button class="pricing-button">Sign up for Basic</button>
+                </div>
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <div class="pricing-name">Pro Membership</div>
+                        <div class="pricing-price">$9.99/month for advanced</div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li>Access 20 study groups monthly</li>
+                        <li>Unlimited access to study resources</li>
+                        <li>24/7 study group access</li>
+                    </ul>
+                    <button class="pricing-button primary">Sign up for Pro</button>
+                </div>
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <div class="pricing-name">Premium Membership</div>
+                        <div class="pricing-price">$40.99/month for exclusive</div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li>Unlimited access to study groups</li>
+                        <li>Premium library for all your study needs</li>
+                        <li>Priority support</li>
+                    </ul>
+                    <button class="pricing-button">Sign up for Premium</button>
+                </div>
+            </div>
         </div>
     </section>
-    <footer>
-        <p>&copy; 2025 StudyBuddy. All rights reserved.</p>
-    </footer>
-    <script>
-        document.querySelector('.menu-toggle').addEventListener('click', function() {
-            document.querySelector('.nav-links').classList.toggle('active');
-        });
-    </script>
+
+    <script src="landing.js"></script>
+    <script src="navbar.js"></script>
 </body>
 </html>
