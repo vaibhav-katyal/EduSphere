@@ -1,0 +1,402 @@
+[
+    {
+        "question": "Which company developed JavaScript?",
+        "options": ["Netscape", "Microsoft", "Google", "Oracle"],
+        "answer": "Netscape"
+    },
+    {
+        "question": "Which of the following is not a JavaScript data type?",
+        "options": ["Number", "Boolean", "Float", "String"],
+        "answer": "Float"
+    },
+    {
+        "question": "Which symbol is used for single-line comments in JavaScript?",
+        "options": ["//", "/*", "#", "<!--"],
+        "answer": "//"
+    },
+    {
+        "question": "How do you declare a variable in JavaScript?",
+        "options": ["var", "let", "const", "All of the above"],
+        "answer": "All of the above"
+    },
+    {
+        "question": "What will `typeof null` return in JavaScript?",
+        "options": ["null", "object", "undefined", "string"],
+        "answer": "object"
+    },
+    {
+        "question": "Which method is used to parse a string to an integer?",
+        "options": ["parseInt()", "parseFloat()", "Number()", "toInt()"],
+        "answer": "parseInt()"
+    },
+    {
+        "question": "What is the default value of an uninitialized variable in JavaScript?",
+        "options": ["null", "0", "undefined", "NaN"],
+        "answer": "undefined"
+    },
+    {
+        "question": "Which of the following methods is used to add an element to an array?",
+        "options": ["push()", "add()", "append()", "insert()"],
+        "answer": "push()"
+    },
+    {
+        "question": "Which of these is not a valid JavaScript loop?",
+        "options": ["for", "while", "do-while", "foreach"],
+        "answer": "foreach"
+    },
+    {
+        "question": "What does the `isNaN()` function check for?",
+        "options": ["If a value is null", "If a value is undefined", "If a value is NaN", "If a value is a number"],
+        "answer": "If a value is NaN"
+    },
+    {
+        "question": "Which of the following is not a reserved keyword in JavaScript?",
+        "options": ["default", "finally", "undefined", "throw"],
+        "answer": "undefined"
+    },
+    {
+        "question": "How can you create an object in JavaScript?",
+        "options": ["var obj = {}", "var obj = Object.create(null)", "var obj = new Object()", "All of the above"],
+        "answer": "All of the above"
+    },
+    {
+        "question": "What is the result of `2 + '2'` in JavaScript?",
+        "options": ["4", "22", "NaN", "Error"],
+        "answer": "22"
+    },
+    {
+        "question": "Which method is used to convert a JSON object to a string?",
+        "options": ["JSON.stringify()", "JSON.parse()", "toString()", "convertToString()"],
+        "answer": "JSON.stringify()"
+    },
+    {
+        "question": "Which of the following is not a valid JavaScript event?",
+        "options": ["onclick", "onmouseover", "onchange", "onprint"],
+        "answer": "onprint"
+    },
+    {
+        "question": "What will `console.log(1 == '1')` return?",
+        "options": ["true", "false", "undefined", "Error"],
+        "answer": "true"
+    },
+    {
+        "question": "What is the output of `console.log(1 === '1')`?",
+        "options": ["true", "false", "undefined", "Error"],
+        "answer": "false"
+    },
+    {
+        "question": "Which method is used to remove the last element from an array?",
+        "options": ["pop()", "remove()", "delete()", "shift()"],
+        "answer": "pop()"
+    },
+    {
+        "question": "Which of these is a JavaScript framework?",
+        "options": ["Angular", "Laravel", "Django", "Flask"],
+        "answer": "Angular"
+    },
+    {
+        "question": "What does the `return` statement do in JavaScript?",
+        "options": ["Exits the function", "Returns a value", "Both", "None"],
+        "answer": "Both"
+    },
+    {
+        "question": "Which keyword is used to define a function in JavaScript?",
+        "options": ["function", "def", "fun", "method"],
+        "answer": "function"
+    },
+    {
+        "question": "What is the correct syntax to add a comment in JavaScript?",
+        "options": ["// This is a comment", "<!-- This is a comment -->", "# This is a comment", "' This is a comment"],
+        "answer": "// This is a comment"
+    },
+    {
+        "question": "Which of the following is used to create an array in JavaScript?",
+        "options": ["[]", "Array()", "new Array()", "All of the above"],
+        "answer": "All of the above"
+    },
+    {
+        "question": "What is the use of `push()` in JavaScript?",
+        "options": ["To remove an element from the array", "To add an element to the array", "To sort the array", "To reverse the array"],
+        "answer": "To add an element to the array"
+    },
+    {
+        "question": "Which keyword is used to handle exceptions in JavaScript?",
+        "options": ["try", "catch", "finally", "All of the above"],
+        "answer": "All of the above"
+    },
+    {
+        "question": "Which method is used to find the length of a string?",
+        "options": ["size()", "length()", "getLength()", "None of the above"],
+        "answer": "length()"
+    },
+    {
+        "question": "What will be the output of `console.log(typeof [])`?",
+        "options": ["object", "array", "undefined", "list"],
+        "answer": "object"
+    },
+    {
+        "question": "Which of these is a falsy value in JavaScript?",
+        "options": ["false", "0", "null", "All of the above"],
+        "answer": "All of the above"
+    },
+    {
+        "question": "What will be the output of `console.log(1 + true)`?",
+        "options": ["1", "true", "2", "NaN"],
+        "answer": "2"
+    },
+    {
+        "question": "Which of the following is a JavaScript library?",
+        "options": ["React", "Bootstrap", "Express", "Laravel"],
+        "answer": "React"
+    },
+    {
+        "question": "What does `NaN` stand for in JavaScript?",
+        "options": ["Not a Number", "Not Applicable Number", "Not Assigned Number", "None"],
+        "answer": "Not a Number"
+    },
+    {
+        "question": "Which operator is used to check equality without type conversion?",
+        "options": ["==", "===", "!=", "!=="],
+        "answer": "==="
+    },
+    {
+        "question": "Which object is at the top of the scope chain in JavaScript?",
+        "options": ["window", "document", "global", "this"],
+        "answer": "window"
+    },
+    {
+        "question": "Which function is used to parse JSON strings in JavaScript?",
+        "options": ["JSON.stringify()", "JSON.parse()", "JSON.read()", "JSON.decode()"],
+        "answer": "JSON.parse()"
+    },
+    {
+        "question": "Which method is used to merge two arrays in JavaScript?",
+        "options": ["concat()", "merge()", "combine()", "append()"],
+        "answer": "concat()"
+    },
+    {
+        "question": "What does the `break` statement do?",
+        "options": ["Exits the current loop", "Skips one iteration", "Continues the loop", "None"],
+        "answer": "Exits the current loop"
+    },
+    {
+        "question": "Which function is used to schedule code execution in JavaScript?",
+        "options": ["setTimeout()", "setInterval()", "Both", "None"],
+        "answer": "Both"
+    },
+    {
+        "question": "Which of these is used to handle asynchronous operations in JavaScript?",
+        "options": ["Promises", "Callbacks", "Async/Await", "All of the above"],
+        "answer": "All of the above"
+    },
+    {
+        "question": "Which method is used to access an element by its ID?",
+        "options": ["getElementById()", "querySelector()", "getId()", "findById()"],
+        "answer": "getElementById()"
+    },
+    {
+        "question": "What is the purpose of the `typeof` operator?",
+        "options": ["Determine the type of a variable", "Check if a variable is undefined", "Compare two variables", "None"],
+        "answer": "Determine the type of a variable"
+    },
+    {
+        "question": "What is the purpose of the `bind()` method in JavaScript?",
+        "options": ["To bind an event", "To bind a function to an object", "To bind a variable to a value", "None"],
+        "answer": "To bind a function to an object"
+    },
+    {
+        "question": "Which method is used to select elements with a specific class in JavaScript?",
+        "options": ["getElementsByClassName()", "querySelector()", "getElementsByName()", "getElementsByClass()"],
+        "answer": "getElementsByClassName()"
+    },
+    {
+        "question": "Which method is used to stop event propagation in JavaScript?",
+        "options": ["stopPropagation()", "preventDefault()", "cancelEvent()", "stopEvent()"],
+        "answer": "stopPropagation()"
+    },
+    {
+        "question": "What will `console.log('5' - 3)` output?",
+        "options": ["53", "2", "NaN", "Error"],
+        "answer": "2"
+    },
+    {
+        "question": "Which of the following is used to handle exceptions in JavaScript?",
+        "options": ["try...catch", "if...else", "switch...case", "for...loop"],
+        "answer": "try...catch"
+    },
+    {
+        "question": "What is the default behavior of the `preventDefault()` method?",
+        "options": ["Prevents event execution", "Stops the default action", "Stops event propagation", "None"],
+        "answer": "Stops the default action"
+    },
+    {
+        "question": "What is the purpose of the `reduce()` method in JavaScript?",
+        "options": ["To flatten an array", "To sum up array elements", "To reduce an array to a single value", "All of the above"],
+        "answer": "To reduce an array to a single value"
+    },
+    {
+        "question": "What will `console.log(typeof NaN)` output?",
+        "options": ["number", "NaN", "undefined", "object"],
+        "answer": "number"
+    },
+    {
+        "question": "Which operator checks both value and type equality?",
+        "options": ["==", "===", "!=", "!=="],
+        "answer": "==="
+    },
+    {
+        "question": "What does the `unshift()` method do in JavaScript?",
+        "options": ["Adds elements to the start of an array", "Removes the first element", "Adds elements to the end", "None"],
+        "answer": "Adds elements to the start of an array"
+    },
+    {
+        "question": "Which statement is used to skip the current iteration in a loop?",
+        "options": ["break", "continue", "skip", "exit"],
+        "answer": "continue"
+    },
+    {
+        "question": "What does `JSON.parse()` do in JavaScript?",
+        "options": ["Converts JSON to a string", "Converts a string to JSON", "Parses a string", "None"],
+        "answer": "Converts a string to JSON"
+    },
+    {
+        "question": "Which method removes the first element from an array?",
+        "options": ["shift()", "pop()", "remove()", "splice()"],
+        "answer": "shift()"
+    },
+    {
+        "question": "What does `setInterval()` do?",
+        "options": ["Executes code repeatedly after a delay", "Executes code once after a delay", "Stops execution of code", "None"],
+        "answer": "Executes code repeatedly after a delay"
+    },
+    {
+        "question": "Which method is used to copy an array in JavaScript?",
+        "options": ["slice()", "copy()", "clone()", "None"],
+        "answer": "slice()"
+    },
+    {
+        "question": "Which keyword is used to declare a constant in JavaScript?",
+        "options": ["const", "let", "var", "constant"],
+        "answer": "const"
+    },
+    {
+        "question": "What is the output of `console.log(typeof undefined)`?",
+        "options": ["undefined", "object", "null", "string"],
+        "answer": "undefined"
+    },
+    {
+        "question": "Which method is used to concatenate arrays?",
+        "options": ["concat()", "join()", "merge()", "add()"],
+        "answer": "concat()"
+    },
+    {
+        "question": "What does `Array.isArray()` check?",
+        "options": ["If the value is an array", "If the array is empty", "If the value is not null", "None"],
+        "answer": "If the value is an array"
+    },
+    {
+        "question": "What is the purpose of the `map()` method in JavaScript?",
+        "options": ["To create a new array", "To modify an array", "To remove array elements", "None"],
+        "answer": "To create a new array"
+    },
+    {
+        "question": "Which method adds or removes elements from an array?",
+        "options": ["splice()", "slice()", "split()", "concat()"],
+        "answer": "splice()"
+    },
+    {
+        "question": "Which operator is used to assign default values in JavaScript?",
+        "options": ["||", "&&", "??", "**"],
+        "answer": "??"
+    },
+    {
+        "question": "What will `console.log([] + [])` output?",
+        "options": ["[]", "undefined", "''", "null"],
+        "answer": "''"
+    },
+    {
+        "question": "What does `document.querySelectorAll()` return?",
+        "options": ["A single element", "A NodeList", "An array", "None"],
+        "answer": "A NodeList"
+    },
+    {
+        "question": "What is the purpose of `fetch()` in JavaScript?",
+        "options": ["To make HTTP requests", "To parse JSON", "To handle events", "None"],
+        "answer": "To make HTTP requests"
+    },
+    {
+        "question": "Which event is fired when the DOM is fully loaded?",
+        "options": ["DOMContentLoaded", "load", "ready", "onload"],
+        "answer": "DOMContentLoaded"
+    },
+    {
+        "question": "Which function is used to execute code after a delay?",
+        "options": ["setTimeout()", "setInterval()", "setDelay()", "None"],
+        "answer": "setTimeout()"
+    },
+    {
+        "question": "What does `Object.keys()` return?",
+        "options": ["An array of keys", "An array of values", "An array of entries", "None"],
+        "answer": "An array of keys"
+    },
+    {
+        "question": "Which loop is best suited for iterating through object properties?",
+        "options": ["for-in", "for-of", "for", "while"],
+        "answer": "for-in"
+    },
+    {
+        "question": "What does the `filter()` method do?",
+        "options": ["Filters array elements based on a condition", "Sorts an array", "Maps an array", "None"],
+        "answer": "Filters array elements based on a condition"
+    },
+    {
+        "question": "Which operator is used to spread array elements?",
+        "options": ["...", "*", "&", "^"],
+        "answer": "..."
+    },
+    {
+        "question": "Which method converts a number to a string?",
+        "options": ["toString()", "parseInt()", "Number()", "None"],
+        "answer": "toString()"
+    },
+    {
+        "question": "What will `console.log(!!false)` return?",
+        "options": ["true", "false", "undefined", "Error"],
+        "answer": "false"
+    },
+    {
+        "question": "Which method is used to check if an array includes a certain value?",
+        "options": ["includes()", "find()", "filter()", "some()"],
+        "answer": "includes()"
+    },
+    {
+        "question": "What does `document.createElement()` do?",
+        "options": ["Creates a new HTML element", "Creates a new DOM object", "Creates a new attribute", "None"],
+        "answer": "Creates a new HTML element"
+    },
+    {
+        "question": "Which of these is not a JavaScript framework?",
+        "options": ["Vue.js", "React", "Angular", "Laravel"],
+        "answer": "Laravel"
+    },
+    {
+        "question": "Which method is used to trim whitespace from a string?",
+        "options": ["trim()", "remove()", "delete()", "None"],
+        "answer": "trim()"
+    },
+    {
+        "question": "What does `this` refer to in JavaScript?",
+        "options": ["The current object", "The global object", "The parent object", "None"],
+        "answer": "The current object"
+    },
+    {
+        "question": "Which method is used to reverse an array?",
+        "options": ["reverse()", "invert()", "back()", "None"],
+        "answer": "reverse()"
+    },
+    {
+        "question": "What does the `Promise.resolve()` method do?",
+        "options": ["Returns a resolved promise", "Creates a new promise", "Rejects a promise", "None"],
+        "answer": "Returns a resolved promise"
+    }
+]
