@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,10 +16,12 @@
             height: 100vh;
             color: #166534;
         }
+
         .container {
             display: flex;
             height: 100vh;
         }
+
         .sidebar {
             width: 300px;
             background: rgba(255, 255, 255, 0.95);
@@ -30,6 +33,7 @@
             position: relative;
             z-index: 1;
         }
+
         .sidebar h2 {
             text-align: center;
             margin-bottom: 32px;
@@ -37,6 +41,7 @@
             font-size: 28px;
             font-weight: 700;
         }
+
         .sidebar button {
             margin: 8px 0;
             padding: 16px;
@@ -48,6 +53,7 @@
             cursor: pointer;
             font-weight: 600;
         }
+
         .main-content {
             flex: 1;
             display: flex;
@@ -56,17 +62,23 @@
             gap: 32px;
             overflow-y: auto;
         }
-        .group-info, .chat-container, .group-members, .upload-section {
+
+        .group-info,
+        .chat-container,
+        .group-members,
+        .upload-section {
             background: rgba(255, 255, 255, 0.95);
             padding: 32px;
             border-radius: 24px;
             box-shadow: 0 4px 6px rgba(22, 101, 52, 0.05);
             border: 1px solid rgba(22, 163, 74, 0.1);
         }
+
         ul {
             list-style: none;
             padding: 0;
         }
+
         li {
             padding: 12px 16px;
             color: #166534;
@@ -75,6 +87,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="sidebar">
@@ -108,36 +121,72 @@
         </div>
     </div>
     <script>
-        function generateInviteCode() {
-            return Math.random().toString(36).substr(2, 6).toUpperCase();
+        function loadGroupDetails() {
+            const group = JSON.parse(localStorage.getItem("currentGroup"));
+            if (!group) {
+                alert("No group data found!");
+                return;
+            }
+            document.getElementById("groupName").textContent = group.name;
+            document.getElementById("inviteCode").textContent = group.inviteCode || "N/A";
+            updateMemberList(group.members);
         }
-        
-        let inviteCode = generateInviteCode();
-        let members = [];
-        let uploadedFiles = JSON.parse(localStorage.getItem("uploadedFiles")) || [];
-        
+
+        function updateMemberList(members) {
+            const memberList = document.getElementById("memberList");
+            memberList.innerHTML = "";
+            members.forEach(member => {
+                const li = document.createElement("li");
+                li.textContent = member;
+                memberList.appendChild(li);
+            });
+        }
+
+        window.onload = loadGroupDetails;
+
         function inviteMembers() {
-            alert("Share this invite code: " + inviteCode);
+            const group = JSON.parse(localStorage.getItem("currentGroup"));
+            alert("Share this invite code: " + group.inviteCode);
         }
+
         function joinGroup() {
+            const group = JSON.parse(localStorage.getItem("currentGroup"));
             const code = prompt("Enter the invite code:");
-            if (code === inviteCode) {
+            if (code === group.inviteCode) {
                 const newMember = prompt("Enter your name:");
                 if (newMember) {
-                    members.push(newMember);
-                    updateMemberList();
-                    alert("You have successfully joined the group!");
+                    if (!group.members.includes(newMember)) {
+                        group.members.push(newMember);
+                        localStorage.setItem("currentGroup", JSON.stringify(group));
+                        saveGroups(group);
+                        updateMemberList(group.members);
+                        alert("You have successfully joined the group!");
+                    } else {
+                        alert("You are already a member of this group.");
+                    }
                 }
             } else {
                 alert("Invalid code. Please try again.");
             }
         }
+
+        function saveGroups(updatedGroup) {
+            let groups = JSON.parse(localStorage.getItem("groups")) || [];
+            const groupIndex = groups.findIndex(g => g.name === updatedGroup.name);
+            if (groupIndex !== -1) {
+                groups[groupIndex] = updatedGroup;
+            } else {
+                groups.push(updatedGroup);
+            }
+            localStorage.setItem("groups", JSON.stringify(groups));
+        }
+
         function uploadFile() {
             const fileInput = document.getElementById("fileInput");
             if (fileInput.files.length > 0) {
                 const file = fileInput.files[0];
                 const reader = new FileReader();
-                
+
                 reader.onload = function (e) {
                     uploadedFiles.push({ name: file.name || "Untitled", content: e.target.result });
                     localStorage.setItem("uploadedFiles", JSON.stringify(uploadedFiles));
@@ -146,6 +195,7 @@
                 reader.readAsDataURL(file);
             }
         }
+
         function sendMessage() {
             const messageInput = document.getElementById("messageInput");
             const messageText = messageInput.value.trim();
@@ -158,6 +208,7 @@
                 chatMessages.scrollTop = chatMessages.scrollHeight;
             }
         }
+
         function updateFileList() {
             const fileList = document.getElementById("fileList");
             fileList.innerHTML = "";
@@ -173,7 +224,54 @@
                 fileList.appendChild(li);
             });
         }
+
         updateFileList();
+
+        function joinGroup() {
+            const group = JSON.parse(localStorage.getItem("currentGroup"));
+            const code = prompt("Enter the invite code:");
+            if (code === group.inviteCode) {
+                const newMember = prompt("Enter your name:");
+                if (newMember) {
+                    if (!group.members.includes(newMember)) {
+                        group.members.push(newMember);
+                        localStorage.setItem("currentGroup", JSON.stringify(group));
+                        saveGroups(group);
+                        updateMemberList(group.members);
+                        alert("You have successfully joined the group!");
+                        localStorage.setItem("videoCallAccess", "true"); // Store access flag
+                        addVideoCallButton();
+                    } else {
+                        alert("You are already a member of this group.");
+                    }
+                }
+            } else {
+                alert("Invalid code. Please try again.");
+            }
+        }
+
+        function addVideoCallButton() {
+            if (!document.getElementById("videoCallButton")) {
+                const button = document.createElement("button");
+                button.id = "videoCallButton";
+                button.textContent = "Connect via Video Call";
+                button.style.marginTop = "12px";
+                button.onclick = function () {
+                    window.location.href = "video-call-app/public/video-call.html";
+                };
+                document.querySelector(".sidebar").appendChild(button);
+            }
+        }
+
+        // Load group details & check if button should be added
+        window.onload = function () {
+            loadGroupDetails();
+            if (localStorage.getItem("videoCallAccess") === "true") {
+                addVideoCallButton();
+            }
+        };
+
     </script>
 </body>
+
 </html>
