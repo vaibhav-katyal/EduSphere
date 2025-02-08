@@ -6,123 +6,317 @@
     <title>Group Page</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
             margin: 0;
             padding: 0;
-            background: #eef2f3;
+            background: linear-gradient(135deg, #dcfce7 0%, #f0f9f0 100%);
             display: flex;
             flex-direction: row;
             height: 100vh;
+            color: #166534;
         }
         .sidebar {
-            width: 250px;
-            background: white;
-            padding: 20px;
+            width: 300px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 32px;
             display: flex;
             flex-direction: column;
-            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            box-shadow: 20px 0 40px rgba(22, 101, 52, 0.1);
+            position: relative;
+            backdrop-filter: blur(10px);
+            border-right: 1px solid rgba(22, 163, 74, 0.1);
+        }
+        .sidebar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(180deg, #16a34a 0%, transparent 100%);
+            opacity: 0.1;
+            pointer-events: none;
         }
         .sidebar h2 {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 32px;
+            color: #15803d;
+            font-size: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            text-shadow: 0 2px 4px rgba(22, 101, 52, 0.1);
         }
-        .sidebar input {
-            padding: 10px;
+        .sidebar input[type="text"] {
+            padding: 16px;
             width: 100%;
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+            margin-bottom: 24px;
+            border: 2px solid #dcfce7;
+            border-radius: 16px;
+            font-size: 15px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-sizing: border-box;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: inset 0 2px 4px rgba(22, 101, 52, 0.05);
+        }
+        .sidebar input[type="text"]:focus {
+            outline: none;
+            border-color: #16a34a;
+            box-shadow: 0 0 0 4px rgba(22, 163, 74, 0.15);
+            transform: translateY(-1px);
         }
         .sidebar button {
-            background: #28a745;
+            background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
             color: white;
-            padding: 10px;
+            padding: 16px;
             border: none;
             cursor: pointer;
-            border-radius: 5px;
+            border-radius: 16px;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-bottom: 28px;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 6px rgba(22, 163, 74, 0.15),
+                        0 10px 20px rgba(22, 163, 74, 0.1);
+        }
+        .sidebar button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(22, 163, 74, 0.2),
+                        0 12px 24px rgba(22, 163, 74, 0.15);
+        }
+        .sidebar button:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(22, 163, 74, 0.1);
         }
         .main-content {
             flex: 1;
-            padding: 20px;
+            padding: 40px;
             overflow-y: auto;
         }
         .group-list {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
+            display: grid;
+            gap: 24px;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            padding: 8px;
         }
         .group-card {
-            background: white;
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.95);
+            padding: 32px;
+            border-radius: 24px;
+            box-shadow: 0 4px 6px rgba(22, 101, 52, 0.05),
+                        0 10px 20px rgba(22, 101, 52, 0.1);
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            flex-direction: column;
+            gap: 20px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(22, 163, 74, 0.1);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+        .group-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #16a34a 0%, transparent 400%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+        }
+        .group-card:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 12px 24px rgba(22, 101, 52, 0.15),
+                        0 24px 48px rgba(22, 101, 52, 0.1);
+        }
+        .group-card:hover::before {
+            opacity: 0.05;
+        }
+        .group-card h3 {
+            color: #15803d;
+            margin: 0;
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        .group-card p {
+            color: #166534;
+            margin: 0;
+            font-size: 15px;
+            line-height: 1.6;
+            opacity: 0.9;
         }
         .group-card button {
-            background: #28a745;
-            color: white;
-            padding: 8px 12px;
+            background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+            color: #15803d;
+            padding: 14px 24px;
             border: none;
             cursor: pointer;
-            border-radius: 5px;
+            border-radius: 14px;
+            font-weight: 600;
+            font-size: 15px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            align-self: flex-start;
+            box-shadow: 0 2px 4px rgba(22, 101, 52, 0.1);
+        }
+        .group-card button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(22, 101, 52, 0.15);
+            background: linear-gradient(135deg, #bbf7d0 0%, #86efac 100%);
         }
         .footer {
             text-align: center;
-            padding: 10px;
-            font-size: 12px;
+            padding: 32px;
+            font-size: 14px;
+            color: #166534;
+            margin-top: 40px;
+            background: linear-gradient(135deg, rgba(220, 252, 231, 0.5) 0%, rgba(240, 249, 240, 0.5) 100%);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+        .sidebar h3 {
+            color: #15803d;
+            font-size: 18px;
+            margin: 24px 0 16px;
+            font-weight: 600;
+        }
+        .sidebar label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #166534;
+            margin-bottom: 12px;
+            cursor: pointer;
+            font-size: 15px;
+            padding: 8px 12px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+        .sidebar label:hover {
+            background: rgba(220, 252, 231, 0.5);
+        }
+        .sidebar input[type="radio"] {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #16a34a;
+            border-radius: 50%;
+            margin: 0;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        .sidebar input[type="radio"]:checked {
+            background: #16a34a;
+            border-color: #16a34a;
+        }
+        .sidebar input[type="radio"]:checked::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 8px;
+            height: 8px;
+            background: white;
+            border-radius: 50%;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .group-card {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+        .main-content h2 {
+            background: linear-gradient(135deg, #15803d 0%, #16a34a 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 32px;
+            letter-spacing: -1px;
+            text-shadow: 0 2px 4px rgba(22, 101, 52, 0.1);
         }
     </style>
 </head>
 <body>
     <div class="sidebar">
-        <h2>📚 ColabStudy</h2>
-        <button onclick="createGroup()">Create Group</button>
-        <input type="text" placeholder="Search Groups">
+        <h2>🌿 EduSphere</h2>
+        <button onclick="createGroup()">Create New Study Group</button>
+        <input type="text" placeholder="🔍 Search Study Groups...">
         <h3>Filters</h3>
-        <label><input type="radio" name="groupType" value="public"> Public</label>
-        <label><input type="radio" name="groupType" value="private"> Private</label>
+        <label><input type="radio" name="groupType" value="public"> Public Groups</label>
+        <label><input type="radio" name="groupType" value="private"> Private Groups</label>
         <h3>Sort By</h3>
         <label><input type="radio" name="sort" value="active"> Most Active</label>
         <label><input type="radio" name="sort" value="newest"> Newest First</label>
     </div>
     <div class="main-content">
-        <h2>Study Groups</h2>
+        <h2>Discover Study Groups</h2>
         <div class="group-list" id="groupList">
             <!-- Groups will be dynamically added here -->
         </div>
         <div class="footer">
-            © 2025 ColabStudy. All Rights Reserved.
+            © 2025 EduSphere• Empowering Collaborative Learning
         </div>
     </div>
     <script>
         let groups = [
-            { name: "Physics Gurus", description: "A space for physics discussions.", type: "public" },
-            { name: "Math Wizards", description: "Discuss math problems and solutions.", type: "public" },
-            { name: "Biology Enthusiasts", description: "A space to share biology knowledge.", type: "private" }
+            { 
+                name: "Physics Gurus", 
+                description: "Join our vibrant community of physics enthusiasts! Explore complex concepts, solve challenging problems, and prepare for exams together.", 
+                type: "public" 
+            },
+            { 
+                name: "Math Wizards", 
+                description: "Master mathematics through collaborative problem-solving. From calculus to linear algebra, we're here to help each other succeed.", 
+                type: "public" 
+            },
+            { 
+                name: "Biology Enthusiasts", 
+                description: "Dive deep into the fascinating world of biology. Share knowledge, discuss latest research, and prepare for bio-related courses together.", 
+                type: "private" 
+            }
         ];
+
         function displayGroups() {
             const groupList = document.getElementById("groupList");
             groupList.innerHTML = "";
-            groups.forEach(group => {
+            groups.forEach((group, index) => {
                 const div = document.createElement("div");
                 div.classList.add("group-card");
-                div.innerHTML = `<div><h3>${group.name}</h3><p>${group.description}</p></div>
-                                <button onclick="viewGroup('${group.name}')">View Details</button>`;
+                div.style.animationDelay = `${index * 0.1}s`;
+                div.innerHTML = `
+                    <div>
+                        <h3>${group.name}</h3>
+                        <p>${group.description}</p>
+                    </div>
+                    <button onclick="viewGroup('${group.name}')">Join Group →</button>
+                `;
                 groupList.appendChild(div);
             });
         }
+
         function createGroup() {
-            const groupName = prompt("Enter group name:");
+            const groupName = prompt("Enter your study group name:");
             if (groupName) {
-                groups.push({ name: groupName, description: "Newly created group.", type: "public" });
+                groups.push({ 
+                    name: groupName, 
+                    description: "A new collaborative study group for sharing knowledge and learning together.", 
+                    type: "public" 
+                });
                 displayGroups();
             }
         }
+
         function viewGroup(groupName) {
             window.location.href = `group-details.html?group=${groupName}`;
         }
+
         displayGroups();
     </script>
 </body>

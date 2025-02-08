@@ -6,102 +6,79 @@
     <title>Group Details</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
             margin: 0;
             padding: 0;
-            background: #f4f7f9;
+            background: linear-gradient(135deg, #dcfce7 0%, #f0f9f0 100%);
             display: flex;
             flex-direction: column;
             height: 100vh;
+            color: #166534;
         }
         .container {
             display: flex;
             height: 100vh;
         }
         .sidebar {
-            width: 280px;
-            background: #fff;
-            padding: 20px;
+            width: 300px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 32px;
             display: flex;
             flex-direction: column;
-            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
+            box-shadow: 20px 0 40px rgba(22, 101, 52, 0.1);
+            backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 1;
         }
         .sidebar h2 {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 32px;
+            color: #15803d;
+            font-size: 28px;
+            font-weight: 700;
         }
         .sidebar button {
-            margin: 10px 0;
-            padding: 10px;
+            margin: 8px 0;
+            padding: 16px;
             border: none;
-            background: #007bff;
+            background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
             color: white;
-            border-radius: 5px;
-            font-size: 16px;
+            border-radius: 16px;
+            font-size: 15px;
             cursor: pointer;
-        }
-        .sidebar button:hover {
-            background: #0056b3;
+            font-weight: 600;
         }
         .main-content {
             flex: 1;
             display: flex;
             flex-direction: column;
-            padding: 20px;
+            padding: 40px;
+            gap: 32px;
             overflow-y: auto;
         }
-        .group-info, .group-members, .upload-section {
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
+        .group-info, .chat-container, .group-members, .upload-section {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 32px;
+            border-radius: 24px;
+            box-shadow: 0 4px 6px rgba(22, 101, 52, 0.05);
+            border: 1px solid rgba(22, 163, 74, 0.1);
         }
-        .chat-container {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            background: #fff;
-            border-radius: 12px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
+        ul {
+            list-style: none;
+            padding: 0;
         }
-        .chat-messages {
-            flex: 1;
-            padding: 20px;
-            overflow-y: auto;
-        }
-        .chat-input {
-            display: flex;
-            padding: 10px;
-            background: #eee;
-        }
-        .chat-input input {
-            flex: 1;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-        }
-        .chat-input button {
-            margin-left: 10px;
-            padding: 10px;
-            background: #28a745;
-            color: white;
-            border: none;
+        li {
+            padding: 12px 16px;
+            color: #166534;
+            border-bottom: 1px solid #dcfce7;
             cursor: pointer;
-            border-radius: 5px;
-            font-weight: bold;
-        }
-        .chat-input button:hover {
-            background: #218838;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="sidebar">
-            <h2>📚 ColabStudy</h2>
+            <h2>🌿 EduSphere</h2>
             <button onclick="inviteMembers()">Invite Members</button>
             <button onclick="joinGroup()">Join via Code</button>
             <button onclick="document.getElementById('fileInput').click()">Upload Study Material</button>
@@ -116,8 +93,8 @@
             <div class="chat-container">
                 <div class="chat-messages" id="chatMessages"></div>
                 <div class="chat-input">
-                    <input type="text" id="messageInput" placeholder="Type a message...">
-                    <button onclick="sendMessage()">Send</button>
+                    <input type="text" id="messageInput" placeholder="Type your message here...">
+                    <button onclick="sendMessage()">Send Message</button>
                 </div>
             </div>
             <div class="group-members">
@@ -125,7 +102,7 @@
                 <ul id="memberList"></ul>
             </div>
             <div class="upload-section">
-                <h3>Uploaded Files</h3>
+                <h3>Study Materials</h3>
                 <ul id="fileList"></ul>
             </div>
         </div>
@@ -135,20 +112,9 @@
             return Math.random().toString(36).substr(2, 6).toUpperCase();
         }
         
-        const urlParams = new URLSearchParams(window.location.search);
-        const groupName = urlParams.get("group") || "Unnamed Group";
-        let inviteCode = urlParams.get("code") || generateInviteCode();
+        let inviteCode = generateInviteCode();
         let members = [];
-        let uploadedFiles = [];
-        
-        const creatorName = prompt("Enter your name (Group Creator):");
-        if (creatorName) {
-            members.push(`${creatorName} (Creator)`);
-        }
-        
-        document.getElementById("groupName").innerText = groupName;
-        document.getElementById("inviteCode").innerText = inviteCode;
-        updateMemberList();
+        let uploadedFiles = JSON.parse(localStorage.getItem("uploadedFiles")) || [];
         
         function inviteMembers() {
             alert("Share this invite code: " + inviteCode);
@@ -169,10 +135,15 @@
         function uploadFile() {
             const fileInput = document.getElementById("fileInput");
             if (fileInput.files.length > 0) {
-                const fileName = fileInput.files[0].name;
-                uploadedFiles.push(fileName);
-                updateFileList();
-                alert("File uploaded: " + fileName);
+                const file = fileInput.files[0];
+                const reader = new FileReader();
+                
+                reader.onload = function (e) {
+                    uploadedFiles.push({ name: file.name || "Untitled", content: e.target.result });
+                    localStorage.setItem("uploadedFiles", JSON.stringify(uploadedFiles));
+                    updateFileList();
+                };
+                reader.readAsDataURL(file);
             }
         }
         function sendMessage() {
@@ -187,24 +158,22 @@
                 chatMessages.scrollTop = chatMessages.scrollHeight;
             }
         }
-        function updateMemberList() {
-            const memberList = document.getElementById("memberList");
-            memberList.innerHTML = "";
-            members.forEach(member => {
-                const li = document.createElement("li");
-                li.textContent = member;
-                memberList.appendChild(li);
-            });
-        }
         function updateFileList() {
             const fileList = document.getElementById("fileList");
             fileList.innerHTML = "";
             uploadedFiles.forEach(file => {
                 const li = document.createElement("li");
-                li.textContent = file;
+                li.textContent = file.name;
+                li.onclick = function () {
+                    const link = document.createElement("a");
+                    link.href = file.content;
+                    link.download = file.name;
+                    link.click();
+                };
                 fileList.appendChild(li);
             });
         }
+        updateFileList();
     </script>
 </body>
 </html>
