@@ -68,25 +68,40 @@ document.addEventListener("DOMContentLoaded", function () {
         e.preventDefault();
         const email = document.querySelector("#signin-email").value.trim();
         const password = document.querySelector("#signin-password").value.trim();
-
+    
         if (!email || !password) {
             showPopup("⚠️ Please fill in all fields!");
             return;
         }
-
+    
         const userData = localStorage.getItem(email);
         if (!userData) {
             showPopup("⚠️ No account found! Please create an account.");
             return;
         }
-
-        const { password: storedPassword } = JSON.parse(userData);
+    
+        const { username, password: storedPassword } = JSON.parse(userData);
         if (password !== storedPassword) {
             showPopup("⚠️ Incorrect password!");
             return;
         }
-
+    
+        // Save user session
+        localStorage.setItem('user', JSON.stringify({ username, email }));
         showPopup("✅ Sign-in successful!");
-        signInForm.reset();
+    
+        setTimeout(() => {
+            window.location.href = 'landing.html'; // Redirect to landing page
+        }, 1000);
     });
+    
 });
+
+
+function handleSignOut() {
+    // Clear user data from localStorage
+    localStorage.removeItem('user');
+
+    // Redirect to sign-in page
+    window.location.href = 'sign.html';
+}
