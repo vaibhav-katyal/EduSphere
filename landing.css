@@ -218,8 +218,13 @@ body {
 }
 
 .pricing-button.primary {
-    background: #00FF66;
-    border-color: #00FF66;
+    background: transparent;
+    border-color: black;
+}
+
+.pricing-button:hover{
+    background-color: #00FF66;
+    transition: 0.5s ease;
 }
 
 @media (max-width: 768px) {
