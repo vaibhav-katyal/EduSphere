@@ -93,7 +93,6 @@
             background-color: #fa3e3e;
         }
 
-
         body {
             margin: 0;
             font-family: Arial, sans-serif;
@@ -243,11 +242,13 @@
 
     <script src="https://cdn.jsdelivr.net/npm/peerjs@1.3.2/dist/peerjs.min.js"></script>
     <script>
-        // const peer = new Peer(undefined, {
-        //     host: '/',
-        //     port: 3000,
-        //     path: '/peerjs'
-        // });
+        const SERVER_URL = "https://edusphere-dvyv.onrender.com";
+
+        const peer = new Peer(undefined, {
+            host: SERVER_URL.replace("https://", ""),
+            port: 443,
+            secure: true
+        });
 
         const myVideo = document.getElementById('myVideo');
         const peerVideo = document.getElementById('peerVideo');
@@ -261,26 +262,22 @@
         let isCameraOn = true;
         let isMicOn = true;
 
-        // Get User Media (Access Camera & Mic)
         navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(stream => {
             myStream = stream;
             myVideo.srcObject = stream;
 
             peer.on('call', call => {
-                call.answer(stream);  // Answer call with our stream
+                call.answer(stream);
                 call.on('stream', userVideoStream => {
                     peerVideo.srcObject = userVideoStream;
                 });
             });
         });
 
-        // Create Call
         createCallBtn.addEventListener('click', () => {
-            const callId = peer.id;
-            alert(`Your Call ID: ${callId}`);
+            alert(`Your Call ID: ${peer.id}`);
         });
 
-        // Join Call
         joinCallBtn.addEventListener('click', () => {
             const callId = callIdInput.value;
             if (!callId) return alert('Enter a Call ID');
@@ -291,32 +288,8 @@
             });
         });
 
-        // Toggle Camera
-        toggleCameraBtn.addEventListener('click', () => {
-            isCameraOn = !isCameraOn;
-            myStream.getVideoTracks()[0].enabled = isCameraOn;
-            toggleCameraBtn.textContent = isCameraOn ? 'Camera On' : 'Camera Off';
-            toggleCameraBtn.classList.toggle('off');
-        });
-
-        // Toggle Microphone
-        toggleMicBtn.addEventListener('click', () => {
-            isMicOn = !isMicOn;
-            myStream.getAudioTracks()[0].enabled = isMicOn;
-            toggleMicBtn.textContent = isMicOn ? 'Mic On' : 'Mic Off';
-            toggleMicBtn.classList.toggle('off');
-        });
-
-        // Notify When Connected
         peer.on('open', id => {
             console.log(`Connected with Peer ID: ${id}`);
-        });
-
-        const SERVER_URL = "https://edusphere-dvyv.onrender.com";
-        const peer = new Peer(undefined, {
-            host: SERVER_URL.replace("https://", ""),
-            port: 443,
-            secure: true
         });
     </script>
 </body>
