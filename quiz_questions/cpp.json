@@ -1,0 +1,448 @@
+[
+  {
+    "question": "What is the size of 'int' in C++ typically?",
+    "options": ["2 bytes", "4 bytes", "8 bytes", "Depends on the compiler"],
+    "answer": "Depends on the compiler"
+  },
+  {
+    "question": "Which header file is used for input and output operations in C++?",
+    "options": ["iostream", "stdlib.h", "conio.h", "stdio.h"],
+    "answer": "iostream"
+  },
+  {
+    "question": "What is the output of 'cout << 5 + 4;'?",
+    "options": ["54", "5 + 4", "9", "Error"],
+    "answer": "9"
+  },
+  {
+    "question": "Which of the following is a correct way to declare a pointer?",
+    "options": ["int ptr*;", "int* ptr;", "ptr int*;", "int &ptr;"],
+    "answer": "int* ptr;"
+  },
+  {
+    "question": "What does the keyword 'virtual' indicate in C++?",
+    "options": ["A function can be overridden in a derived class", "A function is static", "A function is constant", "None of the above"],
+    "answer": "A function can be overridden in a derived class"
+  },
+  {
+    "question": "Which operator is used to allocate memory in C++?",
+    "options": ["malloc", "new", "alloc", "None of the above"],
+    "answer": "new"
+  },
+  {
+    "question": "What is the default return type of the 'main' function in C++?",
+    "options": ["void", "int", "char", "float"],
+    "answer": "int"
+  },
+  {
+    "question": "Which of these is not a valid access specifier in C++?",
+    "options": ["public", "private", "protected", "internal"],
+    "answer": "internal"
+  },
+  {
+    "question": "What does STL stand for in C++?",
+    "options": ["Standard Type Library", "System Template Library", "Standard Template Library", "System Type Library"],
+    "answer": "Standard Template Library"
+  },
+  {
+    "question": "Which function is used to read a single character from the user?",
+    "options": ["cin.get()", "cin.read()", "cin.char()", "getchar()"],
+    "answer": "cin.get()"
+  },
+  {
+    "question": "What is the purpose of the 'this' pointer in C++?",
+    "options": ["To refer to the current object", "To pass the current object", "To call the destructor", "To create a new object"],
+    "answer": "To refer to the current object"
+  },
+  {
+    "question": "What is the output of 'cout << (5 > 4);'?",
+    "options": ["true", "1", "5 > 4", "Error"],
+    "answer": "1"
+  },
+  {
+    "question": "Which of the following is a valid class declaration?",
+    "options": ["class MyClass {};", "MyClass class {};", "int class MyClass {};", "None of the above"],
+    "answer": "class MyClass {};"
+  },
+  {
+    "question": "What is the term for reusing code in C++?",
+    "options": ["Inheritance", "Polymorphism", "Encapsulation", "Abstraction"],
+    "answer": "Inheritance"
+  },
+  {
+    "question": "What is the output of 'cout << 5 / 2;'?",
+    "options": ["2.5", "2", "5 / 2", "Error"],
+    "answer": "2"
+  },
+  {
+    "question": "Which keyword is used to prevent inheritance in C++?",
+    "options": ["static", "sealed", "final", "None of the above"],
+    "answer": "final"
+  },
+  {
+    "question": "What does the term 'namespace' mean in C++?",
+    "options": ["A space where classes are stored", "A feature to avoid name conflicts", "A type of memory", "None of the above"],
+    "answer": "A feature to avoid name conflicts"
+  },
+  {
+    "question": "What is the output of 'cout << 5 % 3;'?",
+    "options": ["1", "2", "5", "Error"],
+    "answer": "2"
+  },
+  {
+    "question": "What is a destructor in C++?",
+    "options": ["A function called at the end of a program", "A function that deallocates memory", "A function with the same name as the class prefixed with '~'", "None of the above"],
+    "answer": "A function with the same name as the class prefixed with '~'"
+  },
+  {
+    "question": "What is the difference between 'struct' and 'class' in C++?",
+    "options": ["No difference", "struct members are public by default", "class members are public by default", "struct cannot have functions"],
+    "answer": "struct members are public by default"
+  },
+  {
+    "question": "Which keyword is used for exception handling in C++?",
+    "options": ["catch", "try", "throw", "All of the above"],
+    "answer": "All of the above"
+  },
+  {
+    "question": "What does the 'auto' keyword do in C++?",
+    "options": ["Specifies automatic storage", "Automatically infers the type", "Declares a static variable", "None of the above"],
+    "answer": "Automatically infers the type"
+  },
+  {
+    "question": "Which of the following is not a type of inheritance in C++?",
+    "options": ["Single", "Multiple", "Parallel", "Hierarchical"],
+    "answer": "Parallel"
+  },
+  {
+    "question": "What is a pure virtual function in C++?",
+    "options": ["A function with no definition", "A function with definition", "A function with a constant value", "None of the above"],
+    "answer": "A function with no definition"
+  },
+  {
+    "question": "What is the output of 'cout << (10 == 10);'?",
+    "options": ["true", "1", "10 == 10", "Error"],
+    "answer": "1"
+  },
+  {
+    "question": "What is the function of the 'virtual' keyword?",
+    "options": ["To call the base class function", "To override a function in a derived class", "To create an abstract class", "None of the above"],
+    "answer": "To override a function in a derived class"
+  },
+  {
+    "question": "What is the maximum value of a 'char' in C++?",
+    "options": ["127", "128", "255", "256"],
+    "answer": "127"
+  },
+  {
+    "question": "What is the default access specifier for members of a class in C++?",
+    "options": ["private", "public", "protected", "None of the above"],
+    "answer": "private"
+  },
+  {
+    "question": "What is the use of the 'friend' keyword in C++?",
+    "options": ["Allows a function or class to access private members", "Allows global access", "Declares a static variable", "None of the above"],
+    "answer": "Allows a function or class to access private members"
+  },
+  {
+    "question": "Which of the following is not a storage class in C++?",
+    "options": ["auto", "register", "volatile", "static"],
+    "answer": "volatile"
+  },
+  {
+    "question": "What does the 'sizeof' operator do in C++?",
+    "options": ["Calculates the size of a variable or type", "Allocates memory", "Returns the memory address", "None of the above"],
+    "answer": "Calculates the size of a variable or type"
+  },
+  {
+    "question": "Which function is used to terminate a program in C++?",
+    "options": ["exit()", "terminate()", "end()", "abort()"],
+    "answer": "exit()"
+  },
+  {
+    "question": "Which type of polymorphism is supported by C++?",
+    "options": ["Compile-time", "Run-time", "Both", "None"],
+    "answer": "Both"
+  },
+  {
+    "question": "What is the output of 'cout << 10 / 3.0;'?",
+    "options": ["3.33", "3", "3.0", "3.333333"],
+    "answer": "3.333333"
+  },
+  {
+    "question": "What does the 'dynamic_cast' keyword do in C++?",
+    "options": ["Casts a base class to a derived class", "Casts a derived class to a base class", "Converts a pointer to a reference", "None of the above"],
+    "answer": "Casts a base class to a derived class"
+  },
+  {
+    "question": "Which keyword is used to declare constants in C++?",
+    "options": ["const", "static", "define", "immutable"],
+    "answer": "const"
+  },
+  {
+    "question": "Which function is used to compare two strings in C++?",
+    "options": ["compare()", "strcmp()", "strcpy()", "memcmp()"],
+    "answer": "strcmp()"
+  },
+  {
+    "question": "What is the output of 'cout << sizeof(int);' in most compilers?",
+    "options": ["2", "4", "8", "16"],
+    "answer": "4"
+  },
+  {
+    "question": "Which of the following is a container in STL?",
+    "options": ["vector", "map", "deque", "All of the above"],
+    "answer": "All of the above"
+  },
+  {
+    "question": "What is the default value of an uninitialized local variable in C++?",
+    "options": ["0", "garbage value", "NULL", "None of the above"],
+    "answer": "garbage value"
+  },
+  {
+    "question": "Which keyword is used to define a class in C++?",
+    "options": ["struct", "class", "typedef", "None of the above"],
+    "answer": "class"
+  },
+  {
+    "question": "What is the use of the 'mutable' keyword in C++?",
+    "options": ["Allows modification of a member even in const object", "Declares a variable", "Makes a variable read-only", "None of the above"],
+    "answer": "Allows modification of a member even in const object"
+  },
+  {
+    "question": "Which of the following is not a valid loop in C++?",
+    "options": ["for", "while", "do-while", "repeat-until"],
+    "answer": "repeat-until"
+  },
+  {
+    "question": "What does the 'typeid' operator do in C++?",
+    "options": ["Gets the type of an expression", "Casts a type", "Checks type safety", "None of the above"],
+    "answer": "Gets the type of an expression"
+  },
+  {
+    "question": "Which of the following is the correct syntax to declare a pointer in C++?",
+    "options": ["int ptr*;", "int *ptr;", "ptr int*;", "int ptr;&"],
+    "answer": "int *ptr;"
+  },
+  {
+    "question": "Which of the following is used to define a constant in C++?",
+    "options": ["#define", "const", "both #define and const", "none of the above"],
+    "answer": "both #define and const"
+  },
+  {
+    "question": "What is the output of 'sizeof(char)' in C++?",
+    "options": ["1", "2", "4", "Depends on the compiler"],
+    "answer": "1"
+  },
+  {
+    "question": "What is the default access specifier for members of a class in C++?",
+    "options": ["private", "protected", "public", "none"],
+    "answer": "private"
+  },
+  {
+    "question": "Which operator is used to access a member of a structure in C++?",
+    "options": [".", "->", "*", "&"],
+    "answer": "."
+  },
+  {
+    "question": "What is the correct syntax for a single-line comment in C++?",
+    "options": ["#", "//", "/*", "<!--"],
+    "answer": "//"
+  },
+  {
+    "question": "Which of the following is not a C++ keyword?",
+    "options": ["volatile", "default", "virtual", "function"],
+    "answer": "function"
+  },
+  {
+    "question": "How many types of inheritance are supported in C++?",
+    "options": ["3", "4", "5", "6"],
+    "answer": "5"
+  },
+  {
+    "question": "Which of the following is not a valid data type in C++?",
+    "options": ["float", "int", "real", "char"],
+    "answer": "real"
+  },
+  {
+    "question": "Which of the following is not a feature of C++?",
+    "options": ["Object-oriented", "Platform-independent", "Pointer manipulation", "Generic programming"],
+    "answer": "Platform-independent"
+  },
+  {
+    "question": "Which of the following loops is guaranteed to execute at least once?",
+    "options": ["for loop", "while loop", "do-while loop", "none"],
+    "answer": "do-while loop"
+  },
+  {
+    "question": "What is the output of the following code snippet: \n int x = 5; cout << x++;",
+    "options": ["5", "6", "undefined", "none"],
+    "answer": "5"
+  },
+  {
+    "question": "Which of the following is a valid destructor name for a class named 'Demo'?",
+    "options": ["~Demo", "DestructorDemo", "~Destructor", "DemoDestructor"],
+    "answer": "~Demo"
+  },
+  {
+    "question": "Which of the following is not a valid storage class in C++?",
+    "options": ["static", "volatile", "mutable", "auto"],
+    "answer": "volatile"
+  },
+  {
+    "question": "Which keyword is used to define a virtual function in C++?",
+    "options": ["override", "virtual", "virtual_function", "none"],
+    "answer": "virtual"
+  },
+  {
+    "question": "What does STL stand for in C++?",
+    "options": ["Standard Template Library", "Simple Template Library", "Standard Tools Library", "Simple Tools Library"],
+    "answer": "Standard Template Library"
+  },
+  {
+    "question": "Which of the following is used to allocate memory dynamically in C++?",
+    "options": ["malloc", "calloc", "new", "both malloc and new"],
+    "answer": "new"
+  },
+  {
+    "question": "What is the return type of the main function in C++?",
+    "options": ["int", "void", "float", "none"],
+    "answer": "int"
+  },
+  {
+    "question": "What is the purpose of the 'this' pointer in C++?",
+    "options": ["It stores the address of the current object.", "It stores the address of the parent object.", "It stores the address of the base class.", "none of the above"],
+    "answer": "It stores the address of the current object."
+  },
+  {
+    "question": "Which of the following is not a type of polymorphism in C++?",
+    "options": ["Compile-time polymorphism", "Run-time polymorphism", "Virtual polymorphism", "Operator overloading"],
+    "answer": "Virtual polymorphism"
+  },
+  {
+    "question": "Which of the following is the correct syntax for a function template in C++?",
+    "options": ["template<class T>", "template<T>", "template function<T>", "function<T>"],
+    "answer": "template<class T>"
+  },
+  {
+    "question": "Which of the following is not a valid operator in C++?",
+    "options": ["::", "->", "?:", "<-"],
+    "answer": "<-"
+  },
+  {
+    "question": "What is the output of the following code: \n int a = 10; int b = 20; swap(a, b); cout << a;?",
+    "options": ["10", "20", "undefined", "none"],
+    "answer": "undefined"
+  },
+  {
+    "question": "Which function is used to terminate a program in C++?",
+    "options": ["exit()", "terminate()", "abort()", "all of the above"],
+    "answer": "all of the above"
+  },
+  {
+    "question": "What is the scope resolution operator in C++?",
+    "options": ["->", "::", "&&", "**"],
+    "answer": "::"
+  },
+  {
+    "question": "Which type of casting is used in C++ to convert pointers of base class to derived class?",
+    "options": ["static_cast", "dynamic_cast", "const_cast", "reinterpret_cast"],
+    "answer": "dynamic_cast"
+  },
+  {
+    "question": "What is the difference between struct and class in C++?",
+    "options": ["struct members are private by default.", "class members are public by default.", "struct members are public by default.", "class and struct are identical."],
+    "answer": "struct members are public by default."
+  },
+  {
+    "question": "Which of the following containers does not allow duplicate elements?",
+    "options": ["vector", "list", "set", "deque"],
+    "answer": "set"
+  },
+  {
+    "question": "What is the purpose of the 'friend' keyword in C++?",
+    "options": ["It defines a friend function.", "It allows a class to access private members of another class.", "It allows access to private and protected members.", "all of the above"],
+    "answer": "all of the above"
+  },
+  {
+    "question": "Which operator is overloaded for object instantiation?",
+    "options": ["new", "delete", "::", "->"],
+    "answer": "new"
+  },
+  {
+    "question": "Which header file is used for file operations in C++?",
+    "options": ["fstream", "file.h", "fstream.h", "ifstream"],
+    "answer": "fstream"
+  },
+  {
+    "question": "Which of the following is used to handle exceptions in C++?",
+    "options": ["try-catch", "throw", "both try-catch and throw", "none"],
+    "answer": "both try-catch and throw"
+  },
+  {
+    "question": "What is the output of the following code: \n int x = 5; cout << (x << 1);",
+    "options": ["10", "15", "20", "5"],
+    "answer": "10"
+  },
+  {
+    "question": "Which of the following keywords is used to prevent inheritance in C++?",
+    "options": ["final", "sealed", "prevent", "none"],
+    "answer": "final"
+  },
+  {
+    "question": "What is the default return type of the main function in C++?",
+    "options": ["int", "void", "float", "double"],
+    "answer": "int"
+  },
+  {
+    "question": "What is the correct way to declare a 2D array in C++?",
+    "options": ["int arr[2,2];", "int arr[2][2];", "int arr(2,2);", "int arr(2][2];"],
+    "answer": "int arr[2][2];"
+  },
+  {
+    "question": "Which of the following is not a type of constructor in C++?",
+    "options": ["Default constructor", "Parameterized constructor", "Virtual constructor", "Copy constructor"],
+    "answer": "Virtual constructor"
+  },
+  {
+    "question": "Which of the following is a valid method to access elements in a vector?",
+    "options": ["operator[]", "at()", "both operator[] and at()", "none"],
+    "answer": "both operator[] and at()"
+  },
+  {
+    "question": "Which function is called to release memory allocated by 'new'?",
+    "options": ["free()", "delete", "release()", "remove()"],
+    "answer": "delete"
+  },
+  {
+    "question": "Which keyword is used to create an alias in C++?",
+    "options": ["alias", "typedef", "using", "both typedef and using"],
+    "answer": "both typedef and using"
+  },
+  {
+    "question": "Which header file provides input/output manipulators in C++?",
+    "options": ["iomanip", "iostream", "manip", "string"],
+    "answer": "iomanip"
+  },
+  {
+    "question": "Which type of exception is thrown when 'new' fails to allocate memory?",
+    "options": ["std::exception", "std::bad_alloc", "std::runtime_error", "none"],
+    "answer": "std::bad_alloc"
+  },
+  {
+    "question": "What does 'RAII' stand for in C++?",
+    "options": ["Resource Acquisition Is Initialization", "Resource Allocation Is Initialization", "Runtime Allocation Is Immediate", "none"],
+    "answer": "Resource Acquisition Is Initialization"
+  },
+  {
+    "question": "What is the output of the following code: \n int arr[5] = {1, 2, 3, 4, 5}; cout << arr[3];",
+    "options": ["3", "4", "5", "undefined"],
+    "answer": "4"
+  },
+  {
+    "question": "What is the keyword 'mutable' used for in C++?",
+    "options": ["To allow modification of member variables in const functions.", "To declare static variables.", "To define thread-safe variables.", "none"],
+    "answer": "To allow modification of member variables in const functions."
+  }
+]
+  

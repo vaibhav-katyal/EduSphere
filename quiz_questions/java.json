@@ -1,0 +1,457 @@
+[
+    {
+        "question": "What is the default value of an instance variable in Java?",
+        "options": ["0", "null", "Depends on the type", "Not initialized"],
+        "answer": "Depends on the type"
+    },
+    {
+        "question": "Which keyword is used to inherit a class in Java?",
+        "options": ["extends", "implements", "inherits", "super"],
+        "answer": "extends"
+    },
+    {
+        "question": "What is the output of `System.out.println(5 + 2 + \"Java\");`?",
+        "options": ["7Java", "Java7", "57Java", "Error"],
+        "answer": "7Java"
+    },
+    {
+        "question": "Which of these is not a Java feature?",
+        "options": ["Object-Oriented", "Platform Independent", "Use of Pointers", "Portable"],
+        "answer": "Use of Pointers"
+    },
+    {
+        "question": "Which method is the entry point for a Java program?",
+        "options": ["start()", "main()", "init()", "run()"],
+        "answer": "main()"
+    },
+    {
+        "question": "Which package is automatically imported in every Java program?",
+        "options": ["java.io", "java.util", "java.lang", "java.awt"],
+        "answer": "java.lang"
+    },
+    {
+        "question": "What is the size of `int` in Java?",
+        "options": ["2 bytes", "4 bytes", "8 bytes", "Depends on the system"],
+        "answer": "4 bytes"
+    },
+    {
+        "question": "What is the output of `System.out.println(\"A\" + 'A');`?",
+        "options": ["AA", "65A", "A65", "Error"],
+        "answer": "A65"
+    },
+    {
+        "question": "Which operator is used to compare two values in Java?",
+        "options": ["==", "=", "!=", "<>"],
+        "answer": "=="
+    },
+    {
+        "question": "Which keyword is used to declare a constant in Java?",
+        "options": ["const", "final", "static", "immutable"],
+        "answer": "final"
+    },
+    {
+        "question": "What is the superclass of all classes in Java?",
+        "options": ["Object", "String", "Class", "Main"],
+        "answer": "Object"
+    },
+    {
+        "question": "Which of the following is a checked exception?",
+        "options": ["NullPointerException", "ArithmeticException", "IOException", "ArrayIndexOutOfBoundsException"],
+        "answer": "IOException"
+    },
+    {
+        "question": "Which access modifier allows access within the same package?",
+        "options": ["public", "private", "protected", "default"],
+        "answer": "default"
+    },
+    {
+        "question": "What is the output of `Math.min(3, 7);`?",
+        "options": ["3", "7", "0", "Error"],
+        "answer": "3"
+    },
+    {
+        "question": "Which method is used to terminate a thread in Java?",
+        "options": ["stop()", "destroy()", "terminate()", "exit()"],
+        "answer": "stop()"
+    },
+    {
+        "question": "Which loop is guaranteed to execute at least once?",
+        "options": ["for", "while", "do-while", "None"],
+        "answer": "do-while"
+    },
+    {
+        "question": "Which of the following is not a wrapper class in Java?",
+        "options": ["Integer", "Double", "Character", "String"],
+        "answer": "String"
+    },
+    {
+        "question": "What is the default value of a `boolean` in Java?",
+        "options": ["true", "false", "null", "0"],
+        "answer": "false"
+    },
+    {
+        "question": "Which method is used to convert a string to a number?",
+        "options": ["parseInt()", "toInt()", "valueOf()", "convert()"],
+        "answer": "parseInt()"
+    },
+    {
+        "question": "Which keyword is used to prevent inheritance in Java?",
+        "options": ["static", "final", "protected", "private"],
+        "answer": "final"
+    },
+    {
+        "question": "What is the output of `System.out.println(10/3);`?",
+        "options": ["3.33", "3", "3.0", "Error"],
+        "answer": "3"
+    },
+    {
+        "question": "Which of the following is a marker interface?",
+        "options": ["Serializable", "Cloneable", "Both", "None"],
+        "answer": "Both"
+    },
+    {
+        "question": "What does the `this` keyword refer to?",
+        "options": ["Current object", "Parent class", "Current class", "Static method"],
+        "answer": "Current object"
+    },
+    {
+        "question": "What is the output of `System.out.println(5 > 2 ? \"Yes\" : \"No\");`?",
+        "options": ["Yes", "No", "Error", "None"],
+        "answer": "Yes"
+    },
+    {
+        "question": "Which of these is a valid declaration of the main method?",
+        "options": ["public void main()", "static void main()", "public static void main(String[] args)", "void main()"],
+        "answer": "public static void main(String[] args)"
+    },
+    {
+        "question": "Which method is used to convert a string to lowercase?",
+        "options": ["toLowerCase()", "lowercase()", "toLower()", "convertLower()"],
+        "answer": "toLowerCase()"
+    },
+    {
+        "question": "Which class is used to handle strings in Java?",
+        "options": ["String", "StringBuffer", "StringBuilder", "All of the above"],
+        "answer": "String"
+    },
+    {
+        "question": "Which keyword is used to handle exceptions?",
+        "options": ["try", "catch", "finally", "All of the above"],
+        "answer": "All of the above"
+    },
+    {
+        "question": "Which method is used to pause a thread in Java?",
+        "options": ["wait()", "pause()", "sleep()", "stop()"],
+        "answer": "sleep()"
+    },
+    {
+        "question": "Which collection does not allow duplicate elements?",
+        "options": ["List", "Set", "Queue", "Map"],
+        "answer": "Set"
+    },
+    {
+        "question": "What is the default size of an ArrayList in Java?",
+        "options": ["10", "0", "16", "None of the above"],
+        "answer": "10"
+    },
+    {
+        "question": "Which of these is not an OOP concept in Java?",
+        "options": ["Encapsulation", "Inheritance", "Polymorphism", "Compilation"],
+        "answer": "Compilation"
+    },
+    {
+        "question": "Which method is called when an object is garbage collected?",
+        "options": ["finalize()", "dispose()", "clean()", "garbage()"],
+        "answer": "finalize()"
+    },
+    {
+        "question": "What is the size of a `long` in Java?",
+        "options": ["4 bytes", "8 bytes", "16 bytes", "Depends on the system"],
+        "answer": "8 bytes"
+    },
+    {
+        "question": "What is the result of `System.out.println(1 + 2 + \"3\");`?",
+        "options": ["33", "6", "123", "33"],
+        "answer": "33"
+    },
+    {
+        "question": "Which of these is used to achieve abstraction in Java?",
+        "options": ["Interface", "Abstract class", "Both", "None"],
+        "answer": "Both"
+    },
+    {
+        "question": "Which of these is not a valid Java datatype?",
+        "options": ["int", "float", "boolean", "text"],
+        "answer": "text"
+    },
+    {
+        "question": "What is the output of `System.out.println(10%3);`?",
+        "options": ["0", "1", "2", "Error"],
+        "answer": "1"
+    },
+    {
+        "question": "What is the main advantage of using Java?",
+        "options": ["Platform independence", "Speed", "Memory management", "None"],
+        "answer": "Platform independence"
+    },
+    {
+        "question": "Which of the following is used for serializing objects in Java?",
+        "options": ["Serializable", "Externalizable", "Both", "None"],
+        "answer": "Both"
+    },
+    {
+        "question": "Which is a reserved keyword in Java?",
+        "options": ["goto", "constant", "define", "sizeof"],
+        "answer": "goto"
+    },
+    {
+        "question": "Which keyword is used to create an object?",
+        "options": ["new", "class", "object", "None"],
+        "answer": "new"
+    },
+    {
+        "question": "Which of these can be used to start a thread?",
+        "options": ["start()", "run()", "begin()", "execute()"],
+        "answer": "start()"
+    },
+    {
+        "question": "Which keyword is used to refer to the parent class in Java?",
+        "options": ["super", "this", "parent", "base"],
+        "answer": "super"
+    },
+    {
+        "question": "Which of these is not a lifecycle method in a Java Applet?",
+        "options": ["start()", "init()", "paint()", "destroy()"],
+        "answer": "paint()"
+    },
+    {
+        "question": "Which of the following is immutable in Java?",
+        "options": ["String", "StringBuilder", "ArrayList", "HashMap"],
+        "answer": "String"
+    },
+    {
+        "question": "What is the default value of a `String` variable in Java?",
+        "options": ["Empty string", "null", "undefined", "0"],
+        "answer": "null"
+    },
+    {
+        "question": "Which class is used to take input from the user in Java?",
+        "options": ["Scanner", "InputStream", "BufferedReader", "DataInput"],
+        "answer": "Scanner"
+    },
+    {
+        "question": "What is the return type of the `hashCode()` method?",
+        "options": ["int", "long", "float", "String"],
+        "answer": "int"
+    },
+    {
+        "question": "Which of these exceptions is thrown when a divided-by-zero error occurs?",
+        "options": ["IOException", "ArithmeticException", "NullPointerException", "ClassNotFoundException"],
+        "answer": "ArithmeticException"
+    },
+    {
+        "question": "Which of the following is used to create a thread?",
+        "options": ["Thread class", "Runnable interface", "Both", "None"],
+        "answer": "Both"
+    },
+    {
+        "question": "Which of the following is not a primitive datatype in Java?",
+        "options": ["int", "boolean", "float", "String"],
+        "answer": "String"
+    },
+    {
+        "question": "Which method is used to check if a string starts with a specific prefix?",
+        "options": ["startsWith()", "starts()", "hasPrefix()", "checkPrefix()"],
+        "answer": "startsWith()"
+    },
+    {
+        "question": "What is the size of a `char` in Java?",
+        "options": ["1 byte", "2 bytes", "4 bytes", "8 bytes"],
+        "answer": "2 bytes"
+    },
+    {
+        "question": "Which of these is not a reserved keyword in Java?",
+        "options": ["volatile", "strictfp", "unsigned", "transient"],
+        "answer": "unsigned"
+    },
+    {
+        "question": "Which keyword is used to throw an exception explicitly in Java?",
+        "options": ["throw", "throws", "try", "catch"],
+        "answer": "throw"
+    },
+    {
+        "question": "Which method is used to compare two strings in Java for equality?",
+        "options": ["compare()", "compareTo()", "equals()", "match()"],
+        "answer": "equals()"
+    },
+    {
+        "question": "Which operator is used to perform bitwise AND in Java?",
+        "options": ["&", "&&", "|", "||"],
+        "answer": "&"
+    },
+    {
+        "question": "Which of these methods is not in the `Math` class?",
+        "options": ["sqrt()", "abs()", "round()", "parseInt()"],
+        "answer": "parseInt()"
+    },
+    {
+        "question": "Which of the following is a valid constructor in Java?",
+        "options": ["public void MyClass()", "public MyClass()", "void MyClass()", "MyClass()"],
+        "answer": "public MyClass()"
+    },
+    {
+        "question": "Which of these is used to create an object in Java?",
+        "options": ["new", "create", "instance", "object"],
+        "answer": "new"
+    },
+    {
+        "question": "Which of the following is not a method of the `String` class?",
+        "options": ["substring()", "trim()", "parseInt()", "replace()"],
+        "answer": "parseInt()"
+    },
+    {
+        "question": "Which collection class is used to maintain elements in sorted order?",
+        "options": ["HashMap", "TreeSet", "ArrayList", "LinkedList"],
+        "answer": "TreeSet"
+    },
+    {
+        "question": "Which access modifier makes a member accessible only within its own class?",
+        "options": ["private", "protected", "default", "public"],
+        "answer": "private"
+    },
+    {
+        "question": "Which method is called to convert an object to a string representation?",
+        "options": ["toString()", "convertToString()", "stringify()", "toStr()"],
+        "answer": "toString()"
+    },
+    {
+        "question": "Which statement is used to exit a loop in Java?",
+        "options": ["exit", "break", "stop", "return"],
+        "answer": "break"
+    },
+    {
+        "question": "Which of the following is used to serialize an object?",
+        "options": ["ObjectOutputStream", "FileOutputStream", "ObjectStream", "None"],
+        "answer": "ObjectOutputStream"
+    },
+    {
+        "question": "Which of the following is not an interface in Java?",
+        "options": ["List", "Set", "Queue", "HashMap"],
+        "answer": "HashMap"
+    },
+    {
+        "question": "Which of these keywords is used to continue a loop?",
+        "options": ["continue", "loop", "next", "break"],
+        "answer": "continue"
+    },
+    {
+        "question": "Which of the following is the parent interface for all collection classes?",
+        "options": ["Collection", "List", "Set", "Map"],
+        "answer": "Collection"
+    },
+    {
+        "question": "Which operator is used to concatenate strings in Java?",
+        "options": ["+", "&", ".", "concat()"],
+        "answer": "+"
+    },
+    {
+        "question": "Which keyword is used to restrict a variable to a single instance in memory?",
+        "options": ["static", "final", "private", "volatile"],
+        "answer": "static"
+    },
+    {
+        "question": "Which of the following is not a valid exception in Java?",
+        "options": ["IOException", "ArrayIndexOutOfBoundsException", "SQLException", "FileNotExistException"],
+        "answer": "FileNotExistException"
+    },
+    {
+        "question": "Which method is used to convert a primitive type to its wrapper class?",
+        "options": ["valueOf()", "parse()", "convert()", "wrap()"],
+        "answer": "valueOf()"
+    },
+    {
+        "question": "Which of the following is a method in the `Thread` class?",
+        "options": ["start()", "run()", "sleep()", "All of the above"],
+        "answer": "All of the above"
+    },
+    {
+        "question": "What is the default encoding for `InputStreamReader` in Java?",
+        "options": ["UTF-8", "ASCII", "ISO-8859-1", "Default platform encoding"],
+        "answer": "Default platform encoding"
+    },
+    {
+        "question": "What is the result of `System.out.println('A' + 1);`?",
+        "options": ["66", "A1", "Error", "B"],
+        "answer": "66"
+    },
+    {
+        "question": "Which of these allows duplicate elements?",
+        "options": ["Set", "List", "Map", "TreeSet"],
+        "answer": "List"
+    },
+    {
+        "question": "What is the return type of `System.currentTimeMillis()`?",
+        "options": ["int", "long", "float", "double"],
+        "answer": "long"
+    },
+    {
+        "question": "Which of the following is not part of the Java standard library?",
+        "options": ["java.util", "java.io", "java.awt", "java.xml"],
+        "answer": "java.xml"
+    },
+    {
+        "question": "Which of these is an abstract class in Java?",
+        "options": ["AbstractList", "ArrayList", "HashSet", "None"],
+        "answer": "AbstractList"
+    },
+    {
+        "question": "Which of the following is a type of garbage collection in Java?",
+        "options": ["CMS", "G1", "Both", "None"],
+        "answer": "Both"
+    },
+    {
+        "question": "What does the `finally` block do?",
+        "options": ["Always executes", "Executes if no exception", "Executes only if an exception occurs", "None"],
+        "answer": "Always executes"
+    },
+    {
+        "question": "What is the size of the `double` type in Java?",
+        "options": ["4 bytes", "8 bytes", "16 bytes", "Depends on the system"],
+        "answer": "8 bytes"
+    },
+    {
+        "question": "Which of these is not a valid annotation in Java?",
+        "options": ["@Override", "@Deprecated", "@Serializable", "@FunctionalInterface"],
+        "answer": "@Serializable"
+    },
+    {
+        "question": "What is the default value of a `byte` variable in Java?",
+        "options": ["0", "-1", "null", "undefined"],
+        "answer": "0"
+    },
+    {
+        "question": "Which of these allows you to sort a list?",
+        "options": ["Collections.sort()", "List.sort()", "Arrays.sort()", "All of the above"],
+        "answer": "All of the above"
+    },
+    {
+        "question": "Which stream is used for object serialization?",
+        "options": ["ObjectInputStream", "FileInputStream", "BufferedInputStream", "DataInputStream"],
+        "answer": "ObjectInputStream"
+    },
+    {
+        "question": "What is the range of `int` in Java?",
+        "options": ["-2^31 to 2^31-1", "0 to 2^31-1", "-2^63 to 2^63-1", "None"],
+        "answer": "-2^31 to 2^31-1"
+    },
+    {
+        "question": "Which keyword is used to access the parent class's constructor?",
+        "options": ["super", "this", "base", "parent"],
+        "answer": "super"
+    },
+    {
+        "question": "What is the purpose of the `volatile` keyword?",
+        "options": ["Ensure visibility of changes", "Ensure immutability", "Optimize memory usage", "None"],
+        "answer": "Ensure visibility of changes"
+    }
+]

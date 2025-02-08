@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Group Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f4f7f9;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+        .sidebar {
+            width: 280px;
+            background: #fff;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .sidebar button {
+            margin: 10px 0;
+            padding: 10px;
+            border: none;
+            background: #007bff;
+            color: white;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .sidebar button:hover {
+            background: #0056b3;
+        }
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        .group-info, .group-members, .upload-section {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .chat-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        .chat-input {
+            display: flex;
+            padding: 10px;
+            background: #eee;
+        }
+        .chat-input input {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+        }
+        .chat-input button {
+            margin-left: 10px;
+            padding: 10px;
+            background: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .chat-input button:hover {
+            background: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <h2>📚 ColabStudy</h2>
+            <button onclick="inviteMembers()">Invite Members</button>
+            <button onclick="joinGroup()">Join via Code</button>
+            <button onclick="document.getElementById('fileInput').click()">Upload Study Material</button>
+            <input type="file" id="fileInput" style="display: none;" onchange="uploadFile()">
+        </div>
+        <div class="main-content">
+            <div class="group-info">
+                <h2 id="groupName">Group Name</h2>
+                <p>Invite Code: <b id="inviteCode">Generating...</b></p>
+                <p>Topic: Science & Technology</p>
+            </div>
+            <div class="chat-container">
+                <div class="chat-messages" id="chatMessages"></div>
+                <div class="chat-input">
+                    <input type="text" id="messageInput" placeholder="Type a message...">
+                    <button onclick="sendMessage()">Send</button>
+                </div>
+            </div>
+            <div class="group-members">
+                <h3>Group Members</h3>
+                <ul id="memberList"></ul>
+            </div>
+            <div class="upload-section">
+                <h3>Uploaded Files</h3>
+                <ul id="fileList"></ul>
+            </div>
+        </div>
+    </div>
+    <script>
+        function generateInviteCode() {
+            return Math.random().toString(36).substr(2, 6).toUpperCase();
+        }
+        
+        const urlParams = new URLSearchParams(window.location.search);
+        const groupName = urlParams.get("group") || "Unnamed Group";
+        let inviteCode = urlParams.get("code") || generateInviteCode();
+        let members = [];
+        let uploadedFiles = [];
+        
+        const creatorName = prompt("Enter your name (Group Creator):");
+        if (creatorName) {
+            members.push(`${creatorName} (Creator)`);
+        }
+        
+        document.getElementById("groupName").innerText = groupName;
+        document.getElementById("inviteCode").innerText = inviteCode;
+        updateMemberList();
+        
+        function inviteMembers() {
+            alert("Share this invite code: " + inviteCode);
+        }
+        function joinGroup() {
+            const code = prompt("Enter the invite code:");
+            if (code === inviteCode) {
+                const newMember = prompt("Enter your name:");
+                if (newMember) {
+                    members.push(newMember);
+                    updateMemberList();
+                    alert("You have successfully joined the group!");
+                }
+            } else {
+                alert("Invalid code. Please try again.");
+            }
+        }
+        function uploadFile() {
+            const fileInput = document.getElementById("fileInput");
+            if (fileInput.files.length > 0) {
+                const fileName = fileInput.files[0].name;
+                uploadedFiles.push(fileName);
+                updateFileList();
+                alert("File uploaded: " + fileName);
+            }
+        }
+        function sendMessage() {
+            const messageInput = document.getElementById("messageInput");
+            const messageText = messageInput.value.trim();
+            if (messageText !== "") {
+                const chatMessages = document.getElementById("chatMessages");
+                const newMessage = document.createElement("p");
+                newMessage.innerHTML = `<strong>You:</strong> ${messageText}`;
+                chatMessages.appendChild(newMessage);
+                messageInput.value = "";
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+        }
+        function updateMemberList() {
+            const memberList = document.getElementById("memberList");
+            memberList.innerHTML = "";
+            members.forEach(member => {
+                const li = document.createElement("li");
+                li.textContent = member;
+                memberList.appendChild(li);
+            });
+        }
+        function updateFileList() {
+            const fileList = document.getElementById("fileList");
+            fileList.innerHTML = "";
+            uploadedFiles.forEach(file => {
+                const li = document.createElement("li");
+                li.textContent = file;
+                fileList.appendChild(li);
+            });
+        }
+    </script>
+</body>
+</html>
