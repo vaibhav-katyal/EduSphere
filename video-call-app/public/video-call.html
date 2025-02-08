@@ -244,10 +244,23 @@
     <script>
         const SERVER_URL = "https://edusphere-dvyv.onrender.com";
 
-        const peer = new Peer(undefined, {
-            host: SERVER_URL.replace("https://", ""),
+        // const peer = new Peer(undefined, {
+        //     host: SERVER_URL.replace("https://", ""),
+        //     port: 443,
+        //     secure: true
+        // });
+
+        const peer = new Peer({
+            host: "0.peerjs.com",
             port: 443,
             secure: true
+        });
+
+        peer.on('open', id => {
+            console.log(`Connected with Peer ID: ${id}`);
+        });
+        peer.on('error', err => {
+            console.error(`PeerJS Error:`, err);
         });
 
         const myVideo = document.getElementById('myVideo');
