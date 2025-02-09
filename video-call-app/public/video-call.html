@@ -244,10 +244,7 @@
                 <video id="myVideo" autoplay muted></video>
             </div>
 
-            <div class="video-wrapper">
-                <h2>Other Participant</h2>
-                <video id="peerVideo" autoplay></video>
-            </div>
+            
         </div>
     </div>
 
@@ -257,45 +254,72 @@
     <script>
         const SERVER_URL = "https://edusphere-dvyv.onrender.com";
 
-        const peer = new Peer(undefined, {
-            host: SERVER_URL.replace("https://", ""),
-            port: 443,
-            secure: true
-        });
+        // const peer = new Peer(undefined, {
+        //     host: SERVER_URL.replace("https://", ""),
+        //     port: 443,
+        //     secure: true
+        // });
 
-        const myVideo = document.createElement("video");
-        myVideo.muted = true;
+        const peer = new Peer();
+
+        const myVideo = document.getElementById("myVideo"); // Keep my video in "Your Video" section
         const videoContainer = document.querySelector(".video-container");
-        const peers = {}; // To store connected peers
+        const peers = {}; // Store connected peers
+        let myStream;
 
         navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(stream => {
-            addVideoStream(myVideo, stream);
+            myStream = stream;
+            myVideo.srcObject = stream;  // Ensure my video appears correctly in "Your Video" div
 
             peer.on('call', call => {
                 call.answer(stream);
-                const newVideo = document.createElement("video");
+                const newVideo = createVideoElement(); // Create a new video for other user
                 call.on('stream', userVideoStream => {
                     addVideoStream(newVideo, userVideoStream);
                 });
                 peers[call.peer] = call;
             });
+        });
 
-            document.getElementById('joinCall').addEventListener('click', () => {
-                const callId = document.getElementById('callId').value;
-                if (!callId) return alert('Enter a Call ID');
+        document.getElementById('createCall').addEventListener('click', () => {
+            alert(`Your Call ID: ${peer.id}`);
+        });
 
-                const call = peer.call(callId, stream);
-                const newVideo = document.createElement("video");
-                call.on('stream', userVideoStream => {
-                    addVideoStream(newVideo, userVideoStream);
-                });
-                peers[call.peer] = call;
+        document.getElementById('joinCall').addEventListener('click', () => {
+            const callId = document.getElementById('callId').value;
+            if (!callId) return alert('Enter a Call ID');
+
+            const call = peer.call(callId, myStream);
+            const newVideo = createVideoElement();
+            call.on('stream', userVideoStream => {
+                addVideoStream(newVideo, userVideoStream);
             });
+            peers[call.peer] = call;
+        });
+
+        document.getElementById('toggleCamera').addEventListener('click', () => {
+            const videoTrack = myStream.getVideoTracks()[0];
+            videoTrack.enabled = !videoTrack.enabled;
+            document.getElementById('toggleCamera').textContent = videoTrack.enabled ? "Camera On" : "Camera Off";
+        });
+
+        document.getElementById('toggleMic').addEventListener('click', () => {
+            const audioTrack = myStream.getAudioTracks()[0];
+            audioTrack.enabled = !audioTrack.enabled;
+            document.getElementById('toggleMic').textContent = audioTrack.enabled ? "Mic On" : "Mic Off";
         });
 
         peer.on('open', id => {
             console.log(`Connected with Peer ID: ${id}`);
         });
+
+        function createVideoElement() {
+            const video = document.createElement("video");
+            video.width = 400;
+            video.height = 300;
+            video.autoplay = true;
+            return video;
+        }
 
         function addVideoStream(video, stream) {
             video.srcObject = stream;
@@ -304,6 +328,7 @@
             });
             videoContainer.append(video);
         }
+
 
     </script>
 </body>
