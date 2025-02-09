@@ -210,7 +210,7 @@
         <div class="title">EDUSPHERE</div>
         <div class="menu-toggle">☰</div>
         <ul>
-            <a href="index.html">
+            <a href="landing.html">
                 <li>Home</li>
             </a>
             <a href="groupPage.html">
@@ -257,66 +257,54 @@
     <script>
         const SERVER_URL = "https://edusphere-dvyv.onrender.com";
 
-        // const peer = new Peer(undefined, {
-        //     host: SERVER_URL.replace("https://", ""),
-        //     port: 443,
-        //     secure: true
-        // });
-
-        const peer = new Peer({
-            host: "0.peerjs.com",
+        const peer = new Peer(undefined, {
+            host: SERVER_URL.replace("https://", ""),
             port: 443,
             secure: true
         });
 
-        peer.on('open', id => {
-            console.log(`Connected with Peer ID: ${id}`);
-        });
-        peer.on('error', err => {
-            console.error(`PeerJS Error:`, err);
-        });
-
-        const myVideo = document.getElementById('myVideo');
-        const peerVideo = document.getElementById('peerVideo');
-        const createCallBtn = document.getElementById('createCall');
-        const joinCallBtn = document.getElementById('joinCall');
-        const callIdInput = document.getElementById('callId');
-        const toggleCameraBtn = document.getElementById('toggleCamera');
-        const toggleMicBtn = document.getElementById('toggleMic');
-
-        let myStream;
-        let isCameraOn = true;
-        let isMicOn = true;
+        const myVideo = document.createElement("video");
+        myVideo.muted = true;
+        const videoContainer = document.querySelector(".video-container");
+        const peers = {}; // To store connected peers
 
         navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(stream => {
-            myStream = stream;
-            myVideo.srcObject = stream;
+            addVideoStream(myVideo, stream);
 
             peer.on('call', call => {
                 call.answer(stream);
+                const newVideo = document.createElement("video");
                 call.on('stream', userVideoStream => {
-                    peerVideo.srcObject = userVideoStream;
+                    addVideoStream(newVideo, userVideoStream);
                 });
+                peers[call.peer] = call;
             });
-        });
 
-        createCallBtn.addEventListener('click', () => {
-            alert(`Your Call ID: ${peer.id}`);
-        });
+            document.getElementById('joinCall').addEventListener('click', () => {
+                const callId = document.getElementById('callId').value;
+                if (!callId) return alert('Enter a Call ID');
 
-        joinCallBtn.addEventListener('click', () => {
-            const callId = callIdInput.value;
-            if (!callId) return alert('Enter a Call ID');
-
-            const call = peer.call(callId, myStream);
-            call.on('stream', userVideoStream => {
-                peerVideo.srcObject = userVideoStream;
+                const call = peer.call(callId, stream);
+                const newVideo = document.createElement("video");
+                call.on('stream', userVideoStream => {
+                    addVideoStream(newVideo, userVideoStream);
+                });
+                peers[call.peer] = call;
             });
         });
 
         peer.on('open', id => {
             console.log(`Connected with Peer ID: ${id}`);
         });
+
+        function addVideoStream(video, stream) {
+            video.srcObject = stream;
+            video.addEventListener("loadedmetadata", () => {
+                video.play();
+            });
+            videoContainer.append(video);
+        }
+
     </script>
 </body>
 
