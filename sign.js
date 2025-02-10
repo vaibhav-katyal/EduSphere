@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     toggleAuth.addEventListener("click", function (event) {
-        event.preventDefault(); // Prevent page reload
+        event.preventDefault(); 
 
         if (signInForm.style.display === "none") {
             signInForm.style.display = "block";
@@ -32,7 +32,8 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    signUpForm.addEventListener("submit", function (e) {
+    // Signup Functionality
+    signUpForm.addEventListener("submit", async function (e) {
         e.preventDefault();
         const username = document.querySelector("#signup-username").value.trim();
         const email = document.querySelector("#signup-email").value.trim();
@@ -51,57 +52,59 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        if (localStorage.getItem(email)) {
-            showPopup("⚠️ Email is already registered!");
-            return;
-        }
+        try {
+            const response = await fetch("http://localhost:3000/signup", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username, email, password })
+            });
 
-        localStorage.setItem(email, JSON.stringify({ username, password }));
-        showPopup("✅ Account created successfully!");
-        signUpForm.reset();
-        signInForm.style.display = "block";
-        signUpForm.style.display = "none";
-        toggleAuth.textContent = "Create an Account";
+            const data = await response.json();
+            if (response.ok) {
+                showPopup("✅ Account created successfully!");
+                signUpForm.reset();
+                signInForm.style.display = "block";
+                signUpForm.style.display = "none";
+                toggleAuth.textContent = "Create an Account";
+            } else {
+                showPopup(`⚠️ ${data.message}`);
+            }
+        } catch (error) {
+            showPopup("⚠️ Server error. Please try again.");
+        }
     });
 
-    signInForm.addEventListener("submit", function (e) {
+    // Signin Functionality
+    signInForm.addEventListener("submit", async function (e) {
         e.preventDefault();
         const email = document.querySelector("#signin-email").value.trim();
         const password = document.querySelector("#signin-password").value.trim();
-    
+
         if (!email || !password) {
             showPopup("⚠️ Please fill in all fields!");
             return;
         }
-    
-        const userData = localStorage.getItem(email);
-        if (!userData) {
-            showPopup("⚠️ No account found! Please create an account.");
-            return;
+
+        try {
+            const response = await fetch("http://localhost:3000/signin", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email, password })
+            });
+
+            const data = await response.json();
+            if (response.ok) {
+                localStorage.setItem("token", data.token); // Store JWT token
+                showPopup("✅ Sign-in successful!");
+
+                setTimeout(() => {
+                    window.location.href = 'landing.html'; // Redirect
+                }, 1000);
+            } else {
+                showPopup(`⚠️ ${data.message}`);
+            }
+        } catch (error) {
+            showPopup("⚠️ Server error. Please try again.");
         }
-    
-        const { username, password: storedPassword } = JSON.parse(userData);
-        if (password !== storedPassword) {
-            showPopup("⚠️ Incorrect password!");
-            return;
-        }
-    
-        // Save user session
-        localStorage.setItem('user', JSON.stringify({ username, email }));
-        showPopup("✅ Sign-in successful!");
-    
-        setTimeout(() => {
-            window.location.href = 'landing.html'; // Redirect to landing page
-        }, 1000);
     });
-    
 });
-
-
-function handleSignOut() {
-    // Clear user data from localStorage
-    localStorage.removeItem('user');
-
-    // Redirect to sign-in page
-    window.location.href = 'sign.html';
-}

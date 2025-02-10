@@ -243,7 +243,7 @@
         }
     </style>
 </head>
-<iframe src="chat.html" width="330" height="500" style="border:none; position:fixed; bottom:20px; right:20px; ; border-radius:10px;"></iframe>
+<iframe src="chat.html" width="330" height="500" style="border:none; position:fixed; bottom:20px; right:20px; ; border-radius:10px; z-index: 1001;"></iframe>
 
 <body>
     <div class="sidebar">
@@ -355,6 +355,48 @@
         }
 
         displayGroups();
+
+
+
+
+    async function fetchGroups() {
+        const response = await fetch("http://localhost:3000/groups");
+        const data = await response.json();
+        groups = data;
+        displayGroups();
+    }
+
+    async function createGroup() {
+        const groupName = prompt("Enter your study group name:");
+        if (!groupName) return;
+
+        const groupType = confirm("Make this group private? Click OK for Private, Cancel for Public") ? "private" : "public";
+        const inviteCode = groupType === "private" ? Math.random().toString(36).substring(2, 8).toUpperCase() : "";
+
+        const newGroup = {
+            name: groupName,
+            description: "A collaborative study group.",
+            type: groupType,
+            inviteCode: inviteCode,
+            leader: currentUser,
+            members: [currentUser]
+        };
+
+        await fetch("http://localhost:3000/groups", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(newGroup)
+        });
+
+        fetchGroups();
+
+
+        
+    }
+
+    fetchGroups();
+
+
     </script>
 </body>
 </html>

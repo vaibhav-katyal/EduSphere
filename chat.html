@@ -16,7 +16,7 @@
             height: 80vh;
             border: none;
             box-shadow: none;
-            
+            z-index: 9999;
         }
         .chatbot-icon {
             position: fixed;
@@ -33,6 +33,7 @@
             font-size: 24px;
             cursor: pointer;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 9999;
         }
         .chatbot-container {
             position: fixed;
@@ -46,6 +47,7 @@
             display: none;
             flex-direction: column;
             overflow: hidden;
+            z-index: 9999;
         }
         .chatbot-header {
             background: #15803d;
@@ -60,11 +62,13 @@
             padding: 10px;
             overflow-y: auto;
             max-height: 400px;
+            padding: auto;
         }
         .chatbot-input {
             display: flex;
             padding: 10px;
             border-top: 1px solid #ddd;
+            z-index: 9999;
         }
         .chatbot-input input {
             flex: 1;
@@ -73,6 +77,7 @@
             outline: none;
             border-radius: 5px;
             margin-right: 5px;
+            z-index: 9999;
         }
         .chatbot-input button {
             background: #15803d;
