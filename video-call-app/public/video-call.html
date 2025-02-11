@@ -53,6 +53,10 @@
             background-color: #1b5e20;
         }
 
+        .end-call-btn {
+            background-color: #fa3e3e;
+        }
+
         input {
             border: 1px solid #dddfe2;
         }
@@ -235,6 +239,7 @@
         <button id="createCall">Create Call</button>
         <input type="text" id="callId" placeholder="Enter Call ID">
         <button id="joinCall">Join Call</button>
+        <button id="endCall" class="end-call-btn">End Call</button>
     </div>
 
     <div class="main-container">
@@ -243,59 +248,157 @@
                 <h2>Your Video</h2>
                 <video id="myVideo" autoplay muted></video>
             </div>
-
-            
         </div>
     </div>
 
-
-
     <script src="https://cdn.jsdelivr.net/npm/peerjs@1.3.2/dist/peerjs.min.js"></script>
+    <script src="https://cdn.socket.io/4.4.1/socket.io.min.js"></script>
     <script>
         const SERVER_URL = "https://edusphere-dvyv.onrender.com";
-
-        // const peer = new Peer(undefined, {
-        //     host: SERVER_URL.replace("https://", ""),
-        //     port: 443,
-        //     secure: true
-        // });
-
+        const socket = io(SERVER_URL);
         const peer = new Peer();
 
-        const myVideo = document.getElementById("myVideo"); // Keep my video in "Your Video" section
+        const myVideo = document.getElementById("myVideo");
         const videoContainer = document.querySelector(".video-container");
-        const peers = {}; // Store connected peers
+        const peers = {};
         let myStream;
+        let myPeerId;
 
+        // Initialize peer connection
+        peer.on("open", id => {
+            myPeerId = id;
+            console.log(`My peer ID is: ${id}`);
+        });
+
+        // Get user media and set up connections
         navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(stream => {
             myStream = stream;
-            myVideo.srcObject = stream;  // Ensure my video appears correctly in "Your Video" div
+            myVideo.srcObject = stream;
 
-            peer.on('call', call => {
-                call.answer(stream);
-                const newVideo = createVideoElement(); // Create a new video for other user
-                call.on('stream', userVideoStream => {
-                    addVideoStream(newVideo, userVideoStream);
+            // Handle incoming calls
+            peer.on("call", call => {
+                console.log("Receiving call from:", call.peer);
+                call.answer(myStream);
+
+                call.on("stream", userVideoStream => {
+                    console.log("Received stream from:", call.peer);
+                    addVideoStream(call.peer, userVideoStream);
                 });
+
                 peers[call.peer] = call;
             });
-        });
 
-        document.getElementById('createCall').addEventListener('click', () => {
-            alert(`Your Call ID: ${peer.id}`);
-        });
+            // Join room when creating or joining a call
+            function joinRoom() {
+                socket.emit("join-room", myPeerId, room => {
+                    console.log("Joined room, existing users:", room.users);
+                    // Connect to all existing users
+                    room.users.forEach(userId => {
+                        if (userId !== myPeerId && !peers[userId]) {
+                            connectToNewUser(userId, myStream);
+                        }
+                    });
+                });
+            }
 
-        document.getElementById('joinCall').addEventListener('click', () => {
-            const callId = document.getElementById('callId').value;
-            if (!callId) return alert('Enter a Call ID');
-
-            const call = peer.call(callId, myStream);
-            const newVideo = createVideoElement();
-            call.on('stream', userVideoStream => {
-                addVideoStream(newVideo, userVideoStream);
+            // Handle create call button
+            document.getElementById('createCall').addEventListener('click', () => {
+                alert(`Your Call ID: ${myPeerId}`);
+                joinRoom();
             });
-            peers[call.peer] = call;
+
+            // Handle join call button
+            document.getElementById('joinCall').addEventListener('click', () => {
+                const callId = document.getElementById('callId').value;
+                if (!callId) return alert('Enter a Call ID');
+                joinRoom();
+
+                const call = peer.call(callId, myStream);
+                call.on("stream", userVideoStream => {
+                    addVideoStream(call.peer, userVideoStream);
+                });
+                peers[call.peer] = call;
+
+                const conn = peer.connect(callId);
+                conn.on('open', () => {
+                    conn.send(peer.id);
+                });
+            });
+
+            // When a new user connects
+            socket.on("user-connected", userId => {
+                console.log("New user connected:", userId);
+                if (userId !== myPeerId && !peers[userId]) {
+                    connectToNewUser(userId, myStream);
+                }
+            });
+
+            // When a user disconnects
+            socket.on("user-disconnected", userId => {
+                console.log("User disconnected:", userId);
+                if (peers[userId]) {
+                    peers[userId].close();
+                    delete peers[userId];
+                    removeVideoStream(userId);
+                }
+            });
+
+            socket.on("all-users", users => {
+                users.forEach(userId => {
+                    if (userId !== myPeerId && !peers[userId]) {
+                        connectToNewUser(userId, myStream);
+                    }
+                });
+            });
         });
+
+        function connectToNewUser(userId, stream) {
+            console.log("Connecting to new user:", userId);
+            const call = peer.call(userId, stream);
+
+            call.on("stream", userVideoStream => {
+                console.log("Received stream from new user:", userId);
+                addVideoStream(userId, userVideoStream);
+            });
+
+            call.on("close", () => {
+                removeVideoStream(userId);
+            });
+
+            peers[userId] = call;
+
+            const conn = peer.connect(userId);
+            conn.on('open', () => {
+                conn.send(peer.id);
+            });
+        }
+
+        function addVideoStream(peerId, stream) {
+            const existingVideo = document.getElementById(`video-${peerId}`);
+            if (existingVideo) {
+                existingVideo.srcObject = stream;
+                return;
+            }
+
+            const videoWrapper = document.createElement("div");
+            videoWrapper.classList.add("video-wrapper");
+
+            const videoElement = document.createElement("video");
+            videoElement.id = `video-${peerId}`;
+            videoElement.srcObject = stream;
+            videoElement.autoplay = true;
+            videoElement.playsInline = true;
+            videoWrapper.appendChild(videoElement);
+
+            videoContainer.appendChild(videoWrapper);
+        }
+
+        function removeVideoStream(peerId) {
+            const videoElement = document.getElementById(`video-${peerId}`);
+            if (videoElement) {
+                videoElement.parentElement.remove();
+            }
+        }
 
         document.getElementById('toggleCamera').addEventListener('click', () => {
             const videoTrack = myStream.getVideoTracks()[0];
@@ -309,27 +412,12 @@
             document.getElementById('toggleMic').textContent = audioTrack.enabled ? "Mic On" : "Mic Off";
         });
 
-        peer.on('open', id => {
-            console.log(`Connected with Peer ID: ${id}`);
+        document.getElementById('endCall').addEventListener('click', () => {
+            socket.emit('leave-room', myPeerId);
+            myStream.getTracks().forEach(track => track.stop());
+            Object.values(peers).forEach(call => call.close());
+            videoContainer.innerHTML = '';
         });
-
-        function createVideoElement() {
-            const video = document.createElement("video");
-            video.width = 400;
-            video.height = 300;
-            video.autoplay = true;
-            return video;
-        }
-
-        function addVideoStream(video, stream) {
-            video.srcObject = stream;
-            video.addEventListener("loadedmetadata", () => {
-                video.play();
-            });
-            videoContainer.append(video);
-        }
-
-
     </script>
 </body>
 
