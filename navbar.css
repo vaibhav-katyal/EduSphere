@@ -190,3 +190,17 @@ body {
 .mobile-nav-icon[name="close-outline"] {
     display: none;
 }
+.mobile-nav-icon {
+    width: 2rem;  
+    height: 2rem;
+    color: black;
+    cursor: pointer;
+}
+
+.mobile-nav-icon[name="close-outline"] {
+    display: none;
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    z-index: 1001; /* Ensures it appears above the sidebar */
+}
