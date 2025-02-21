@@ -9,7 +9,7 @@ document.getElementById("quiz-form").addEventListener("submit", async function(e
 
     loader.style.display = "block";
 
-    const response = await fetch("http://localhost:5000/generate-quiz", {
+    const response = await fetch("https://edusphere-2-7i6d.onrender.com", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ subject, subtopics, difficulty, numQuestions }),
