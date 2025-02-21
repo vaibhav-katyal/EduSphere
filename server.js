@@ -3,14 +3,14 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const nodemailer = require("nodemailer");
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-const JWT_SECRET = "your_jwt_secret_key"; // Change this to a secure key
+const JWT_SECRET = "your_jwt_secret_key";
 
-// Connect to MongoDB
 mongoose.connect("mongodb+srv://adityasharma08093:Lakshya9780@groupstudy.yl0qi.mongodb.net/?retryWrites=true&w=majority&appName=groupstudy", { 
     useNewUrlParser: true, 
     useUnifiedTopology: true 
@@ -18,63 +18,104 @@ mongoose.connect("mongodb+srv://adityasharma08093:Lakshya9780@groupstudy.yl0qi.m
 .then(() => console.log("MongoDB Connected"))
 .catch(err => console.log(err));
 
-// Define User Schema
 const userSchema = new mongoose.Schema({
     username: String,
     email: String,
-    password: String
+    password: String,
+    otp: String,
+    otpExpires: Date
 });
 
 const User = mongoose.model("User", userSchema);
 
-// User Signup Route
-app.post("/signup", async (req, res) => {
-    const { username, email, password } = req.body;
+const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+        user: "adityasharma08093gmail.com", // Replace with your email
+        pass: "atox ioqa kmgt chzj" // Replace with your email password or app password
+    }
+});
 
-    // Check if user already exists
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
-        return res.status(400).json({ message: "User already exists" });
+// Function to generate OTP
+const generateOTP = () => Math.floor(100000 + Math.random() * 900000).toString();
+
+// Send OTP for Signup
+app.post("/send-otp", async (req, res) => {
+  const { email } = req.body;
+  const otp = generateOTP();
+  const otpExpires = new Date(Date.now() + 10 * 60 * 1000); // OTP valid for 10 min
+
+  const user = await User.findOneAndUpdate(
+      { email },
+      { $set: { otp, otpExpires } },
+      { upsert: true, new: true }
+  );
+
+  console.log("📩 OTP Generated:", otp, "for", email); // DEBUG LOG
+
+  const mailOptions = {
+      from: "your-email@gmail.com",
+      to: email,
+      subject: "Your OTP Code",
+      text: `Your OTP is ${otp}. It is valid for 10 minutes.`
+  };
+
+  transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+          console.error("❌ Error sending OTP:", error);
+          return res.status(500).json({ message: "Error sending OTP. Check server logs." });
+      }
+      res.json({ message: "OTP sent successfully" });
+  });
+});
+
+
+
+// Signup with OTP verification
+app.post("/signup", async (req, res) => {
+    const { username, email, password, otp } = req.body;
+    const user = await User.findOne({ email });
+
+    if (!user || user.otp !== otp || new Date() > user.otpExpires) {
+        return res.status(400).json({ message: "Invalid or expired OTP" });
     }
 
-    // Hash password before saving
     const hashedPassword = await bcrypt.hash(password, 10);
+    user.username = username;
+    user.password = hashedPassword;
+    user.otp = undefined;
+    user.otpExpires = undefined;
+    await user.save();
 
-    const newUser = new User({ username, email, password: hashedPassword });
-    await newUser.save();
     res.status(201).json({ message: "User registered successfully" });
 });
 
-// User Signin Route
+// Signin with OTP verification
 app.post("/signin", async (req, res) => {
-    const { email, password } = req.body;
-
+    const { email, otp } = req.body;
     const user = await User.findOne({ email });
-    if (!user) {
-        return res.status(400).json({ message: "User not found" });
+
+    if (!user || user.otp !== otp || new Date() > user.otpExpires) {
+        return res.status(400).json({ message: "Invalid or expired OTP" });
     }
 
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-    if (!isPasswordValid) {
-        return res.status(400).json({ message: "Invalid password" });
-    }
-
-    // Generate JWT token
     const token = jwt.sign({ userId: user._id, email: user.email }, JWT_SECRET, { expiresIn: "1h" });
+    user.otp = undefined;
+    user.otpExpires = undefined;
+    await user.save();
 
     res.json({ message: "Sign-in successful", token, username: user.username });
 });
 
-// Protected Route Example (Requires Authentication)
+// Protected Profile Route
 app.get("/profile", async (req, res) => {
     const token = req.headers.authorization;
     if (!token) {
         return res.status(401).json({ message: "Unauthorized" });
     }
-
     try {
         const decoded = jwt.verify(token, JWT_SECRET);
-        const user = await User.findById(decoded.userId).select('-password'); // Exclude password from response
+        const user = await User.findById(decoded.userId).select('-password');
         res.json(user);
     } catch (error) {
         res.status(401).json({ message: "Invalid token" });

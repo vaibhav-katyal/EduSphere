@@ -8,16 +8,18 @@
     <link rel="stylesheet" href="navbar.css">
     <link rel="stylesheet" href="sign.css">
 </head>
-<iframe src="chat.html" width="330" height="500" style="border:none; position:fixed; bottom:20px; right:20px; ; border-radius:10px;"></iframe>
+
+<iframe src="chat.html" width="330" height="500" style="border:none; position:fixed; bottom:20px; right:20px; border-radius:10px;"></iframe>
 
 <body>
-   
     <div id="popup"></div>
 
     <div id="wrapper">
         <div id="left">
             <div id="auth-form">
                 <div class="heading">EDUSPHERE</div>
+                
+                <!-- Sign In Form -->
                 <form id="signin-form">
                     <div>
                         <label>Email</label>
@@ -29,6 +31,8 @@
                     </div>
                     <button type="submit" class="primary-btn">Sign In</button>
                 </form>
+
+                <!-- Sign Up Form -->
                 <form id="signup-form" style="display: none;">
                     <div>
                         <label>Username</label>
@@ -44,6 +48,16 @@
                     </div>
                     <button type="submit" class="primary-btn">Sign Up</button>
                 </form>
+
+                <!-- OTP Verification Form (Hidden by default) -->
+                <form id="otp-form" style="display: none;">
+                    <div>
+                        <label>Enter OTP</label>
+                        <input type="text" id="otp-input" class="text-input" placeholder="Enter OTP" required>
+                    </div>
+                    <button type="submit" class="primary-btn">Verify OTP</button>
+                </form>
+
                 <div class="links">
                     <a href="javascript:void(0);" id="toggle-auth">Create an Account</a>
                 </div>

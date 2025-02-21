@@ -253,6 +253,144 @@
             display: none;
             z-index: 1000;
         }
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+                height: auto;
+            }
+            .sidebar {
+                width: 100%;
+                padding: 20px;
+                box-shadow: none;
+                border-right: none;
+                border-bottom: 1px solid rgba(22, 163, 74, 0.1);
+            }
+            .sidebar button {
+                padding: 12px;
+                font-size: 14px;
+            }
+            .main-content {
+                padding: 20px;
+            }
+            .group-list {
+                grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+                gap: 16px;
+            }
+        }
+        @media (max-width: 480px) {
+            .sidebar h2 {
+                font-size: 24px;
+            }
+            .sidebar input[type="text"] {
+                padding: 12px;
+                font-size: 14px;
+                margin-bottom: 16px;
+            }
+            .sidebar button {
+                padding: 10px;
+                font-size: 12px;
+            }
+            .sidebar h3 {
+                font-size: 16px;
+                margin: 16px 0 12px;
+            }
+            .sidebar label {
+                font-size: 14px;
+                padding: 6px 10px;
+            }
+            .sidebar input[type="radio"] {
+                width: 18px;
+                height: 18px;
+            }
+            .main-content h2 {
+                font-size: 30px;
+                margin-bottom: 24px;
+            }
+            .group-card {
+                padding: 24px;
+                gap: 16px;
+            }
+            .group-card h3 {
+                font-size: 20px;
+            }
+            .group-card p {
+                font-size: 14px;
+            }
+            .group-card button {
+                padding: 12px 20px;
+                font-size: 14px;
+            }
+            .footer {
+                padding: 24px;
+                font-size: 12px;
+            }
+            .popup {
+                top: 10px;
+                right: 10px;
+                padding: 12px;
+                font-size: 12px;
+            }
+        }
+        .sidebar button {
+    background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+    color: white;
+    padding: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 16px;
+    font-weight: 600;
+    font-size: 16px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-bottom: 28px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px rgba(22, 163, 74, 0.15),
+                0 10px 20px rgba(22, 163, 74, 0.1);
+}
+.sidebar button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(22, 163, 74, 0.2),
+                0 12px 24px rgba(22, 163, 74, 0.15);
+}
+.sidebar button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(22, 163, 74, 0.1);
+}
+
+.popup {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #15803d;
+    color: white;
+    padding: 16px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    display: none;
+    z-index: 1000;
+}
+
+@media (max-width: 768px) {
+    .sidebar button {
+        padding: 12px;
+        font-size: 14px;
+        
+    }
+}
+
+@media (max-width: 480px) {
+    .sidebar button {
+        padding: 10px;
+        font-size: 12px;
+        width: 320px;
+    }
+    .popup {
+        top: 10px;
+        right: 10px;
+        padding: 12px;
+        font-size: 12px;
+        margin-right: 40px;
+    }
+}
     </style>
 </head>
 <iframe src="chat.html" width="330" height="500" style="border:none; position:fixed; bottom:20px; right:20px; border-radius:10px; z-index: 1001;"></iframe>
@@ -302,36 +440,41 @@
         function displayGroups(filter = "all") {
             const groupList = document.getElementById("groupList");
             groupList.innerHTML = "";
-            groups.filter(group => filter === "all" || group.type === filter)
-                  .forEach(group => {
-                const div = document.createElement("div");
-                div.classList.add("group-card");
-                div.innerHTML = `
-                    <h3>${group.name}</h3>
-                    <p>${group.description}</p>
-                    <p>Type: ${group.type}</p>
-                    ${group.type === "private" ? `<p>Invite Code: <strong>${group.inviteCode}</strong></p>` : ""}
-                    <p>Leader: <strong>${group.leader}</strong></p>
-                    <p id="members-${group.name.replace(/\s+/g, '-')}">Members: ${group.members.join(", ")}</p>
-                    <button onclick="joinGroup('${group.name}', '${group.type}', '${group.inviteCode}')">Join Group →</button>
-                `;
-                groupList.appendChild(div);
-            });
+
+            let groups = JSON.parse(localStorage.getItem("groups")) || [];
+
+            groups
+                .filter(group => filter === "all" || group.type === filter)
+                .forEach(group => {
+                    const div = document.createElement("div");
+                    div.classList.add("group-card");
+                    div.innerHTML = `
+                        <h3>${group.name}</h3>
+                        <p>${group.description}</p>
+                        <p>Type: ${group.type}</p>
+                        ${group.type === "private" ? `<p>Invite Code: <strong>${group.inviteCode}</strong></p>` : ""}
+                        <p>Leader: <strong>${group.leader}</strong></p>
+                        <p id="members-${group.name.replace(/\s+/g, '-')}">Members: ${group.members.join(", ")}</p>
+                        <button onclick="joinGroup('${group._id}', '${group.type}', '${group.inviteCode}')">Join Group →</button>
+                    `;
+                    groupList.appendChild(div);
+                });
         }
 
         async function createGroup() {
+            let currentUser = localStorage.getItem("username");
             if (!currentUser) {
-                showPopup("⚠️ Please sign in first to create a group!");
+                alert("⚠️ Please sign in first to create a group!");
                 return;
             }
 
-            const groupName = prompt("Enter your study group name:");
+            let groupName = prompt("Enter your study group name:");
             if (!groupName) return;
 
-            const groupType = confirm("Make this group private? Click OK for Private, Cancel for Public") ? "private" : "public";
-            const inviteCode = groupType === "private" ? generateInviteCode() : "";
+            let groupType = confirm("Make this group private? Click OK for Private, Cancel for Public") ? "private" : "public";
+            let inviteCode = groupType === "private" ? generateInviteCode() : "";
 
-            const newGroup = {
+            let newGroup = {
                 name: groupName,
                 description: "A collaborative study group.",
                 type: groupType,
@@ -340,20 +483,47 @@
                 members: [currentUser]
             };
 
-            await fetch("http://localhost:3000/groups", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(newGroup)
-            });
+            console.log("Creating group with data:", newGroup); // Log the group data being sent
 
-            fetchGroups();
+            try {
+                let response = await fetch("http://localhost:3000/groups", {
+                    method: "POST",
+                    headers: { 
+                        "Content-Type": "application/json",
+                        "Authorization": "Bearer " + localStorage.getItem("token") // Add JWT token to headers
+                    },
+                    body: JSON.stringify(newGroup)
+                });
+
+                if (response.ok) {
+                    let savedGroup = await response.json(); // Backend se latest group leke aayega
+
+                    // ✅ Local Storage Update Karo
+                    let groups = JSON.parse(localStorage.getItem("groups")) || [];
+                    groups.push(savedGroup.group); // Naya group add karo
+                    localStorage.setItem("groups", JSON.stringify(groups));
+
+                    displayGroups(); // 🔥 UI turant update karo
+                } else {
+                    let errorData = await response.json();
+                    alert("Error creating group: " + errorData.message);
+                }
+            } catch (error) {
+                console.error("Error creating group:", error);
+                alert("Error creating group: " + error.message);
+            }
         }
 
         async function fetchGroups() {
-            const response = await fetch("http://localhost:3000/groups");
-            const data = await response.json();
-            groups = data;
-            displayGroups();
+            try {
+                let response = await fetch("http://localhost:3000/groups");
+                let data = await response.json();
+                console.log("Fetched groups from backend:", data); // Log fetched groups
+                localStorage.setItem("groups", JSON.stringify(data)); // Latest data store karo
+                displayGroups(); // 🔥 Turant update karo
+            } catch (error) {
+                console.error("Error fetching groups:", error);
+            }
         }
 
         function searchGroups() {
@@ -369,6 +539,56 @@
 
         function filterGroups(type) {
             displayGroups(type);
+        }
+
+        async function joinGroup(id, type, inviteCode) {
+            try {
+                let response = await fetch("http://localhost:3000/groups");
+                let groups = await response.json(); // Get fresh group list
+
+                let selectedGroup = groups.find(group => group._id === id);
+                if (!selectedGroup) {
+                    alert("Group not found! Please refresh and try again.");
+                    return;
+                }
+
+                // If the group is private, check invite code
+                if (type === "private") {
+                    let enteredCode = prompt("Enter invite code:");
+                    if (enteredCode !== inviteCode) {
+                        alert("Incorrect invite code!");
+                        return;
+                    }
+                }
+
+                // Add user to group members if not already added
+                let currentUser = localStorage.getItem("username");
+                if (!currentUser) {
+                    alert("Please sign in first!");
+                    return;
+                }
+
+                if (!selectedGroup.members.includes(currentUser)) {
+                    selectedGroup.members.push(currentUser);
+
+                    // Send update to backend
+                    await fetch(`http://localhost:3000/groups/${selectedGroup._id}/join`, {
+                        method: "POST",
+                        headers: { 
+                            "Content-Type": "application/json",
+                            "Authorization": "Bearer " + localStorage.getItem("token") // Add JWT token to headers
+                        },
+                        body: JSON.stringify({ username: currentUser })
+                    });
+                }
+
+                // Store selected group in localStorage and redirect
+                localStorage.setItem("currentGroup", JSON.stringify(selectedGroup));
+                window.location.href = "group-details.html";
+
+            } catch (error) {
+                console.error("Error joining group:", error);
+            }
         }
 
         fetchGroups();
