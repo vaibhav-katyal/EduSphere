@@ -123,7 +123,7 @@
             const language = document.getElementById("language").value;
             const input = document.getElementById("input").value;
             
-            axios.post("http://localhost:3000/run", { language, code, input })
+            axios.post("https://edusphere-1-9j49.onrender.com/run", { language, code, input })
                 .then(response => {
                     let output = response.data.stdout || "";
                     if (response.data.stderr) {
