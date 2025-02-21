@@ -1,6 +1,5 @@
 {
   "dependencies": {
-<<<<<<< HEAD
     "axios": "^1.7.9",
     "bcrypt": "^5.1.1",
     "bcryptjs": "^3.0.2",
@@ -21,8 +20,7 @@
     "passport": "^0.7.0",
     "passport-github2": "^0.1.12",
     "passport-google-oauth20": "^2.0.0"
-=======
-    "monaco-editor": "^0.52.2"
->>>>>>> fe68b01f67fb4484f2b12b14dc49d679bd4ef62e
-  }
+
+
+}
 }
