@@ -5,122 +5,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Video Call</title>
-    <link rel="stylesheet" href="navbar.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap">
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f0f2f5;
             margin: 0;
-            padding: 0px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        h1 {
-            color: black;
-            margin-bottom: 20px;
-        }
-
-        .controls {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        button,
-        input {
-            padding: 10px 15px;
-            border: none;
-            border-radius: 4px;
-            font-size: 16px;
-        }
-
-        button {
-            background-color: #37ae67;
-            color: white;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        button:hover {
-            background-color: #1b5e20;
-        }
-
-        .end-call-btn {
-            background-color: #fa3e3e;
-        }
-
-        input {
-            border: 1px solid #dddfe2;
-        }
-
-        .video-container {
-            display: flex;
-            gap: 33px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .video-wrapper {
-            background-color: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .main-container {
-            background-color: white;
-            width: 70%;
-            padding: 24px;
-            border-radius: 24px;
-            padding-bottom: 44px;
-            margin-top: 25px;
-        }
-
-        video {
-            width: 400px;
-            height: 300px;
-            background-color: #000;
-            object-fit: cover;
-        }
-
-        h2 {
-            color: #1877f2;
-            text-align: center;
-            margin: 10px 0;
-        }
-
-        .toggle-btn {
-            background-color: #42b72a;
-            margin-right: 10px;
-        }
-
-        .toggle-btn.off {
-            background-color: #fa3e3e;
-        }
-
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
+            font-family: 'Inter', Arial, sans-serif;
             background-color: #e0f2be;
+            min-height: 100vh;
         }
 
+        /* Navbar Styles */
         .navbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 15px 30px;
-            background-color: #c5e1a5;
+            background-color: #B8FFB8;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             position: relative;
-            width: 100%;
         }
 
         .navbar .title {
@@ -150,32 +53,143 @@
             color: #1b5e20;
         }
 
+        .navbar ul a {
+            text-decoration: none;
+        }
+
         .menu-toggle {
             font-size: 24px;
             cursor: pointer;
             color: #2e7d32;
             display: none;
-            z-index: 10;
+            z-index: 1001;
+            position: absolute;
+            top: 15px;
+            right: 30px;
         }
 
-        .login-btn {
-            background-color: #2e7d32;
+        /* Main Container Styles */
+        .main-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .video-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .video-wrapper {
+            background-color: #1e293b;
+            border-radius: 1rem;
+            overflow: hidden;
+            position: relative;
+            aspect-ratio: 16 / 9;
+            max-height: 70vh;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .participant-info {
+            position: absolute;
+            bottom: 1rem;
+            left: 1rem;
             color: white;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 2rem;
+            font-size: 0.875rem;
+        }
+
+        /* Controls Bar Styles */
+        .controls {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #ffffff;
+            padding: 1rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .control-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
             border: none;
-            padding: 8px 16px;
-            border-radius: 5px;
             cursor: pointer;
-            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f1f5f9;
+            color: #0f172a;
+            transition: all 0.2s;
+            position: relative;
         }
 
-        .login-btn:hover {
-            background-color: #1b5e20;
+        .control-btn:hover {
+            background-color: #e2e8f0;
         }
 
-        .navbar ul a {
-            text-decoration: none;
+        .control-btn:hover::before {
+            content: attr(data-tooltip);
+            position: absolute;
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #1e293b;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            white-space: nowrap;
+            pointer-events: none;
         }
 
+        .control-btn.off {
+            background-color: #ef4444;
+            color: white;
+        }
+
+        .control-btn.end-call {
+            background-color: #ef4444;
+            color: white;
+        }
+
+        #callId {
+            padding: 0.75rem 1rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.5rem;
+            outline: none;
+            font-size: 0.875rem;
+            width: 200px;
+        }
+
+        #callId:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        /* Popup Styles */
         .popup-overlay {
             display: none;
             position: fixed;
@@ -184,6 +198,7 @@
             width: 100%;
             height: 100%;
             background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
             z-index: 1000;
             justify-content: center;
             align-items: center;
@@ -191,65 +206,67 @@
 
         .popup {
             background-color: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-            position: relative;
+            border-radius: 1rem;
+            padding: 2rem;
             width: 90%;
             max-width: 400px;
-            text-align: center;
+            position: relative;
         }
 
         .popup-close {
             position: absolute;
-            top: 15px;
-            right: 15px;
-            font-size: 24px;
+            top: 1rem;
+            right: 1rem;
             cursor: pointer;
-            color: #666;
-            transition: color 0.3s;
-        }
-
-        .popup-close:hover {
-            color: #fa3e3e;
+            color: #64748b;
         }
 
         .call-id-container {
-            background-color: #f0f2f5;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 20px 0;
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin: 1rem 0;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 10px;
         }
 
         .call-id-text {
-            font-family: monospace;
-            font-size: 18px;
-            color: #2e7d32;
-            flex-grow: 1;
-            text-align: center;
+            font-family: 'SF Mono', 'Monaco', monospace;
+            color: #0f172a;
+            font-size: 0.875rem;
         }
 
         .copy-button {
-            background-color: #37ae67;
+            background-color: #3b82f6;
             color: white;
             border: none;
-            padding: 8px 16px;
-            border-radius: 5px;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
             cursor: pointer;
-            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
         }
 
         .copy-button:hover {
-            background-color: #2e7d32;
+            background-color: #2563eb;
         }
 
-        .popup h2 {
-            color: #2e7d32;
-            margin-bottom: 15px;
+        .time-indicator {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         @media (max-width: 1024px) {
@@ -270,10 +287,17 @@
                 padding-top: 60px;
                 transition: right 0.3s ease-in-out;
                 gap: 30px;
+                z-index: 999;
             }
 
             .navbar ul.show {
                 right: 0;
+            }
+
+            .controls {
+                width: 90%;
+                flex-wrap: wrap;
+                justify-content: center;
             }
         }
 
@@ -307,35 +331,55 @@
             </a>
         </ul>
     </nav>
-    <h1>Real-Time Video Calling</h1>
-
-    <div class="controls">
-        <button id="toggleCamera" class="toggle-btn">Camera On</button>
-        <button id="toggleMic" class="toggle-btn">Mic On</button>
-        <button id="createCall">Create Call</button>
-        <input type="text" id="callId" placeholder="Enter Call ID">
-        <button id="joinCall">Join Call</button>
-        <button id="endCall" class="end-call-btn">End Call</button>
-    </div>
 
     <div class="main-container">
         <div class="video-container">
             <div class="video-wrapper">
-                <h2>Your Video</h2>
                 <video id="myVideo" autoplay muted></video>
+                <div class="time-indicator">
+                    <i data-lucide="clock"></i>
+                    <span id="callTimer">00:00:00</span>
+                </div>
+                <div class="participant-info">
+                    <i data-lucide="user"></i>
+                    <span>You</span>
+                </div>
             </div>
         </div>
+    </div>
 
+    <div class="controls">
+        <button id="toggleCamera" class="control-btn" data-tooltip="Toggle Camera">
+            <i data-lucide="video"></i>
+        </button>
+        <button id="toggleMic" class="control-btn" data-tooltip="Toggle Microphone">
+            <i data-lucide="mic"></i>
+        </button>
+        <button id="createCall" class="control-btn" data-tooltip="Create New Call">
+            <i data-lucide="plus"></i>
+        </button>
+        <input type="text" id="callId" placeholder="Enter Call ID">
+        <button id="joinCall" class="control-btn" data-tooltip="Join Call">
+            <i data-lucide="phone-incoming"></i>
+        </button>
+        <button id="endCall" class="control-btn end-call" data-tooltip="End Call">
+            <i data-lucide="phone-off"></i>
+        </button>
     </div>
 
     <div class="popup-overlay">
         <div class="popup">
-            <span class="popup-close">&times;</span>
+            <div class="popup-close">
+                <i data-lucide="x"></i>
+            </div>
             <h2>Your Call ID</h2>
             <p>Share this ID with others to join your call</p>
             <div class="call-id-container">
                 <span class="call-id-text"></span>
-                <button class="copy-button">Copy</button>
+                <button class="copy-button">
+                    <i data-lucide="copy"></i>
+                    <span>Copy</span>
+                </button>
             </div>
         </div>
     </div>
@@ -343,15 +387,51 @@
     <script src="https://cdn.jsdelivr.net/npm/peerjs@1.3.2/dist/peerjs.min.js"></script>
     <script src="https://cdn.socket.io/4.4.1/socket.io.min.js"></script>
     <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Mobile menu toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navbarUl = document.querySelector('.navbar ul');
+
+        menuToggle.addEventListener('click', () => {
+            navbarUl.classList.toggle('show');
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.navbar')) {
+                navbarUl.classList.remove('show');
+            }
+        });
+
         const SERVER_URL = "https://edusphere-dvyv.onrender.com";
         const socket = io(SERVER_URL);
         const peer = new Peer();
 
         const myVideo = document.getElementById("myVideo");
         const videoContainer = document.querySelector(".video-container");
+        const toggleCameraBtn = document.getElementById('toggleCamera');
+        const toggleMicBtn = document.getElementById('toggleMic');
         const peers = {};
         let myStream;
         let myPeerId;
+        let callStartTime;
+
+        // Initialize call timer
+        function startCallTimer() {
+            callStartTime = Date.now();
+            setInterval(updateCallTimer, 1000);
+        }
+
+        function updateCallTimer() {
+            const elapsed = Date.now() - callStartTime;
+            const hours = Math.floor(elapsed / 3600000);
+            const minutes = Math.floor((elapsed % 3600000) / 60000);
+            const seconds = Math.floor((elapsed % 60000) / 1000);
+            document.getElementById('callTimer').textContent =
+                `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
 
         // Initialize peer connection
         peer.on("open", id => {
@@ -363,6 +443,7 @@
         navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(stream => {
             myStream = stream;
             myVideo.srcObject = stream;
+            startCallTimer();
 
             // Handle incoming calls
             peer.on("call", call => {
@@ -381,7 +462,6 @@
             function joinRoom() {
                 socket.emit("join-room", myPeerId, room => {
                     console.log("Joined room, existing users:", room.users);
-                    // Connect to all existing users
                     room.users.forEach(userId => {
                         if (userId !== myPeerId && !peers[userId]) {
                             connectToNewUser(userId, myStream);
@@ -407,9 +487,10 @@
                 try {
                     await navigator.clipboard.writeText(myPeerId);
                     const copyButton = document.querySelector('.copy-button');
-                    copyButton.textContent = 'Copied!';
+                    const copySpan = copyButton.querySelector('span');
+                    copySpan.textContent = 'Copied!';
                     setTimeout(() => {
-                        copyButton.textContent = 'Copy';
+                        copySpan.textContent = 'Copy';
                     }, 2000);
                 } catch (err) {
                     console.error('Failed to copy text: ', err);
@@ -504,9 +585,18 @@
             videoElement.srcObject = stream;
             videoElement.autoplay = true;
             videoElement.playsInline = true;
-            videoWrapper.appendChild(videoElement);
 
+            const participantInfo = document.createElement("div");
+            participantInfo.classList.add("participant-info");
+            participantInfo.innerHTML = `
+                <i data-lucide="user"></i>
+                <span>Participant</span>
+            `;
+
+            videoWrapper.appendChild(videoElement);
+            videoWrapper.appendChild(participantInfo);
             videoContainer.appendChild(videoWrapper);
+            lucide.createIcons();
         }
 
         function removeVideoStream(peerId) {
@@ -516,23 +606,44 @@
             }
         }
 
-        document.getElementById('toggleCamera').addEventListener('click', () => {
+        toggleCameraBtn.addEventListener('click', () => {
             const videoTrack = myStream.getVideoTracks()[0];
             videoTrack.enabled = !videoTrack.enabled;
-            document.getElementById('toggleCamera').textContent = videoTrack.enabled ? "Camera On" : "Camera Off";
+            toggleCameraBtn.innerHTML = videoTrack.enabled ?
+                '<i data-lucide="video"></i>' :
+                '<i data-lucide="video-off"></i>';
+            toggleCameraBtn.classList.toggle('off');
+            lucide.createIcons();
         });
 
-        document.getElementById('toggleMic').addEventListener('click', () => {
+        toggleMicBtn.addEventListener('click', () => {
             const audioTrack = myStream.getAudioTracks()[0];
             audioTrack.enabled = !audioTrack.enabled;
-            document.getElementById('toggleMic').textContent = audioTrack.enabled ? "Mic On" : "Mic Off";
+            toggleMicBtn.innerHTML = audioTrack.enabled ?
+                '<i data-lucide="mic"></i>' :
+                '<i data-lucide="mic-off"></i>';
+            toggleMicBtn.classList.toggle('off');
+            lucide.createIcons();
         });
 
         document.getElementById('endCall').addEventListener('click', () => {
             socket.emit('leave-room', myPeerId);
             myStream.getTracks().forEach(track => track.stop());
             Object.values(peers).forEach(call => call.close());
-            videoContainer.innerHTML = '';
+            videoContainer.innerHTML = `
+                <div class="video-wrapper">
+                    <video id="myVideo" autoplay muted></video>
+                    <div class="time-indicator">
+                        <i data-lucide="clock"></i>
+                        <span id="callTimer">00:00:00</span>
+                    </div>
+                    <div class="participant-info">
+                        <i data-lucide="user"></i>
+                        <span>You</span>
+                    </div>
+                </div>
+            `;
+            lucide.createIcons();
         });
     </script>
 </body>
