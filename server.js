@@ -62,7 +62,7 @@ app.post("/signin", async (req, res) => {
     // Generate JWT token
     const token = jwt.sign({ userId: user._id, email: user.email }, JWT_SECRET, { expiresIn: "1h" });
 
-    res.json({ message: "Sign-in successful", token });
+    res.json({ message: "Sign-in successful", token, username: user.username });
 });
 
 // Protected Route Example (Requires Authentication)
@@ -74,7 +74,7 @@ app.get("/profile", async (req, res) => {
 
     try {
         const decoded = jwt.verify(token, JWT_SECRET);
-        const user = await User.findById(decoded.userId);
+        const user = await User.findById(decoded.userId).select('-password'); // Exclude password from response
         res.json(user);
     } catch (error) {
         res.status(401).json({ message: "Invalid token" });

@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     toggleAuth.addEventListener("click", function (event) {
-        event.preventDefault(); 
+        event.preventDefault();
 
         if (signInForm.style.display === "none") {
             signInForm.style.display = "block";
@@ -63,9 +63,7 @@ document.addEventListener("DOMContentLoaded", function () {
             if (response.ok) {
                 showPopup("✅ Account created successfully!");
                 signUpForm.reset();
-                signInForm.style.display = "block";
-                signUpForm.style.display = "none";
-                toggleAuth.textContent = "Create an Account";
+                toggleAuth.click(); // Switch to sign-in form
             } else {
                 showPopup(`⚠️ ${data.message}`);
             }
@@ -94,11 +92,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const data = await response.json();
             if (response.ok) {
+                localStorage.setItem("username", data.username); // Store username
                 localStorage.setItem("token", data.token); // Store JWT token
                 showPopup("✅ Sign-in successful!");
 
                 setTimeout(() => {
-                    window.location.href = 'landing.html'; // Redirect
+                    window.location.href = 'index.html'; // Redirect
                 }, 1000);
             } else {
                 showPopup(`⚠️ ${data.message}`);

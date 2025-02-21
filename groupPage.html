@@ -241,9 +241,21 @@
             letter-spacing: -1px;
             text-shadow: 0 2px 4px rgba(22, 101, 52, 0.1);
         }
+        .popup {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #15803d;
+            color: white;
+            padding: 16px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            display: none;
+            z-index: 1000;
+        }
     </style>
 </head>
-<iframe src="chat.html" width="330" height="500" style="border:none; position:fixed; bottom:20px; right:20px; ; border-radius:10px; z-index: 1001;"></iframe>
+<iframe src="chat.html" width="330" height="500" style="border:none; position:fixed; bottom:20px; right:20px; border-radius:10px; z-index: 1001;"></iframe>
 
 <body>
     <div class="sidebar">
@@ -267,9 +279,17 @@
             © 2025 EduSphere • Empowering Collaborative Learning
         </div>
     </div>
+    <div id="popup" class="popup"></div>
     <script>
         let groups = JSON.parse(localStorage.getItem("groups")) || [];
-        let currentUser = "User" + Math.floor(Math.random() * 1000);
+        let currentUser = localStorage.getItem("username"); // Fetch the current user from localStorage
+
+        function showPopup(message) {
+            const popup = document.getElementById("popup");
+            popup.textContent = message;
+            popup.style.display = "block";
+            setTimeout(() => { popup.style.display = "none"; }, 3000);
+        }
 
         function generateInviteCode() {
             return Math.random().toString(36).substring(2, 8).toUpperCase();
@@ -299,44 +319,41 @@
             });
         }
 
-        function createGroup() {
+        async function createGroup() {
+            if (!currentUser) {
+                showPopup("⚠️ Please sign in first to create a group!");
+                return;
+            }
+
             const groupName = prompt("Enter your study group name:");
             if (!groupName) return;
-            
+
             const groupType = confirm("Make this group private? Click OK for Private, Cancel for Public") ? "private" : "public";
             const inviteCode = groupType === "private" ? generateInviteCode() : "";
-            
-            groups.push({ 
-                name: groupName, 
-                description: "A new collaborative study group for sharing knowledge and learning together.", 
+
+            const newGroup = {
+                name: groupName,
+                description: "A collaborative study group.",
                 type: groupType,
                 inviteCode: inviteCode,
                 leader: currentUser,
                 members: [currentUser]
+            };
+
+            await fetch("http://localhost:3000/groups", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(newGroup)
             });
-            saveGroups();
-            displayGroups();
+
+            fetchGroups();
         }
 
-        function joinGroup(groupName, groupType, inviteCode) {
-            const group = groups.find(g => g.name === groupName);
-            if (!group) return;
-
-            if (groupType === "private") {
-                const userCode = prompt("Enter the invite code to join the private group:");
-                if (userCode !== inviteCode) {
-                    alert("Invalid invite code!");
-                    return;
-                }
-            }
-            
-            if (!group.members.includes(currentUser)) {
-                group.members.push(currentUser);
-                saveGroups();
-            }
-            
-            localStorage.setItem("currentGroup", JSON.stringify(group));
-            window.location.href = 'group-details.html';
+        async function fetchGroups() {
+            const response = await fetch("http://localhost:3000/groups");
+            const data = await response.json();
+            groups = data;
+            displayGroups();
         }
 
         function searchGroups() {
@@ -354,49 +371,7 @@
             displayGroups(type);
         }
 
-        displayGroups();
-
-
-
-
-    async function fetchGroups() {
-        const response = await fetch("http://localhost:3000/groups");
-        const data = await response.json();
-        groups = data;
-        displayGroups();
-    }
-
-    async function createGroup() {
-        const groupName = prompt("Enter your study group name:");
-        if (!groupName) return;
-
-        const groupType = confirm("Make this group private? Click OK for Private, Cancel for Public") ? "private" : "public";
-        const inviteCode = groupType === "private" ? Math.random().toString(36).substring(2, 8).toUpperCase() : "";
-
-        const newGroup = {
-            name: groupName,
-            description: "A collaborative study group.",
-            type: groupType,
-            inviteCode: inviteCode,
-            leader: currentUser,
-            members: [currentUser]
-        };
-
-        await fetch("http://localhost:3000/groups", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(newGroup)
-        });
-
         fetchGroups();
-
-
-        
-    }
-
-    fetchGroups();
-
-
     </script>
 </body>
 </html>
