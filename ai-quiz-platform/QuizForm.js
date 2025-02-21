@@ -9,7 +9,7 @@ const QuizForm = ({ setQuizData }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await axios.post("http://localhost:5000/generate-quiz", {
+    const response = await axios.post("https://edusphere-2-7i6d.onrender.com", {
       subject,
       subtopics,
       difficulty,
