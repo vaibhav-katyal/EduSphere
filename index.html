@@ -76,26 +76,50 @@
         }
     </style>
 </head>
-<iframe src="chat.html" width="330" height="500" style="border:none; position:fixed; bottom:20px; right:20px; border-radius:10px; z-index: 1001;"></iframe>
 
 <body>
     <nav class="navbar">
         <div class="title">EDUSPHERE</div>
-        <div class="menu-toggle" id="menu-toggle">☰</div>
+        <div class="mobile-navbar-btn">
+            <ion-icon name="menu-outline" class="mobile-nav-icon menu-icon"></ion-icon>
+            <ion-icon name="close-outline" class="mobile-nav-icon close-icon"></ion-icon>
+        </div>
         <ul id="nav-auth" class="nav-menu">
-            <a href="landing.html"><li>Home</li></a>
-            <a href="groupPage.html"><li>Group Study</li></a>
-            <a href="library.html"><li>Library</li></a>
-            <a href="ai-quiz-platform\frontend\index.html"><li>Quiz</li></a>
-            <a href="feedback.html"><li>Contact Us</li></a>
-            <a href="sign.html" id="auth-link"><li><button class="login-btn">Login</button></li></a>
+            <a href="landing.html">
+                <li>Home</li>
+            </a>
+            <a href="groupPage.html">
+                <li>Group Study</li>
+            </a>
+            <a href="library.html">
+                <li>Library</li>
+            </a>
+            <a href="quiz.html">
+                <li>Quiz</li>
+            </a>
+            <a href="feedback.html">
+                <li>Contact Us</li>
+            </a>
+            <a href="sign.html" id="auth-link">
+                <li><button class="login-btn">Login</button></li>
+            </a>
         </ul>
         <ul id="nav-user" class="nav-menu" style="display: none;">
-            <a href="landing.html"><li>Home</li></a>
-            <a href="groupPage.html"><li>Group Study</li></a>
-            <a href="library.html"><li>Library</li></a>
-            <a href="ai-quiz-platform\frontend\index.html"><li>Quiz</li></a>
-            <a href="feedback.html"><li>Contact Us</li></a>
+            <a href="landing.html">
+                <li>Home</li>
+            </a>
+            <a href="groupPage.html">
+                <li>Group Study</li>
+            </a>
+            <a href="library.html">
+                <li>Library</li>
+            </a>
+            <a href="quiz.html">
+                <li>Quiz</li>
+            </a>
+            <a href="feedback.html">
+                <li>Contact Us</li>
+            </a>
             <li>
                 <button class="username-btn" id="username-btn">
                     <img src="user-avatar.png" alt="User Avatar">
@@ -310,7 +334,7 @@
 
             <div class="footer-bottom">
                 <div class="copyright">
-                    © 2024 StudyBuddy. All rights reserved.
+                    © 2025 EduSphere. All rights reserved.
                 </div>
                 <div class="footer-bottom-links">
                     <a href="#">Terms of Service</a>
@@ -347,11 +371,29 @@
                     dropdowns.forEach(dropdown => dropdown.style.display = "none");
                 }
             });
+
+            // Mobile menu toggle
+            const menuBtn = document.querySelector('.menu-icon');
+            const closeBtn = document.querySelector('.close-icon');
+            const navMenu = document.querySelector('.navbar ul');
+
+            menuBtn.addEventListener('click', () => {
+                navMenu.classList.add('show');
+                menuBtn.style.display = 'none';
+                closeBtn.style.display = 'block';
+            });
+
+            closeBtn.addEventListener('click', () => {
+                navMenu.classList.remove('show');
+                menuBtn.style.display = 'block';
+                closeBtn.style.display = 'none';
+            });
         });
     </script>
 
     <script src="landing.js"></script>
     <script src="footer.js"></script>
+    <script src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
 
 </html><!DOCTYPE html>
@@ -730,6 +772,7 @@
 
     <script src="landing.js"></script>
     <script src="footer.js"></script>
+    <script src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
 
 </html>

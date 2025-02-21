@@ -54,12 +54,12 @@ document.addEventListener("DOMContentLoaded", function () {
     updateNavbar(); // Run this function on page load
 });
 
-const menuToggle = document.querySelector('.menu-toggle');
-const navLinks = document.querySelector('.navbar ul');
+// const menuToggle = document.querySelector('.menu-toggle');
+// const navLinks = document.querySelector('.navbar ul');
 
-menuToggle.addEventListener('click', () => {
-    navLinks.classList.toggle('show');
-});
+// menuToggle.addEventListener('click', () => {
+//     navLinks.classList.toggle('show');
+// });
 
 
 

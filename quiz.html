@@ -7,21 +7,77 @@
     <link rel="stylesheet" href="quiz.css">
 </head>
 <body>
-    <div class="quiz-container">
-        <h2>Generate AI Quiz</h2>
-        <label>Subject: <input type="text" id="subject"></label>
-        <label>Subtopic: <input type="text" id="subtopic"></label>
-        <label>Difficulty:
-            <select id="difficulty">
-                <option value="easy">Easy</option>
-                <option value="medium">Medium</option>
-                <option value="hard">Hard</option>
-            </select>
-        </label>
-        <label>Number of Questions: <input type="number" id="numQuestions" min="1" max="10"></label>
-        <button onclick="generateQuiz()">Generate Quiz</button>
+    <nav class="navbar">
+        <div class="title">EDUSPHERE</div>
+        <div class="menu-toggle">☰</div>
+        <ul>
+            <a href="index.html"><li>Home</li></a>
+            <a href="groupPage.html"><li>Group Study</li></a>
+            <a href="library.html"><li>Library</li></a>
+            <a href="quiz.html"><li>Quiz</li></a>
+            <a href="feedback.html"><li>Contact Us</li></a>
+            <!-- <a href="sign.html">
+                <li><button class="login-btn">Login</button></li>
+            </a> -->
+        </ul>
+    </nav>
+    <div class="main">
 
-        <div id="quizOutput"></div>
+        <div class="popup">
+            <h2>Select Quiz Details</h2>
+            <div class="choices">
+                <div class="lang">
+                    <span>Select Programming Language:</span>
+                    <select name="Select the Language" id="lang">
+                        <option value="Python">Python</option>
+                        <option value="C">C</option>
+                        <option value="C++">C++</option>
+                        <option value="Java">Java</option>
+                        <option value="JavaScript">JavaScript</option>
+                    </select>
+                </div>
+    
+                <div class="noques">
+                    <span>Select Number of Questions:</span>
+                    <select name="No. of Questions" id="noofques">
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="15">15</option>
+                        <option value="20">20</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="gen-quiz">
+                <button>Generate Quiz</button>
+            </div>
+        </div>
+        <div class="card hidden">
+            <div class="heading">
+                <h3>--- Quiz</h3>
+                <div class="dark-mode">
+                    <button>🌙</button>
+                </div>
+            </div>
+            <div class="question">
+                Q1: Lorem ipsum, dolor sit amet consectetur adipisicing elit. Distinctio ipsum quaerat obcaecati recusandae vel nisi sapiente. Aperiam dolorum ipsum, magnam minus unde blanditiis.
+            </div>
+            <div class="options">
+                <div class="opt opt1">Lorem ipsum dolor sit amet consectetur.</div>
+                <div class="opt opt2">Lorem ipsum dolor sit amet consectetur.</div>
+                <div class="opt opt3">Lorem ipsum dolor sit amet consectetur.</div>
+                <div class="opt opt4">Lorem ipsum dolor sit amet consectetur.</div>
+            </div>
+
+            <div class="nxt-btn">
+                <button>Next</button>
+            </div>
+
+            <div class="results">
+                You scored 5 out of 5 !
+                <button>Restart Test</button>
+            </div>
+        </div>
     </div>
 
     <script src="quiz.js"></script>
