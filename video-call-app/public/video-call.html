@@ -15,7 +15,6 @@
             min-height: 100vh;
         }
 
-        /* Navbar Styles */
         .navbar {
             display: flex;
             justify-content: space-between;
@@ -68,7 +67,6 @@
             right: 30px;
         }
 
-        /* Main Container Styles */
         .main-container {
             max-width: 1200px;
             margin: 2rem auto;
@@ -115,7 +113,6 @@
             font-size: 0.875rem;
         }
 
-        /* Controls Bar Styles */
         .controls {
             position: fixed;
             bottom: 2rem;
@@ -189,7 +186,6 @@
             box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
         }
 
-        /* Popup Styles */
         .popup-overlay {
             display: none;
             position: fixed;
@@ -355,6 +351,9 @@
         <button id="toggleMic" class="control-btn" data-tooltip="Toggle Microphone">
             <i data-lucide="mic"></i>
         </button>
+        <button id="shareScreen" class="control-btn" data-tooltip="Share Screen">
+            <i data-lucide="monitor"></i>
+        </button>
         <button id="createCall" class="control-btn" data-tooltip="Create New Call">
             <i data-lucide="plus"></i>
         </button>
@@ -413,10 +412,14 @@
         const videoContainer = document.querySelector(".video-container");
         const toggleCameraBtn = document.getElementById('toggleCamera');
         const toggleMicBtn = document.getElementById('toggleMic');
+        const shareScreenBtn = document.getElementById('shareScreen');
         const peers = {};
         let myStream;
         let myPeerId;
         let callStartTime;
+        let screenStream;
+        let isScreenSharing = false;
+        const activeCalls = new Set();
 
         // Initialize call timer
         function startCallTimer() {
@@ -456,6 +459,7 @@
                 });
 
                 peers[call.peer] = call;
+                activeCalls.add(call.peer);
             });
 
             // Join room when creating or joining a call
@@ -588,9 +592,9 @@
             const participantInfo = document.createElement("div");
             participantInfo.classList.add("participant-info");
             participantInfo.innerHTML = `
-                <i data-lucide="user"></i>
-                <span>Participant</span>
-            `;
+        <i data-lucide="user"></i>
+        <span>Participant</span>
+    `;
 
             videoWrapper.appendChild(videoElement);
             videoWrapper.appendChild(participantInfo);
@@ -625,23 +629,64 @@
             lucide.createIcons();
         });
 
+        shareScreenBtn.addEventListener('click', async () => {
+            if (isScreenSharing) {
+                stopScreenSharing();
+                return;
+            }
+
+            try {
+                screenStream = await navigator.mediaDevices.getDisplayMedia({
+                    video: true
+                });
+                const screenTrack = screenStream.getVideoTracks()[0];
+
+                screenTrack.onended = stopScreenSharing;
+
+                for (let peerId of activeCalls) {
+                    const sender = peers[peerId].peerConnection.getSenders().find(s => s.track.kind === 'video');
+                    sender.replaceTrack(screenTrack);
+                }
+
+                myVideo.srcObject = screenStream;
+                isScreenSharing = true;
+                shareScreenBtn.innerHTML = '<i data-lucide="monitor-off"></i>';
+                lucide.createIcons();
+            } catch (err) {
+                console.error("Error sharing screen:", err);
+            }
+        });
+
+        function stopScreenSharing() {
+            screenStream.getTracks().forEach(track => track.stop());
+            isScreenSharing = false;
+            shareScreenBtn.innerHTML = '<i data-lucide="monitor"></i>';
+            lucide.createIcons();
+            myVideo.srcObject = myStream;
+
+            for (let peerId of activeCalls) {
+                const sender = peers[peerId].peerConnection.getSenders().find(s => s.track.kind === 'video');
+                sender.replaceTrack(myStream.getVideoTracks()[0]);
+            }
+        }
+
         document.getElementById('endCall').addEventListener('click', () => {
             socket.emit('leave-room', myPeerId);
             myStream.getTracks().forEach(track => track.stop());
             Object.values(peers).forEach(call => call.close());
             videoContainer.innerHTML = `
-                <div class="video-wrapper">
-                    <video id="myVideo" autoplay muted></video>
-                    <div class="time-indicator">
-                        <i data-lucide="clock"></i>
-                        <span id="callTimer">00:00:00</span>
-                    </div>
-                    <div class="participant-info">
-                        <i data-lucide="user"></i>
-                        <span>You</span>
-                    </div>
-                </div>
-            `;
+        <div class="video-wrapper">
+            <video id="myVideo" autoplay muted></video>
+            <div class="time-indicator">
+                <i data-lucide="clock"></i>
+                <span id="callTimer">00:00:00</span>
+            </div>
+            <div class="participant-info">
+                <i data-lucide="user"></i>
+                <span>You</span>
+            </div>
+        </div>
+    `;
             lucide.createIcons();
         });
     </script>
