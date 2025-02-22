@@ -637,7 +637,8 @@
 
             try {
                 screenStream = await navigator.mediaDevices.getDisplayMedia({
-                    video: true
+                    video: true,
+                    audio: true
                 });
                 const screenTrack = screenStream.getVideoTracks()[0];
 
@@ -646,11 +647,21 @@
                 for (let peerId of activeCalls) {
                     const sender = peers[peerId].peerConnection.getSenders().find(s => s.track.kind === 'video');
                     sender.replaceTrack(screenTrack);
+
+                    // Share audio track if available
+                    const audioSender = peers[peerId].peerConnection.getSenders().find(s => s.track.kind === 'audio');
+                    if (audioSender) {
+                        const audioTrack = screenStream.getAudioTracks()[0];
+                        if (audioTrack) {
+                            audioSender.replaceTrack(audioTrack);
+                        }
+                    }
                 }
 
                 myVideo.srcObject = screenStream;
                 isScreenSharing = true;
                 shareScreenBtn.innerHTML = '<i data-lucide="monitor-off"></i>';
+                shareScreenBtn.classList.add('off');
                 lucide.createIcons();
             } catch (err) {
                 console.error("Error sharing screen:", err);
