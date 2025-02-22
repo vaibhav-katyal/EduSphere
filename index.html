@@ -74,64 +74,85 @@
         .logout-btn:hover {
             background-color: #cc1f1a;
         }
+
+
+
+        /* Dropdown Button */
+.dropbtn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    color: white;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Dropdown Menu */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 120px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    display: block;
+    padding: 8px;
+    text-decoration: none;
+    color: black;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+
     </style>
 </head>
 
 <body>
     <nav class="navbar">
         <div class="title">EDUSPHERE</div>
-        <div class="mobile-navbar-btn">
-            <ion-icon name="menu-outline" class="mobile-nav-icon menu-icon"></ion-icon>
-            <ion-icon name="close-outline" class="mobile-nav-icon close-icon"></ion-icon>
-        </div>
         <ul id="nav-auth" class="nav-menu">
-            <a href="landing.html">
-                <li>Home</li>
-            </a>
-            <a href="groupPage.html">
-                <li>Group Study</li>
-            </a>
-            <a href="library.html">
-                <li>Library</li>
-            </a>
-            <a href="quiz.html">
-                <li>Quiz</li>
-            </a>
-            <a href="feedback.html">
-                <li>Contact Us</li>
-            </a>
-            <a href="sign.html" id="auth-link">
-                <li><button class="login-btn">Login</button></li>
-            </a>
+            <a href="landing.html"><li>Home</li></a>
+            <a href="groupPage.html"><li>Group Study</li></a>
+            <a href="library.html"><li>Library</li></a>
+            <a href="quiz.html"><li>Quiz</li></a>
+            <a href="feedback.html"><li>Contact Us</li></a>
+            <a href="sign.html" id="auth-link"><li><button class="login-btn">Login</button></li></a>
         </ul>
+    
         <ul id="nav-user" class="nav-menu" style="display: none;">
-            <a href="landing.html">
-                <li>Home</li>
-            </a>
-            <a href="groupPage.html">
-                <li>Group Study</li>
-            </a>
-            <a href="library.html">
-                <li>Library</li>
-            </a>
-            <a href="quiz.html">
-                <li>Quiz</li>
-            </a>
-            <a href="feedback.html">
-                <li>Contact Us</li>
-            </a>
-            <li>
-                <button class="username-btn" id="username-btn">
-                    <img src="user-avatar.png" alt="User Avatar">
-                    <span id="username-text"></span>
-                    <div class="username-dropdown">
-                        <a href="profile.html">View Profile</a>
-                        <a href="#" id="logout-btn">Logout</a>
-                    </div>
+            <a href="landing.html"><li>Home</li></a>
+            <a href="groupPage.html"><li>Group Study</li></a>
+            <a href="library.html"><li>Library</li></a>
+            <a href="quiz.html"><li>Quiz</li></a>
+            <a href="feedback.html"><li>Contact Us</li></a>
+    
+            <li class="dropdown">
+                <button id="dropdown-btn" class="username-btn">
+                    <span id="username-text">Guest</span> ⬇
                 </button>
+                <div id="dropdown-content" class="dropdown-content">
+                    <a href="profile.html">View Profile</a>
+                    <a href="#" id="logout-btn">Logout</a>
+                </div>
             </li>
         </ul>
     </nav>
+    
+    
+    
     <div class="hero">
         <div class="container">
             <img src="video.png" alt="">
@@ -389,6 +410,44 @@
                 closeBtn.style.display = 'none';
             });
         });
+
+
+        document.addEventListener("DOMContentLoaded", function () {
+    const dropdownBtn = document.getElementById("dropdown-btn");
+    const dropdownContent = document.getElementById("dropdown-content");
+    const logoutBtn = document.getElementById("logout-btn");
+
+    // Show/hide dropdown menu
+    dropdownBtn.addEventListener("click", function (event) {
+        event.stopPropagation();
+        dropdownContent.style.display = dropdownContent.style.display === "block" ? "none" : "block";
+    });
+
+    // Hide dropdown when clicking outside
+    document.addEventListener("click", function (event) {
+        if (!dropdownBtn.contains(event.target) && !dropdownContent.contains(event.target)) {
+            dropdownContent.style.display = "none";
+        }
+    });
+
+    // Logout functionality
+    logoutBtn.addEventListener("click", function (event) {
+        event.preventDefault();
+        console.log("Logging out...");
+
+        // Remove token
+        localStorage.removeItem("token");
+
+        // Hide user navbar & show login
+        document.getElementById("nav-user").style.display = "none";
+        document.getElementById("nav-auth").style.display = "flex";
+
+        // Redirect to login page
+        window.location.href = "sign.html";
+    });
+});
+
+
     </script>
 
     <script src="landing.js"></script>
@@ -719,41 +778,52 @@
         </div>
     </footer>
 
-    <script>
+    
 
-    document.addEventListener("DOMContentLoaded", async function () {
-        const token = localStorage.getItem("token");
+<script>
+document.addEventListener("DOMContentLoaded", async function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        let token = urlParams.get("token");
 
         if (token) {
+            token = token.split(":")[0];  
+            localStorage.setItem("token", token);
+            window.history.replaceState({}, document.title, "index.html");
+        }
+
+        const storedToken = localStorage.getItem("token");
+        let storedUsername = localStorage.getItem("username"); 
+
+        if (storedToken) {
             try {
-                // Fetch user details from the backend using JWT
-                const response = await fetch("http://localhost:5000/profile", {
+                const response = await fetch("http://localhost:3000/profile", {
                     method: "GET",
-                    headers: {
-                        "Authorization": token
-                    }
+                    headers: { "Authorization": `Bearer ${storedToken}` }
                 });
 
-                const data = await response.json();
-
-                if (response.ok) {
-                    document.querySelector("#username-text").textContent = data.email; // Show email or name
-                    document.querySelector("#nav-auth").style.display = "none";
-                    document.querySelector("#nav-user").style.display = "flex";
-                } else {
-                    console.error("Error fetching user:", data.message);
-                    localStorage.removeItem("token");
+                if (!response.ok) {
+                    throw new Error("Failed to fetch user data");
                 }
+
+                const data = await response.json();
+                storedUsername = data.username || storedUsername || "User";
+                localStorage.setItem("username", storedUsername);
+
+                document.querySelector("#username-text").textContent = `Welcome, ${storedUsername}`;
+                document.querySelector("#nav-auth").style.display = "none";
+                document.querySelector("#nav-user").style.display = "flex";
             } catch (error) {
-                console.error("Error:", error);
+                console.error("❌ Fetch Error:", error);
+                localStorage.removeItem("token");
             }
         }
 
         document.querySelector("#logout-btn").addEventListener("click", function () {
             localStorage.removeItem("token");
-            window.location.href = "index.html";
+            localStorage.removeItem("username");
+            window.location.href = "index.html";  
         });
-
+    });
         document.querySelector("#username-btn").addEventListener("click", function () {
             const dropdown = document.querySelector(".username-dropdown");
             dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
@@ -765,7 +835,7 @@
                 dropdowns.forEach(dropdown => dropdown.style.display = "none");
             }
         });
-    });
+   
 
 
     </script>
