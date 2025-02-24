@@ -1,90 +1,102 @@
-const express = require("express");
-const http = require("http");
-const cors = require("cors");
-const { Server } = require("socket.io");
+const socket = io();
 
-const app = express();
-const server = http.createServer(app);
-const io = new Server(server, {
-    cors: {
-        origin: "*",
-    },
-});
+// Get media devices
+navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+    .then(stream => {
+        document.getElementById('localVideo').srcObject = stream;
+        localStream = stream;
+    })
+    .catch(error => console.error('Error accessing media devices.', error));
 
-app.use(cors());
-app.use(express.json());
-let users = [];
+let localStream;
+let remoteStream;
+let peerConnection;
+const roomId = 'example-room'; // Change as needed
+const userId = Math.floor(Math.random() * 10000); // Generate a random user ID
 
-io.on("connection", (socket) => {
-    console.log("a user connected");
+// Join a room
+socket.emit('join-room', roomId, userId);
 
-    socket.on("join-room", (userId, callback) => {
-        if (!users.includes(userId)) {
-            users.push(userId);
-
-            // Send the current users list back to the joining user
-            callback({ users });
-
-            // Notify all other users about the new user
-            socket.broadcast.emit("user-connected", userId);
-        }
-
-        socket.on("disconnect", () => {
-            users = users.filter(id => id !== userId);
-            io.emit("user-disconnected", userId);
-            console.log("user disconnected:", userId);
-        });
-    });
-});
-
-app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/public/video-call.html');
-});
-
-app.post("/join-room", (req, res) => {
-    const { peerId } = req.body;
-    if (!users.includes(peerId)) {
-        users.push(peerId);
-        io.emit("user-joined", peerId);
+socket.on('room-users', usersInRoom => {
+    console.log('Users in room:', usersInRoom);
+    if (usersInRoom.length > 1) {
+        createOffer();
     }
-    res.json({ success: true });
 });
 
-app.get("/get-users", (req, res) => {
-    res.json(users);
+socket.on('user-connected', userId => {
+    console.log('User connected:', userId);
 });
 
-app.post("/leave-room", (req, res) => {
-    const { peerId } = req.body;
-    users = users.filter(user => user !== peerId);
-    io.emit("user-left", peerId);
-    res.json({ success: true });
+socket.on('user-disconnected', userId => {
+    console.log('User disconnected:', userId);
+    if (remoteStream) {
+        remoteStream.getTracks().forEach(track => track.stop());
+    }
 });
 
-io.on("connection", (socket) => {
-    console.log("a user connected");
+socket.on('offer', (offer, fromUserId, toUserId) => {
+    if (toUserId === userId) {
+        createAnswer(offer);
+    }
+});
 
-    socket.on("join-room", (userId) => {
-        users.push(userId);
-        socket.join(userId);
-        socket.emit("all-users", users);
-        socket.to(userId).emit("user-connected", userId);
+socket.on('answer', (answer, fromUserId, toUserId) => {
+    if (toUserId === userId) {
+        peerConnection.setRemoteDescription(new RTCSessionDescription(answer));
+    }
+});
 
-        socket.on("disconnect", () => {
-            users = users.filter(user => user !== userId);
-            socket.to(userId).emit("user-disconnected", userId);
-        });
+socket.on('ice-candidate', (candidate, fromUserId, toUserId) => {
+    if (toUserId === userId) {
+        peerConnection.addIceCandidate(new RTCIceCandidate(candidate));
+    }
+});
+
+function createPeerConnection() {
+    peerConnection = new RTCPeerConnection({
+        iceServers: [
+            { urls: 'stun:stun.l.google.com:19302' },
+            { urls: 'stun:stun1.l.google.com:19302' }
+        ]
     });
 
-    socket.on("leave-room", (userId) => {
-        users = users.filter(user => user !== userId);
-        socket.broadcast.emit("user-disconnected", userId);
-    });
+    peerConnection.onicecandidate = event => {
+        if (event.candidate) {
+            socket.emit('ice-candidate', event.candidate, roomId, userId);
+        }
+    };
 
-    socket.on("disconnect", () => {
-        console.log("user disconnected");
-    });
-});
+    peerConnection.ontrack = event => {
+        if (!remoteStream) {
+            remoteStream = new MediaStream();
+            document.getElementById('remoteVideo').srcObject = remoteStream;
+        }
+        remoteStream.addTrack(event.track);
+    };
 
-const PORT = process.env.PORT || 5000;
-server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+    localStream.getTracks().forEach(track => {
+        peerConnection.addTrack(track, localStream);
+    });
+}
+
+function createOffer() {
+    createPeerConnection();
+    peerConnection.createOffer()
+        .then(offer => {
+            peerConnection.setLocalDescription(offer);
+            socket.emit('offer', offer, roomId, userId);
+        })
+        .catch(error => console.error('Error creating offer:', error));
+}
+
+function createAnswer(offer) {
+    createPeerConnection();
+    peerConnection.setRemoteDescription(new RTCSessionDescription(offer))
+        .then(() => peerConnection.createAnswer())
+        .then(answer => {
+            peerConnection.setLocalDescription(answer);
+            socket.emit('answer', answer, roomId, userId);
+        })
+        .catch(error => console.error('Error creating answer:', error));
+}

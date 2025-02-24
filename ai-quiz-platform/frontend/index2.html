@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Quiz Platform</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="dashboard">
+        <div class="sidebar">
+            <h1>AI Quiz Generator</h1>
+            <form id="quiz-form">
+                <div class="form-group">
+                    <label for="subject">Subject</label>
+                    <input type="text" id="subject" placeholder="Enter Subject" required>
+                </div>
+                <div class="form-group">
+                    <label for="subtopics">Subtopics</label>
+                    <input type="text" id="subtopics" placeholder="Enter Subtopics" required>
+                </div>
+                <div class="form-group">
+                    <label for="difficulty">Difficulty</label>
+                    <select id="difficulty">
+                        <option value="easy">Easy</option>
+                        <option value="medium">Medium</option>
+                        <option value="hard">Hard</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="numQuestions">Number of Questions</label>
+                    <input type="number" id="numQuestions" min="1" max="10" value="5" required>
+                </div>
+                <button onclick="createQuiz()" class="quiz-btn">Create Quiz</button>
+            </form>
+            <div id="loader" class="loader" style="display: none;"></div>
+        </div>
+        <div class="main-content">
+            <div id="quiz-container"></div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
