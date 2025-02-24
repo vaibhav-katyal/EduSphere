@@ -10,6 +10,41 @@
 </head>
 <iframe src="chat.html" width="330" height="500" style="border:none; position:fixed; bottom:20px; right:20px; ; border-radius:10px;"></iframe>
 
+<style>
+    .google-login {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+#google-login-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px 15px;
+    font-size: 16px;
+    font-weight: bold;
+    border: 1px solid #dcdcdc;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: white;
+    color: #5f6368;
+    transition: background-color 0.3s;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+#google-login-btn img {
+    width: 20px;
+    height: 20px;
+}
+
+#google-login-btn:hover {
+    background-color: black;
+    color: white;
+}
+
+</style>
 <body>
    
     <div id="popup"></div>
@@ -21,28 +56,34 @@
                 <form id="signin-form">
                     <div>
                         <label>Email</label>
-                        <input type="email" id="signin-email" class="text-input" placeholder="Enter email" required>
+                        <input type="email" id="signin-email" class="text-input" placeholder="Enter email">
                     </div>
                     <div>
                         <label>Password</label>
-                        <input type="password" id="signin-password" class="text-input" placeholder="Enter password" required>
+                        <input type="password" id="signin-password" class="text-input" placeholder="Enter password">
                     </div>
                     <button type="submit" class="primary-btn">Sign In</button>
+                    
+
                 </form>
                 <form id="signup-form" style="display: none;">
                     <div>
                         <label>Username</label>
-                        <input type="text" id="signup-username" class="text-input" placeholder="Enter username" required>
+                        <input type="text" id="signup-username" class="text-input" placeholder="Enter username">
                     </div>
                     <div>
                         <label>Email</label>
-                        <input type="email" id="signup-email" class="text-input" placeholder="Enter email" required>
+                        <input type="email" id="signup-email" class="text-input" placeholder="Enter email">
                     </div>
                     <div>
                         <label>Password</label>
-                        <input type="password" id="signup-password" class="text-input" placeholder="Enter password" required>
+                        <input type="password" id="signup-password" class="text-input" placeholder="Enter password">
                     </div>
                     <button type="submit" class="primary-btn">Sign Up</button>
+
+                    
+
+                      
                 </form>
                 <div class="separator">Or</div>
                 <div class="social-login">
@@ -52,6 +93,14 @@
                 </div>
                 <div class="links">
                     <a href="javascript:void(0);" id="toggle-auth">Create an Account</a>
+                    <h3> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>OR</b></h3>
+                </div>
+                <div class="google-login" >
+                    <button id="google-login-btn" >
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/1200px-Google_%22G%22_logo.svg.png" 
+                             alt="Google Logo">
+                        Continue with Google
+                    </button>
                 </div>
             </div>
         </div> 
@@ -67,5 +116,25 @@
 
     <script src="sign.js"></script>
     <script src="navbar.js"></script>
+    <script>
+        document.getElementById("google-login-btn").addEventListener("click", function () {
+    window.location.href = "http://localhost:3000/auth/google";
+});
+
+// Handle user data after Google Login
+function handleGoogleLogin() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const email = urlParams.get("email");
+
+    if (email) {
+        console.log("Google login successful, Email:", email);
+        window.location.href = "index.html";  // Redirect to homepage
+    }
+}
+
+// Call the function on page load to check Google login
+handleGoogleLogin();
+
+    </script>
 </body>
 </html>

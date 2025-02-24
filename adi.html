@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Quiz Platform</title>
+    <link rel="stylesheet" href="adi.css">
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>Generate Your Quiz</h1>
+        <form id="quiz-form">
+            <label for="subject">Subject:</label>
+            <input type="text" id="subject" name="subject" required>
+            
+            <label for="topic">Topic:</label>
+            <input type="text" id="topic" name="topic" required>
+            
+            <label for="difficulty">Difficulty Level:</label>
+            <select id="difficulty" name="difficulty" required>
+                <option value="easy">Easy</option>
+                <option value="medium">Medium</option>
+                <option value="hard">Hard</option>
+            </select>
+            
+            <button type="submit">Generate Quiz</button>
+        </form>
+        <div id="quiz-display"></div>
+    </div>
+    <script src="adi.js"></script>
+</body>
+</html>
+
+<!-- comment -->

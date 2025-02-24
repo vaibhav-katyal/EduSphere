@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Quiz Platform</title>
+    <link rel="stylesheet" href="quiz.css">
+</head>
+<body>
+    <div class="quiz-container">
+        <h2>Generate AI Quiz</h2>
+        <label>Subject: <input type="text" id="subject"></label>
+        <label>Subtopic: <input type="text" id="subtopic"></label>
+        <label>Difficulty:
+            <select id="difficulty">
+                <option value="easy">Easy</option>
+                <option value="medium">Medium</option>
+                <option value="hard">Hard</option>
+            </select>
+        </label>
+        <label>Number of Questions: <input type="number" id="numQuestions" min="1" max="10"></label>
+        <button onclick="generateQuiz()">Generate Quiz</button>
+
+        <div id="quizOutput"></div>
+    </div>
+
+    <script src="quiz.js"></script>
+</body>
+</html>
