@@ -1,16 +1,86 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const cors = require("cors");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const session = require("express-session");
-const passport = require("passport");
-const GoogleStrategy = require("passport-google-oauth20").Strategy;
-const path = require("path");
-const app = express();
-app.use(cors());
-app.use(express.json());
+import express from 'express';
+import mongoose from 'mongoose';
+import cors from 'cors';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import session from 'express-session';
+import passport from 'passport';
+import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
+import path from 'path';
+import nodemailer from 'nodemailer';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const app = express();
+
+// Nodemailer setup for sending emails
+async function sendSignupEmail(userEmail, userName) {
+    try {
+        let transporter = nodemailer.createTransport({
+            service: "gmail",
+            auth: {
+                user: "adityasharma.5672@gmail.com",
+                pass: "ezun hhkb oaye phsr"
+            }
+        });
+
+        let mailOptions = {
+            from: '"EduSphere Team" <adityasharma.5672@gmail.com>',
+            to: userEmail,
+            subject: "🚀 Welcome Aboard, Genius!",
+            text: `Hey ${userName}, 
+
+BOOM! 💥 You're officially a part of EduSphere! 🚀 
+
+You just unlocked a world of next-level learning, exclusive study groups, and top-tier knowledge! 🤩
+
+🎯 What’s Next? 
+- Join study groups & meet legends like you! 
+- Access premium notes & resources! 
+- Win challenges & flex your skills! 
+
+⚡ Ready to explore? Click the link & jump in NOW:  
+🔗 https://edusphere.com/dashboard 
+
+See you inside, champ! 😎🔥  
+
+- EduSphere Team  
+(P.S. Legends don’t wait! 😏)  
+`,
+            html: `
+                <div style="font-family: Arial, sans-serif; color: #333; text-align: center;">
+                    <h1 style="color: #ff4747;">🚀 BOOM! YOU’RE IN! 🔥</h1>
+                    <p>Hey <b>${userName}</b>, welcome to <b>EduSphere</b>! You just unlocked a world of **learning, community, and exclusive opportunities!** 😍</p>
+                    
+                    <h3>🎯 What’s Next?</h3>
+                    <ul style="list-style: none; padding: 0;">
+                        <li> Join study groups & meet legends like you! ✅</li>
+                        <li> Access premium notes & resources! 📚</li>
+                        <li> Win challenges & flex your knowledge! 🏆</li>
+                    </ul>
+                    
+                    <p style="font-size: 18px; font-weight: bold;">⚡ Ready to explore? Click below & jump in NOW!</p>
+                    
+                    <a href="https://edusphere.com/dashboard" style="background: #ff4747; color: white; padding: 12px 20px; text-decoration: none; border-radius: 5px; font-size: 18px; font-weight: bold; display: inline-block;"> LET'S GOOO! </a>
+                    
+                    <p style="margin-top: 20px;">See you inside, champ! 😎🔥<br><b>- EduSphere Team</b></p>
+                    <p style="font-size: 12px; color: #888;">P.S. Legends don’t wait! 😏</p>
+                </div>
+            `
+        };
+
+        let info = await transporter.sendMail(mailOptions);
+        console.log("✅ Email sent:", info.response);
+    } catch (error) {
+        console.error("❌ Error sending email:", error);
+    }
+}
+
+
+// CORS setup
 const allowedOrigins = ["http://localhost:3000", "http://127.0.0.1:5500"];
 
 app.use(cors({
@@ -23,32 +93,51 @@ app.use(cors({
     },
     credentials: true
 }));
-// Session setup for Google OAuth
-app.use(session({ secret: "your_secret_key", resave: false, saveUninitialized: true }));
+
+app.use(express.json());
+
+// Session setup
+app.use(session({ 
+    secret: "your_secret_key", 
+    resave: false, 
+    saveUninitialized: true 
+}));
+
 app.use(passport.initialize());
 app.use(passport.session());
 
-const JWT_SECRET = "902d22ae459df3cef67d662f3b637feb8f149eb451362aa6e40596f9c6503dac2de98d1c3d5fa1ac61d6e545f4e46bac84d5a60937602c146ee0bc2e80e5b1b9"; // Change this to a secure key
+const JWT_SECRET = "902d22ae459df3cef67d662f3b637feb8f149eb451362aa6e40596f9c6503dac2de98d1c3d5fa1ac61d6e545f4e46bac84d5a60937602c146ee0bc2e80e5b1b9";
 
-// Connect to MongoDB
+// MongoDB Connection
 mongoose.connect("mongodb+srv://adityasharma08093:Lakshya9780@groupstudy.yl0qi.mongodb.net/?retryWrites=true&w=majority&appName=groupstudy", { 
     useNewUrlParser: true, 
     useUnifiedTopology: true 
 })
-.then(() => console.log("MongoDB Connected"))
-.catch(err => console.log(err));
+.then(() => console.log("✅ MongoDB Connected"))
+.catch(err => console.log("❌ MongoDB Error:", err));
 
-// Define User Schema
+// User Schema
 const userSchema = new mongoose.Schema({
-    username: { type: String, required: true },  // ✅ Remove "unique: true"
-    email: { type: String, unique: true, required: true },  // ✅ Keep email unique
+    username: { type: String, required: true, unique: true },
+    email: { type: String, unique: true, required: true },
     password: String
 });
 
-
 const User = mongoose.model("User", userSchema);
 
-// 🔹 Google OAuth Strategy
+// Group Schema
+const groupSchema = new mongoose.Schema({
+    name: String,
+    description: String,
+    type: String,
+    inviteCode: String,
+    leader: String,
+    members: [String]
+});
+
+const Group = mongoose.model("Group", groupSchema);
+
+// Google OAuth Strategy
 passport.use(new GoogleStrategy({
     clientID: "7499225439-vfj5ihd30lgij33dt9in319fqhsgudf4.apps.googleusercontent.com",
     clientSecret: "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",
@@ -61,7 +150,6 @@ passport.use(new GoogleStrategy({
             let username = profile.displayName;
             let existingUser = await User.findOne({ username });
 
-            // ✅ If username already exists, modify it
             if (existingUser) {
                 username = `${profile.displayName}-${Math.floor(1000 + Math.random() * 9000)}`;
             }
@@ -69,7 +157,7 @@ passport.use(new GoogleStrategy({
             user = new User({
                 username: username,
                 email: profile.emails[0].value,
-                password: "" // No password for Google users
+                password: ""
             });
 
             await user.save();
@@ -86,174 +174,176 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser(async (id, done) => {
-    const user = await User.findById(id);
-    done(null, user);
+    try {
+        const user = await User.findById(id);
+        done(null, user);
+    } catch (error) {
+        done(error, null);
+    }
 });
 
-// 🔹 Google Login Routes
-app.get("/auth/google", passport.authenticate("google", { scope: ["profile", "email"] }));
-
-// Serve static files from the current directory
+// Static file serving
 app.use(express.static(__dirname));
-
-// Serve static files from "public" or another folder if you have one
 app.use(express.static(path.join(__dirname, "public")));
 
-// Google Auth callback
+// Auth Routes
+app.get("/auth/google", passport.authenticate("google", { scope: ["profile", "email"] }));
+
 app.get("/auth/google/callback", 
     passport.authenticate("google", { failureRedirect: "/" }),
     async (req, res) => {
         try {
-            // Generate a JWT token for Google login users
             const token = jwt.sign(
                 { userId: req.user._id, email: req.user.email, username: req.user.username },
                 JWT_SECRET,
-                { expiresIn: "1h" } // Token valid for 1 hour
+                { expiresIn: "1h" }
             );
-
-            // Redirect with token in URL (frontend will store it)
             res.redirect(`/index.html?token=${token}`);
         } catch (error) {
-            console.error("Error generating JWT for Google user:", error);
-            res.redirect("/"); // Redirect to home if error occurs
+            console.error("❌ Error generating JWT for Google user:", error);
+            res.redirect("/");
         }
     }
 );
 
-
-// 🔹 User Signup Route
+// Signup Route
 app.post("/signup", async (req, res) => {
     try {
-        const { username, email, password } = req.body;
+        let { username, email, password } = req.body;
 
-        if (!email || !password) {
-            return res.status(400).json({ message: "Email and password are required" });
+        // Check for existing user
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            console.log("User already exists!");
+            return res.status(400).json({ message: "User already exists!" });
         }
 
-        let user = await User.findOne({ email });
-
-        if (user) {
-            // ✅ If user exists but has no password, allow setting one
-            if (!user.password) {
-                const hashedPassword = await bcrypt.hash(password, 10);
-                user.password = hashedPassword;
-                await user.save();
-                return res.status(200).json({ message: "Password set successfully, now you can login manually!" });
-            }
-            return res.status(400).json({ message: "User already exists. Please login or reset password." });
+        // Ensure unique username
+        let uniqueUsername = username;
+        while (await User.findOne({ username: uniqueUsername })) {
+            uniqueUsername = `${username}-${Math.floor(1000 + Math.random() * 9000)}`;
         }
+        console.log("Unique Username:", uniqueUsername);
 
-        // ✅ Only create a new user if they don't already exist
-        const hashedPassword = await bcrypt.hash(password, 10);
-        const newUser = new User({ username, email, password: hashedPassword });
+        // Hash password
+        const saltRounds = 10;
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
+        console.log("Hashed Password:", hashedPassword);
 
+        // Create and save new user
+        const newUser = new User({
+            username: uniqueUsername,
+            email,
+            password: hashedPassword
+        });
         await newUser.save();
 
-        res.status(201).json({ message: "User registered successfully" });
+        // Send welcome email
+        await sendSignupEmail(email, uniqueUsername);
+
+        res.status(201).json({ message: "Signup successful! Email sent." });
     } catch (error) {
-        console.error("❌ Signup Error:", error);
-        res.status(500).json({ message: "Server error" });
+        if (error.code === 11000) {
+            console.error("❌ Duplicate key error:", error.keyValue);
+            res.status(400).json({ message: "Duplicate key error", field: error.keyValue });
+        } else {
+            console.error("❌ Error during signup:", error);
+            res.status(500).json({ message: "Server Error", error: error.message });
+        }
     }
 });
 
-
-
-// 🔹 User Signin Route
+// Signin Route
 app.post("/signin", async (req, res) => {
     try {
         const { email, password } = req.body;
-
-        if (!email || !password) {
-            return res.status(400).json({ message: "Email and password are required" });
-        }
-
+        
+        // Find user
         const user = await User.findOne({ email });
         if (!user) {
-            return res.status(400).json({ message: "User not found" });
+            console.log("User not found!");
+            return res.status(400).json({ message: "User not found!" });
         }
 
-        const isPasswordValid = await bcrypt.compare(password, user.password);
-        if (!isPasswordValid) {
-            return res.status(400).json({ message: "Invalid password" });
+        // Verify password
+        const isMatch = await bcrypt.compare(password, user.password);
+        console.log("Password Match:", isMatch);
+        if (!isMatch) {
+            console.log("Invalid Password!");
+            return res.status(400).json({ message: "Invalid Password!" });
         }
 
-        // ✅ Logging username for debugging
-        console.log("✅ Username from DB:", user.username);
-
-        // Generate JWT token
+        // Generate token
         const token = jwt.sign(
-            { userId: user._id, email: user.email, username: user.username }, 
+            { userId: user._id, email: user.email, username: user.username },
             JWT_SECRET,
             { expiresIn: "1h" }
         );
 
-        res.json({ message: "Sign-in successful", token, username: user.username });
+        res.status(200).json({ 
+            message: "Login Successful!", 
+            token, 
+            user: {
+                username: user.username,
+                email: user.email
+            }
+        });
     } catch (error) {
-        console.error("❌ Signin Error:", error);
-        res.status(500).json({ message: "Server error" });
+        console.error("❌ Error during login:", error);
+        res.status(500).json({ message: "Server Error", error: error.message });
     }
 });
 
-
-
-// 🔹 Protected Route Example
+// Protected Profile Route
 app.get("/profile", async (req, res) => {
     let token = req.headers.authorization;
-
-    console.log("🛠️ Received Token in /profile:", token);  // Debugging
 
     if (!token) {
         return res.status(401).json({ message: "Unauthorized" });
     }
 
     try {
-        // Remove "Bearer " prefix if present
         if (token.startsWith("Bearer ")) {
-            token = token.slice(7, token.length);
+            token = token.slice(7);
         }
 
-        console.log("🔍 Token After Removing 'Bearer':", token); // Debugging
-
         const decoded = jwt.verify(token, JWT_SECRET);
-        console.log("✅ Decoded Token:", decoded); // Debugging
-
         const user = await User.findById(decoded.userId).select("-password");
 
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
 
-        console.log("✅ Returning User Data:", user);
         res.json(user);
     } catch (error) {
         console.error("❌ JWT Verification Error:", error);
         res.status(401).json({ message: "Invalid token" });
     }
 });
-// Define Group Schema
-const groupSchema = new mongoose.Schema({
-    name: String,
-    description: String,
-    type: String,
-    inviteCode: String,
-    leader: String,
-    members: [String]
-});
 
-const Group = mongoose.model("Group", groupSchema);
-
-// Get all groups
+// Group Routes
 app.get("/groups", async (req, res) => {
-    const groups = await Group.find();
-    res.json(groups);
+    try {
+        const groups = await Group.find();
+        res.json(groups);
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching groups", error: error.message });
+    }
 });
 
-// Create a new group
 app.post("/groups", async (req, res) => {
-    const newGroup = new Group(req.body);
-    await newGroup.save();
-    res.json({ message: "Group Created!", group: newGroup });
+    try {
+        const newGroup = new Group({
+            ...req.body,
+            inviteCode: Math.random().toString(36).substring(7)
+        });
+        await newGroup.save();
+        res.status(201).json({ message: "Group Created!", group: newGroup });
+    } catch (error) {
+        res.status(500).json({ message: "Error creating group", error: error.message });
+    }
 });
 
 // Start server
-app.listen(3000, () => console.log("Server running on port 3000"));
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));

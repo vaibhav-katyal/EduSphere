@@ -40,7 +40,8 @@
 }
 
 #google-login-btn:hover {
-    background-color: #f8f9fa;
+    background-color: black;
+    color: white;
 }
 
 </style>
@@ -62,6 +63,8 @@
                         <input type="password" id="signin-password" class="text-input" placeholder="Enter password">
                     </div>
                     <button type="submit" class="primary-btn">Sign In</button>
+                    
+
                 </form>
                 <form id="signup-form" style="display: none;">
                     <div>
@@ -77,19 +80,21 @@
                         <input type="password" id="signup-password" class="text-input" placeholder="Enter password">
                     </div>
                     <button type="submit" class="primary-btn">Sign Up</button>
-                    <div class="google-login">
-                        <button id="google-login-btn">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/1200px-Google_%22G%22_logo.svg.png" 
-                                 alt="Google Logo">
-                            Continue with Google
-                        </button>
-                    </div>
+
                     
 
                       
                 </form>
                 <div class="links">
                     <a href="javascript:void(0);" id="toggle-auth">Create an Account</a>
+                    <h3> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>OR</b></h3>
+                </div>
+                <div class="google-login" >
+                    <button id="google-login-btn" >
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/1200px-Google_%22G%22_logo.svg.png" 
+                             alt="Google Logo">
+                        Continue with Google
+                    </button>
                 </div>
             </div>
         </div> 
