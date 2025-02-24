@@ -23,13 +23,27 @@ document.querySelectorAll('.pricing-card').forEach((card, index) => {
     card.style.transitionDelay = `${index * 0.1}s`; // ✅ Fixed syntax issue (added backticks)
 });
 
-document.addEventListener("DOMContentLoaded", function () {
-    function updateNavbar() {
-        const user = JSON.parse(localStorage.getItem('user'));
-        const authNav = document.getElementById('nav-auth');
+document.addEventListener("DOMContentLoaded", async function () {
+    async function fetchUserData() {
+        const token = localStorage.getItem("token");
+        if (!token) return null;
+
+        try {
+            const response = await fetch("http://localhost:3000/user", {
+                headers: { Authorization: token }
+            });
+            if (!response.ok) return null;
+            return await response.json();
+        } catch (error) {
+            return null;
+        }
+    }
+
+    async function updateNavbar() {
+        const user = await fetchUserData();
+        const authNav = document.getElementById("nav-auth");
 
         if (user) {
-            // Preserve existing nav links and append profile & logout button
             authNav.innerHTML = `
                 <a href="landing.html"><li>Home</li></a>
                 <a href="groupPage.html"><li>Group Study</li></a>
@@ -37,22 +51,22 @@ document.addEventListener("DOMContentLoaded", function () {
                 <a href="quiz.html"><li>Quiz</li></a>
                 <a href="feedback.html"><li>Contact Us</li></a>
                 <li class="profile-container">
-                    
+                    <img src="${user.profilePic}" class="profile-pic" alt="Profile Picture">
                     <span class="profile-text">Hi👋, ${user.username}!</span>
                 </li>
                 <li><button class="logout-btn" id="logout-btn">Logout</button></li>
             `;
 
-            // Add event listener for logout
-            document.getElementById("logout-btn").addEventListener("click", function () {
-                localStorage.removeItem('user');
-                window.location.reload(); // Refresh page to reset navbar
+            document.getElementById("logout-btn").addEventListener("click", () => {
+                localStorage.removeItem("token");
+                window.location.reload();
             });
         }
     }
 
-    updateNavbar(); // Run this function on page load
+    updateNavbar();
 });
+
 
 // const menuToggle = document.querySelector('.menu-toggle');
 // const navLinks = document.querySelector('.navbar ul');

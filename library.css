@@ -53,6 +53,9 @@ body {
   padding: 20px;
   background: white;
 }
+.mobile-nav {
+  display: none;
+}
 
 /* Library Header */
 .library-header {
