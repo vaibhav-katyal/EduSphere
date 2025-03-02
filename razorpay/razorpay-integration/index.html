@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Razorpay Payment</title>
+</head>
+<body>
+    <h2>Pay ₹500</h2>
+    <button id="pay-btn">Pay Now</button>
+
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script>
+        document.getElementById("pay-btn").addEventListener("click", async () => {
+            try {
+                // 🔥 Order Create API Call
+                const response = await fetch("http://localhost:5000/create-order", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ amount: 500 })
+                });
+
+                const order = await response.json();
+                console.log("Order Created:", order);
+
+                // 🔥 Razorpay Checkout Options
+                var options = {
+                    key: "rzp_live_SRCM2Owf5KsNoY",
+                    amount: order.amount,
+                    currency: order.currency,
+                    order_id: order.id,
+                    name: "Your Company",
+                    description: "Test Transaction",
+                    handler: function (response) {
+                        alert("Payment Successful! Payment ID: " + response.razorpay_payment_id);
+                    },
+                    prefill: {
+                        name: "Customer Name",
+                        email: "customer@example.com",
+                        contact: "9876543210"
+                    },
+                    theme: { color: "#3399cc" }
+                };
+
+                var rzp1 = new Razorpay(options);
+                rzp1.open();
+            } catch (error) {
+                console.error("Payment Error:", error);
+                alert("Payment Failed");
+            }
+        });
+    </script>
+</body>
+</html>
+
+
+

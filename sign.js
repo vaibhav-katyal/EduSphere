@@ -52,12 +52,12 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
       }
 
-      try {
-        const response = await fetch("http://localhost:3000/signup", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ username, email, password })
-        });
+        try {
+            const response = await fetch("https://edusphere-c0wr.onrender.com/signup", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username, email, password })
+            });
 
         const data = await response.json();
         if (response.ok) {
@@ -83,12 +83,12 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
       }
 
-      try {
-        const response = await fetch("http://localhost:3000/signin", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email, password })
-        });
+        try {
+            const response = await fetch("https://edusphere-c0wr.onrender.com/signin", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email, password })
+            });
 
         const data = await response.json();
         if (response.ok) {
@@ -106,17 +106,25 @@ document.addEventListener("DOMContentLoaded", function () {
         showPopup("⚠️ Server error. Please try again.");
       }
     });
+});
 
-    // Google Sign-In Button
-    document.getElementById("google-sign-in-btn").addEventListener("click", () => {
-      window.location.href = "http://localhost:3000/auth/google"; // Redirect to backend
-    });
 
-    // Check if redirected with token
-    const urlParams = new URLSearchParams(window.location.search);
-    const token = urlParams.get("token");
-    if (token) {
-      localStorage.setItem("token", token);
-      window.location.href = "index.html"; // Redirect to main page
+fetch("https://edusphere-c0wr.onrender.com/signin", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, password }),
+})
+.then(response => response.json())
+.then(data => {
+    console.log("🔹 Server Response:", data); // ✅ Debugging
+
+    if (data.token) {
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("username", data.username || "User");  // ✅ Store username properly
+        console.log("📌 Stored in LocalStorage:", localStorage.getItem("username")); // ✅ Debugging
+        window.location.href = "index.html";
+    } else {
+        alert("Login failed: " + data.message);
     }
-  });
+})
+.catch(error => console.error("Fetch Error:", error));

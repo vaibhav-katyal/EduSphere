@@ -779,15 +779,15 @@
 
                         console.log("Creating group with data:", newGroup);
 
-                        try {
-                            let response = await fetch("http://localhost:3000/groups", {
-                                method: "POST",
-                                headers: {
-                                    "Content-Type": "application/json",
-                                    "Authorization": "Bearer " + localStorage.getItem("token")
-                                },
-                                body: JSON.stringify(newGroup)
-                            });
+            try {
+                let response = await fetch("https://edusphere-c0wr.onrender.com/groups", {
+                    method: "POST",
+                    headers: { 
+                        "Content-Type": "application/json",
+                        "Authorization": "Bearer " + localStorage.getItem("token") // Add JWT token to headers
+                    },
+                    body: JSON.stringify(newGroup)
+                });
 
                             if (response.ok) {
                                 let savedGroup = await response.json();
@@ -812,7 +812,7 @@
 
         async function fetchGroups() {
             try {
-                let response = await fetch("http://localhost:3000/groups");
+                let response = await fetch("https://edusphere-c0wr.onrender.com/groups");
                 let data = await response.json();
                 console.log("Fetched groups from backend:", data);
                 localStorage.setItem("groups", JSON.stringify(data));
@@ -840,16 +840,8 @@
 
         async function joinGroup(id, type, inviteCode) {
             try {
-                let currentUser = localStorage.getItem("username");
-                if (!currentUser) {
-                    showModal("Sign In Required",
-                        "<p>Please sign in first to join a group!</p>",
-                        [{ text: "OK", class: "btn-primary" }]);
-                    return;
-                }
-
-                let response = await fetch("http://localhost:3000/groups");
-                let groups = await response.json();
+                let response = await fetch("https://edusphere-c0wr.onrender.com/groups");
+                let groups = await response.json(); // Get fresh group list
 
                 let selectedGroup = groups.find(group => group._id === id);
                 if (!selectedGroup) {
@@ -900,18 +892,16 @@
                 // Add user to group members
                 selectedGroup.members.push(currentUser);
 
-                // Send update to backend
-                await fetch(`http://localhost:3000/groups/${selectedGroup._id}/join`, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": "Bearer " + localStorage.getItem("token")
-                    },
-                    body: JSON.stringify({ username: currentUser })
-                });
-
-                // Show success message
-                showToast("Successfully joined the group!");
+                    // Send update to backend
+                    await fetch(`https://edusphere-c0wr.onrender.com/${selectedGroup._id}/join`, {
+                        method: "POST",
+                        headers: { 
+                            "Content-Type": "application/json",
+                            "Authorization": "Bearer " + localStorage.getItem("token") // Add JWT token to headers
+                        },
+                        body: JSON.stringify({ username: currentUser })
+                    });
+                }
 
                 // Store selected group in localStorage and redirect
                 localStorage.setItem("currentGroup", JSON.stringify(selectedGroup));
