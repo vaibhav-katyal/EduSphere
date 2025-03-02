@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduSphere- Chat</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://unpkg.com/lucide-css/dist/lucide.css" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div id="welcome-screen">
+        <div class="welcome-container">
+            <i data-lucide="message-circle" class="welcome-icon"></i>
+            <h1>Welcome to EduSphere-Chat</h1>
+            <div class="input-group">
+                <i data-lucide="user"></i>
+                <input type="text" id="nickname" placeholder="Enter your nickname">
+            </div>
+            <div class="button-group">
+                <button onclick="createRoom()" class="primary-btn">
+                    <i data-lucide="plus-circle"></i>
+                    Create Room
+                </button>
+                <div class="divider">or</div>
+                <div class="input-group">
+                    <i data-lucide="hash"></i>
+                    <input type="text" id="room-id" placeholder="Enter Room ID">
+                </div>
+                <button onclick="joinRoom()" class="secondary-btn">
+                    <i data-lucide="log-in"></i>
+                    Join Room
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <div id="chat-screen" style="display: none;">
+        <div class="chat-header">
+            <div class="room-info">
+                <i data-lucide="users"></i>
+                <h2>Room: <span id="room-display"></span></h2>
+            </div>
+            <button onclick="copyRoomId()" class="icon-btn" title="Copy Room ID">
+                <i data-lucide="copy"></i>
+            </button>
+        </div>
+        <div id="chat-box"></div>
+        <div class="chat-input">
+            <label for="fileInput" class="icon-btn" title="Send Media or Document">
+                <i data-lucide="paperclip"></i>
+                <input type="file" id="fileInput" accept="image/*,video/*,application/pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx" style="display: none;">
+            </label>
+            <div class="message-input">
+                <input type="text" id="message" placeholder="Type a message..." onkeypress="handleKeyPress(event)">
+                <button onclick="sendMessage()" class="icon-btn send-btn" title="Send Message">
+                    <i data-lucide="send"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.socket.io/4.3.2/socket.io.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

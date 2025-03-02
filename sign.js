@@ -106,7 +106,6 @@ document.addEventListener("DOMContentLoaded", function () {
         showPopup("⚠️ Server error. Please try again.");
       }
     });
-<<<<<<< HEAD
 
     // Google Sign-In Button
     document.getElementById("google-sign-in-btn").addEventListener("click", () => {
@@ -121,27 +120,3 @@ document.addEventListener("DOMContentLoaded", function () {
       window.location.href = "index.html"; // Redirect to main page
     }
   });
-=======
-});
-
-
-fetch("http://localhost:3000/signin", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, password }),
-})
-.then(response => response.json())
-.then(data => {
-    console.log("🔹 Server Response:", data); // ✅ Debugging
-
-    if (data.token) {
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("username", data.username || "User");  // ✅ Store username properly
-        console.log("📌 Stored in LocalStorage:", localStorage.getItem("username")); // ✅ Debugging
-        window.location.href = "index.html";
-    } else {
-        alert("Login failed: " + data.message);
-    }
-})
-.catch(error => console.error("Fetch Error:", error));
->>>>>>> 8ebba94e166608f2a641dc7072695b72dca20c42
