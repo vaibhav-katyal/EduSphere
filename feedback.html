@@ -179,17 +179,31 @@
 <body>
 
     <nav class="navbar">
-        <div class="title">EDUSPHERE</div>
-        <div class="menu-toggle">☰</div>
-        <ul>
+        <a href="dashboard.html" style="text-decoration: none;"><div class="title">EDUSPHERE</div></a>
+        <div class="menu-toggle" id="menu-toggle">☰</div>
+        <ul id="nav-auth" class="nav-menu">
             <a href="index.html"><li>Home</li></a>
             <a href="groupPage.html"><li>Group Study</li></a>
             <a href="library.html"><li>Library</li></a>
-            <a href="quiz.html"><li>Quiz</li></a>
+            <a href="aiquiz.html"><li>Quiz</li></a>
             <a href="feedback.html"><li>Contact Us</li></a>
-            <!-- <a href="sign.html">
-                <li><button class="login-btn">Login</button></li>
-            </a> -->
+            <a href="sign.html" id="auth-link"><li><button class="login-btn">Login</button></li></a>
+        </ul>
+        <ul id="nav-user" class="nav-menu" style="display: none;">
+            <a href="index.html"><li>Home</li></a>
+            <a href="groupPage.html"><li>Group Study</li></a>
+            <a href="library.html"><li>Library</li></a>
+            <a href="aiquiz.html"><li>Quiz</li></a>
+            <a href="feedback.html"><li>Contact Us</li></a>
+            <li class="dropdown">
+                <button id="dropdown-btn" class="username-btn">
+                    <span id="username-text">Guest</span> ⬇
+                </button>
+                <div id="dropdown-content" class="dropdown-content">
+                    <a href="profile.html">View Profile</a>
+                    <a href="#" id="logout-btn">Logout</a>
+                </div>
+            </li>
         </ul>
     </nav>
     <br><br>

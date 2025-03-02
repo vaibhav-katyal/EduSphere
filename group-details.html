@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Group Details</title>
+    <link rel="stylesheet" href="navbar.css">
     <style>
         body {
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
@@ -87,9 +88,60 @@
         }
     </style>
 </head>
-<iframe src="chat.html" width="330" height="500" style="border:none; position:fixed; bottom:20px; right:20px; ; border-radius:10px;"></iframe>
+<iframe src="chat.html" width="330" height="500"
+    style="border:none; position:fixed; bottom:20px; right:20px; ; border-radius:10px;"></iframe>
 
 <body>
+    <nav class="navbar">
+        <div class="title">EDUSPHERE</div>
+        <div class="menu-toggle" id="menu-toggle">☰</div>
+        <ul id="nav-auth" class="nav-menu">
+            <a href="index.html">
+                <li>Home</li>
+            </a>
+            <a href="groupPage.html">
+                <li>Group Study</li>
+            </a>
+            <a href="library.html">
+                <li>Library</li>
+            </a>
+            <a href="quiz.html">
+                <li>Quiz</li>
+            </a>
+            <a href="feedback.html">
+                <li>Contact Us</li>
+            </a>
+            <a href="sign.html" id="auth-link">
+                <li><button class="login-btn">Login</button></li>
+            </a>
+        </ul>
+        <ul id="nav-user" class="nav-menu" style="display: none;">
+            <a href="index.html">
+                <li>Home</li>
+            </a>
+            <a href="groupPage.html">
+                <li>Group Study</li>
+            </a>
+            <a href="library.html">
+                <li>Library</li>
+            </a>
+            <a href="quiz.html">
+                <li>Quiz</li>
+            </a>
+            <a href="feedback.html">
+                <li>Contact Us</li>
+            </a>
+            <li class="dropdown">
+                <button id="dropdown-btn" class="username-btn">
+                    <span id="username-text">Guest</span> ⬇
+                </button>
+                <div id="dropdown-content" class="dropdown-content">
+                    <a href="profile.html">View Profile</a>
+                    <a href="#" id="logout-btn">Logout</a>
+                </div>
+            </li>
+        </ul>
+    </nav>
     <div class="container">
         <div class="sidebar">
             <h2>🌿 EduSphere</h2>
@@ -240,8 +292,13 @@
                         saveGroups(group);
                         updateMemberList(group.members);
                         alert("You have successfully joined the group!");
-                        localStorage.setItem("videoCallAccess", "true"); // Store access flag
+
+                        // Store access flags
+                        localStorage.setItem("videoCallAccess", "true");
+                        localStorage.setItem("chatAccess", "true");
+
                         addVideoCallButton();
+                        addChatButton();
                     } else {
                         alert("You are already a member of this group.");
                     }
@@ -255,7 +312,7 @@
             if (!document.getElementById("videoCallButton")) {
                 const button = document.createElement("button");
                 button.id = "videoCallButton";
-                button.textContent = "Connect via Video Call";
+                button.textContent = "Join with Video Call";
                 button.style.marginTop = "12px";
                 button.onclick = function () {
                     window.location.href = "video-call-app/public/video-call.html";
@@ -264,15 +321,32 @@
             }
         }
 
-        // Load group details & check if button should be added
+        function addChatButton() {
+            if (!document.getElementById("chatButton")) {
+                const button = document.createElement("button");
+                button.id = "chatButton";
+                button.textContent = "Join with Chat";
+                button.style.marginTop = "12px";
+                button.onclick = function () {
+                    window.location.href = "chat/public/index.html";
+                };
+                document.querySelector(".sidebar").appendChild(button);
+            }
+        }
+
+        // Load group details & check if buttons should be added
         window.onload = function () {
             loadGroupDetails();
             if (localStorage.getItem("videoCallAccess") === "true") {
                 addVideoCallButton();
             }
+            if (localStorage.getItem("chatAccess") === "true") {
+                addChatButton();
+            }
         };
 
     </script>
+    <script src="navbar.js"></script>
 </body>
 
 </html>
