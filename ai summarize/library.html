@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyBuddy Library</title>
+    <link rel="stylesheet" href="library.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <!-- <iframe src="chat.html" width="330" height="500" style="border:none; position:fixed; bottom:20px; right:20px; border-radius:10px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); z-index: 1000;"></iframe> -->
+
+    <div class="library-container">
+        <!-- Sidebar for Categories -->
+        <aside class="library-sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h2>Categories</h2>
+                <button class="close-sidebar" id="close-sidebar">&times;</button>
+            </div>
+            <ul id="category-list">
+                <li data-category="all" class="active">📚 All Materials</li>
+                <li data-category="pdf">📄 Question Bank</li>
+                <li data-category="notes">📝 Notes</li>
+                <li data-category="books">📖 Books</li>
+                <li data-category="videos">🎥 Videos</li>
+            </ul>
+        </aside>
+
+        <!-- Main Library Section -->
+        <main class="library-main">
+            <header class="library-header">
+                <div class="header-top">
+                    <h2>Library Resources</h2>
+                    <button class="hamburger" id="hamburger">&#9776;</button>
+                </div>
+                <div class="header-controls">
+                    <div class="search-container">
+                        <input type="text" id="search-input" placeholder="Search materials...">
+                        <div class="search-icon">🔍</div>
+                    </div>
+                    <button id="toggle-upload-btn">Upload Material</button>
+                </div>
+            </header>
+
+            <!-- Upload Section (Initially Hidden) -->
+            <div id="upload-section" class="upload-container" style="display: none;">
+                <h3>Upload Your Material</h3>
+                <div class="form-group">
+                    <input type="text" id="material-title" placeholder="Enter Title">
+                </div>
+                <div class="form-group">
+                    <select id="material-type">
+                        <option value="notes">Notes</option>
+                        <option value="pdf">Question Bank</option>
+                        <option value="books">Books</option>
+                        <option value="videos">Videos</option>
+                    </select>
+                </div>
+                <div class="form-group file-input-container">
+                    <label for="material-file">Choose File</label>
+                    <input type="file" id="material-file">
+                    <span class="file-name">No file chosen</span>
+                </div>
+                <button id="upload-btn">Upload</button>
+            </div>
+
+            <div id="library-items" class="library-items"></div>
+        </main>
+    </div>
+    
+    <!-- Summarize Section -->
+    <div id="summarize-section" class="summarize-container">
+        <div class="summarize-header">
+            <h3>Summarize Your PDF</h3>
+        </div>
+        <div class="summarize-content">
+            <div class="file-upload-container">
+                <label for="pdf-file" class="file-label">Choose PDF</label>
+                <span id="file-name" class="file-name">No file chosen</span>
+                <input type="file" id="pdf-file" accept=".pdf">
+            </div>
+            <button id="summarize-btn">Summarize</button>
+            <div id="summary-result"></div>
+            
+        </div>
+    </div>
+
+    <script src="library.js"></script>
+    <script src="navbar.js"></script>
+    <script src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+
+</html>
+

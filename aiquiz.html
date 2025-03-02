@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Quiz Generator</title>
+    <link rel="stylesheet" href="aiquiz.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>AI Quiz Generator</h1>
+        <p>Create custom quizzes on any topic with AI</p>
+      </div>
+    </header>
+
+    <section class="quiz-form">
+      <div class="container">
+        <div class="form-container">
+          <h2>Create Your Quiz</h2>
+          <div class="form-group">
+            <label for="topic">Topic</label>
+            <input type="text" id="topic" placeholder="e.g. History, Science, Programming">
+          </div>
+          <div class="form-group">
+            <label for="subtopic">Subtopic (Optional)</label>
+            <input type="text" id="subtopic" placeholder="e.g. World War II, Quantum Physics, JavaScript">
+          </div>
+          <div class="form-group">
+            <label for="numQuestions">Number of Questions</label>
+            <select id="numQuestions">
+              <option value="5">5 Questions</option>
+              <option value="10" selected>10 Questions</option>
+              <option value="15">15 Questions</option>
+              <option value="20">20 Questions</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="difficulty">Difficulty Level</label>
+            <select id="difficulty">
+              <option value="easy">Easy</option>
+              <option value="medium" selected>Medium</option>
+              <option value="hard">Hard</option>
+              <option value="expert">Expert</option>
+            </select>
+          </div>
+          <button id="generateBtn" class="cta-button">Generate Quiz</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="loading-section" id="loadingSection">
+      <div class="container">
+        <div class="loading-container">
+          <div class="loading-spinner"></div>
+          <p>Generating your quiz with AI...</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="quiz-section" id="quizSection">
+      <div class="container">
+        <div class="quiz-header">
+          <h2 id="quizTitle">Your Quiz</h2>
+          <p id="quizDescription">Answer the following questions</p>
+        </div>
+        <div id="quizContainer"></div>
+        <div class="quiz-controls">
+          <button id="submitQuizBtn" class="cta-button">Submit Answers</button>
+          <button id="newQuizBtn" class="cta-button secondary">Create New Quiz</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="results-section" id="resultsSection">
+      <div class="container">
+        <div class="results-container">
+          <h2>Quiz Results</h2>
+          <div class="score-display">
+            <div class="score-circle">
+              <span id="scoreValue">0</span>/<span id="totalQuestions">0</span>
+            </div>
+            <p id="scorePercentage">0%</p>
+          </div>
+          <div id="resultsBreakdown"></div>
+          <button id="reviewQuizBtn" class="cta-button">Review Answers</button>
+          <button id="newQuizAfterResultsBtn" class="cta-button secondary">Create New Quiz</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="features">
+      <div class="container">
+        <h2>Why Use Our AI Quiz Generator?</h2>
+        <div class="features-grid">
+          <div class="feature">
+            <div class="feature-icon">
+              <i class="fas fa-robot"></i>
+            </div>
+            <div class="feature-content">
+              <h3>AI-Powered</h3>
+              <p>Leverages Google's Gemini AI for intelligent, relevant questions</p>
+            </div>
+          </div>
+          <div class="feature">
+            <div class="feature-icon">
+              <i class="fas fa-bolt"></i>
+            </div>
+            <div class="feature-content">
+              <h3>Instant Creation</h3>
+              <p>Generate comprehensive quizzes in seconds</p>
+            </div>
+          </div>
+          <div class="feature">
+            <div class="feature-icon">
+              <i class="fas fa-sliders-h"></i>
+            </div>
+            <div class="feature-content">
+              <h3>Customizable</h3>
+              <p>Adjust topic, difficulty, and length to your needs</p>
+            </div>
+          </div>
+          <div class="feature">
+            <div class="feature-icon">
+              <i class="fas fa-graduation-cap"></i>
+            </div>
+            <div class="feature-content">
+              <h3>Educational</h3>
+              <p>Perfect for studying, teaching, or just having fun</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="testimonials">
+      <div class="container">
+        <h2>What Our Users Say</h2>
+        <div class="testimonials-slider">
+          <div class="testimonial-card">
+            <div class="testimonial-content">
+              <p>"This quiz generator has revolutionized how I prepare for my classes. My students love the variety of questions!"</p>
+            </div>
+            <div class="testimonial-author">
+              <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Sarah T." class="author-avatar">
+              <div class="author-info">
+                <p class="author-name">Sarah T.</p>
+                <p class="author-title">High School Teacher</p>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <div class="testimonial-content">
+              <p>"I use this for my study groups. The AI generates questions I wouldn't have thought to ask myself."</p>
+            </div>
+            <div class="testimonial-author">
+              <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Michael R." class="author-avatar">
+              <div class="author-info">
+                <p class="author-name">Michael R.</p>
+                <p class="author-title">College Student</p>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <div class="testimonial-content">
+              <p>"The customization options are fantastic. I can create quizzes for any subject at exactly the right difficulty."</p>
+            </div>
+            <div class="testimonial-author">
+              <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Jessica L." class="author-avatar">
+              <div class="author-info">
+                <p class="author-name">Jessica L.</p>
+                <p class="author-title">Education Consultant</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 AI Quiz Generator. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script type="module" src="main.js"></script>
+  </body>
+</html>

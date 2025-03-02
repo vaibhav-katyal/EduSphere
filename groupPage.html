@@ -1,20 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Group Page</title>
+    <link rel="stylesheet" href="navbar.css">
     <style>
         body {
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
             margin: 0;
             padding: 0;
             background: linear-gradient(135deg, #dcfce7 0%, #f0f9f0 100%);
-            display: flex;
+            /* display: flex; */
             flex-direction: row;
             height: 100vh;
             color: #166534;
         }
+
         .sidebar {
             width: 300px;
             background: rgba(255, 255, 255, 0.95);
@@ -26,6 +29,7 @@
             backdrop-filter: blur(10px);
             border-right: 1px solid rgba(22, 163, 74, 0.1);
         }
+
         .sidebar::before {
             content: '';
             position: absolute;
@@ -37,6 +41,7 @@
             opacity: 0.1;
             pointer-events: none;
         }
+
         .sidebar h2 {
             text-align: center;
             margin-bottom: 32px;
@@ -48,6 +53,7 @@
             gap: 12px;
             text-shadow: 0 2px 4px rgba(22, 101, 52, 0.1);
         }
+
         .sidebar input[type="text"] {
             padding: 16px;
             width: 100%;
@@ -60,12 +66,14 @@
             background: rgba(255, 255, 255, 0.9);
             box-shadow: inset 0 2px 4px rgba(22, 101, 52, 0.05);
         }
+
         .sidebar input[type="text"]:focus {
             outline: none;
             border-color: #16a34a;
             box-shadow: 0 0 0 4px rgba(22, 163, 74, 0.15);
             transform: translateY(-1px);
         }
+
         .sidebar button {
             background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
             color: white;
@@ -79,34 +87,39 @@
             margin-bottom: 28px;
             text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
             box-shadow: 0 4px 6px rgba(22, 163, 74, 0.15),
-                        0 10px 20px rgba(22, 163, 74, 0.1);
+                0 10px 20px rgba(22, 163, 74, 0.1);
         }
+
         .sidebar button:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 12px rgba(22, 163, 74, 0.2),
-                        0 12px 24px rgba(22, 163, 74, 0.15);
+                0 12px 24px rgba(22, 163, 74, 0.15);
         }
+
         .sidebar button:active {
             transform: translateY(0);
             box-shadow: 0 2px 4px rgba(22, 163, 74, 0.1);
         }
+
         .main-content {
             flex: 1;
             padding: 40px;
             overflow-y: auto;
         }
+
         .group-list {
             display: grid;
             gap: 24px;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             padding: 8px;
         }
+
         .group-card {
             background: rgba(255, 255, 255, 0.95);
             padding: 32px;
             border-radius: 24px;
             box-shadow: 0 4px 6px rgba(22, 101, 52, 0.05),
-                        0 10px 20px rgba(22, 101, 52, 0.1);
+                0 10px 20px rgba(22, 101, 52, 0.1);
             display: flex;
             flex-direction: column;
             gap: 20px;
@@ -116,6 +129,7 @@
             position: relative;
             overflow: hidden;
         }
+
         .group-card::before {
             content: '';
             position: absolute;
@@ -128,14 +142,17 @@
             transition: opacity 0.4s ease;
             pointer-events: none;
         }
+
         .group-card:hover {
             transform: translateY(-4px) scale(1.02);
             box-shadow: 0 12px 24px rgba(22, 101, 52, 0.15),
-                        0 24px 48px rgba(22, 101, 52, 0.1);
+                0 24px 48px rgba(22, 101, 52, 0.1);
         }
+
         .group-card:hover::before {
             opacity: 0.05;
         }
+
         .group-card h3 {
             color: #15803d;
             margin: 0;
@@ -143,6 +160,7 @@
             font-weight: 700;
             letter-spacing: -0.5px;
         }
+
         .group-card p {
             color: #166534;
             margin: 0;
@@ -150,6 +168,7 @@
             line-height: 1.6;
             opacity: 0.9;
         }
+
         .group-card button {
             background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
             color: #15803d;
@@ -163,11 +182,13 @@
             align-self: flex-start;
             box-shadow: 0 2px 4px rgba(22, 101, 52, 0.1);
         }
+
         .group-card button:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(22, 101, 52, 0.15);
             background: linear-gradient(135deg, #bbf7d0 0%, #86efac 100%);
         }
+
         .footer {
             text-align: center;
             padding: 32px;
@@ -178,12 +199,14 @@
             border-radius: 20px;
             backdrop-filter: blur(10px);
         }
+
         .sidebar h3 {
             color: #15803d;
             font-size: 18px;
             margin: 24px 0 16px;
             font-weight: 600;
         }
+
         .sidebar label {
             display: flex;
             align-items: center;
@@ -196,9 +219,11 @@
             border-radius: 10px;
             transition: all 0.3s ease;
         }
+
         .sidebar label:hover {
             background: rgba(220, 252, 231, 0.5);
         }
+
         .sidebar input[type="radio"] {
             appearance: none;
             width: 20px;
@@ -209,10 +234,12 @@
             position: relative;
             transition: all 0.3s ease;
         }
+
         .sidebar input[type="radio"]:checked {
             background: #16a34a;
             border-color: #16a34a;
         }
+
         .sidebar input[type="radio"]:checked::after {
             content: '';
             position: absolute;
@@ -224,13 +251,23 @@
             background: white;
             border-radius: 50%;
         }
+
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
+
         .group-card {
             animation: fadeIn 0.6s ease-out forwards;
         }
+
         .main-content h2 {
             background: linear-gradient(135deg, #15803d 0%, #16a34a 100%);
             -webkit-background-clip: text;
@@ -241,7 +278,8 @@
             letter-spacing: -1px;
             text-shadow: 0 2px 4px rgba(22, 101, 52, 0.1);
         }
-        .popup {
+
+        .toast-popup {
             position: fixed;
             top: 20px;
             right: 20px;
@@ -252,12 +290,147 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
             display: none;
             z-index: 1000;
+            animation: fadeIn 0.3s ease-out forwards;
         }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 24px;
+            padding: 32px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 10px 25px rgba(22, 101, 52, 0.2);
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            position: relative;
+            border-top: 6px solid #16a34a;
+        }
+
+        .modal-overlay.active .modal {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            color: #15803d;
+            font-size: 24px;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .modal-body {
+            margin-bottom: 24px;
+        }
+
+        .modal-body p {
+            color: #166534;
+            font-size: 16px;
+            line-height: 1.6;
+            margin: 0 0 16px 0;
+        }
+
+        .modal-body input {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #dcfce7;
+            border-radius: 12px;
+            font-size: 16px;
+            margin-bottom: 16px;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        .modal-body input:focus {
+            outline: none;
+            border-color: #16a34a;
+            box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.15);
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+            color: white;
+            box-shadow: 0 4px 6px rgba(22, 163, 74, 0.15);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(22, 163, 74, 0.2);
+        }
+
+        .btn-secondary {
+            background: #f1f5f9;
+            color: #334155;
+        }
+
+        .btn-secondary:hover {
+            background: #e2e8f0;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .radio-option input[type="radio"] {
+            width: auto;
+            margin: 0;
+        }
+
         @media (max-width: 768px) {
             body {
                 flex-direction: column;
                 height: auto;
             }
+
             .sidebar {
                 width: 100%;
                 padding: 20px;
@@ -265,168 +438,257 @@
                 border-right: none;
                 border-bottom: 1px solid rgba(22, 163, 74, 0.1);
             }
+
             .sidebar button {
                 padding: 12px;
                 font-size: 14px;
             }
+
             .main-content {
                 padding: 20px;
             }
+
             .group-list {
                 grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
                 gap: 16px;
             }
+
+            .modal {
+                width: 95%;
+                padding: 24px;
+            }
         }
+
         @media (max-width: 480px) {
             .sidebar h2 {
                 font-size: 24px;
             }
+
             .sidebar input[type="text"] {
                 padding: 12px;
                 font-size: 14px;
                 margin-bottom: 16px;
             }
+
             .sidebar button {
                 padding: 10px;
                 font-size: 12px;
+                width: 320px;
             }
+
             .sidebar h3 {
                 font-size: 16px;
                 margin: 16px 0 12px;
             }
+
             .sidebar label {
                 font-size: 14px;
                 padding: 6px 10px;
             }
+
             .sidebar input[type="radio"] {
                 width: 18px;
                 height: 18px;
             }
+
             .main-content h2 {
                 font-size: 30px;
                 margin-bottom: 24px;
             }
+
             .group-card {
                 padding: 24px;
                 gap: 16px;
             }
+
             .group-card h3 {
                 font-size: 20px;
             }
+
             .group-card p {
                 font-size: 14px;
             }
+
             .group-card button {
                 padding: 12px 20px;
                 font-size: 14px;
             }
+
             .footer {
                 padding: 24px;
                 font-size: 12px;
             }
-            .popup {
+
+            .toast-popup {
                 top: 10px;
                 right: 10px;
                 padding: 12px;
                 font-size: 12px;
+                margin-right: 40px;
+            }
+
+            .modal-title {
+                font-size: 20px;
+            }
+
+            .modal-body p {
+                font-size: 14px;
+            }
+
+            .btn {
+                padding: 10px 20px;
+                font-size: 14px;
             }
         }
-        .sidebar button {
-    background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
-    color: white;
-    padding: 16px;
-    border: none;
-    cursor: pointer;
-    border-radius: 16px;
-    font-weight: 600;
-    font-size: 16px;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    margin-bottom: 28px;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-    box-shadow: 0 4px 6px rgba(22, 163, 74, 0.15),
-                0 10px 20px rgba(22, 163, 74, 0.1);
-}
-.sidebar button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(22, 163, 74, 0.2),
-                0 12px 24px rgba(22, 163, 74, 0.15);
-}
-.sidebar button:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 4px rgba(22, 163, 74, 0.1);
-}
 
-.popup {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background: #15803d;
-    color: white;
-    padding: 16px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-    display: none;
-    z-index: 1000;
-}
-
-@media (max-width: 768px) {
-    .sidebar button {
-        padding: 12px;
-        font-size: 14px;
-        
-    }
-}
-
-@media (max-width: 480px) {
-    .sidebar button {
-        padding: 10px;
-        font-size: 12px;
-        width: 320px;
-    }
-    .popup {
-        top: 10px;
-        right: 10px;
-        padding: 12px;
-        font-size: 12px;
-        margin-right: 40px;
-    }
-}
+        .all {
+            display: flex;
+        }
     </style>
 </head>
-<iframe src="chat.html" width="330" height="500" style="border:none; position:fixed; bottom:20px; right:20px; border-radius:10px; z-index: 1001;"></iframe>
+<!-- <iframe src="chat.html" width="330" height="500"
+    style="border:none; position:fixed; bottom:20px; right:20px; border-radius:10px; z-index: 1001;"></iframe> -->
 
 <body>
-    <div class="sidebar">
-        <h2>🌿 EduSphere</h2>
-        <button onclick="createGroup()">Create New Study Group</button>
-        <input type="text" id="searchBox" placeholder="🔍 Search Study Groups..." oninput="searchGroups()">
-        <h3>Filters</h3>
-        <label><input type="radio" name="groupType" value="public" onclick="filterGroups('public')"> Public Groups</label>
-        <label><input type="radio" name="groupType" value="private" onclick="filterGroups('private')"> Private Groups</label>
-        <label><input type="radio" name="groupType" value="all" onclick="filterGroups('all')" checked> All Groups</label>
-        <h3>Sort By</h3>
-        <label><input type="radio" name="sort" value="active"> Most Active</label>
-        <label><input type="radio" name="sort" value="newest"> Newest First</label>
-    </div>
-    <div class="main-content">
-        <h2>Discover Study Groups</h2>
-        <div class="group-list" id="groupList">
-            <!-- Groups will be dynamically added here -->
+    <nav class="navbar">
+        <a href="dashboard.html" style="text-decoration: none;"><div class="title">EDUSPHERE</div></a>
+        <div class="menu-toggle" id="menu-toggle">☰</div>
+        <ul id="nav-auth" class="nav-menu">
+            <a href="index.html">
+                <li>Home</li>
+            </a>
+            <a href="groupPage.html">
+                <li>Group Study</li>
+            </a>
+            <a href="library.html">
+                <li>Library</li>
+            </a>
+            <a href="aiquiz.html">
+                <li>Quiz</li>
+            </a>
+            <a href="feedback.html">
+                <li>Contact Us</li>
+            </a>
+            <!-- <a href="sign.html" id="auth-link">
+                <li><button class="login-btn">Login</button></li>
+            </a> -->
+        </ul>
+        <ul id="nav-user" class="nav-menu" style="display: none;">
+            <a href="index.html">
+                <li>Home</li>
+            </a>
+            <a href="groupPage.html">
+                <li>Group Study</li>
+            </a>
+            <a href="library.html">
+                <li>Library</li>
+            </a>
+            <a href="aiquiz.html">
+                <li>Quiz</li>
+            </a>
+            <a href="feedback.html">
+                <li>Contact Us</li>
+            </a>
+            <li class="dropdown">
+                <button id="dropdown-btn" class="username-btn">
+                    <span id="username-text">Guest</span> ⬇
+                </button>
+                <div id="dropdown-content" class="dropdown-content">
+                    <a href="profile.html">View Profile</a>
+                    <a href="#" id="logout-btn">Logout</a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="all">
+        <div class="sidebar">
+            <h2>🌿 EduSphere</h2>
+            <button onclick="createGroup()">Create New Study Group</button>
+            <input type="text" id="searchBox" placeholder="🔍 Search Study Groups..." oninput="searchGroups()">
+            <h3>Filters</h3>
+            <label><input type="radio" name="groupType" value="public" onclick="filterGroups('public')"> Public
+                Groups</label>
+            <label><input type="radio" name="groupType" value="private" onclick="filterGroups('private')"> Private
+                Groups</label>
+            <label><input type="radio" name="groupType" value="all" onclick="filterGroups('all')" checked> All
+                Groups</label>
+            <h3>Sort By</h3>
+            <label><input type="radio" name="sort" value="active"> Most Active</label>
+            <label><input type="radio" name="sort" value="newest"> Newest First</label>
         </div>
-        <div class="footer">
-            © 2025 EduSphere • Empowering Collaborative Learning
+        <div class="main-content">
+            <h2>Discover Study Groups</h2>
+            <div class="group-list" id="groupList">
+                <!-- Groups will be dynamically added here -->
+            </div>
+            <div class="footer">
+                © 2025 EduSphere • Empowering Collaborative Learning
+            </div>
+        </div>
+        <div id="toast-popup" class="toast-popup"></div>
+    </div>
+
+    <!-- Modal Templates -->
+    <div id="modal-overlay" class="modal-overlay">
+        <div id="modal" class="modal">
+            <div class="modal-header">
+                <h3 id="modal-title" class="modal-title">Modal Title</h3>
+            </div>
+            <div id="modal-body" class="modal-body">
+                <!-- Modal content will be dynamically inserted here -->
+            </div>
+            <div id="modal-footer" class="modal-footer">
+                <!-- Buttons will be dynamically inserted here -->
+            </div>
         </div>
     </div>
-    <div id="popup" class="popup"></div>
+
     <script>
         let groups = JSON.parse(localStorage.getItem("groups")) || [];
         let currentUser = localStorage.getItem("username"); // Fetch the current user from localStorage
 
-        function showPopup(message) {
-            const popup = document.getElementById("popup");
-            popup.textContent = message;
-            popup.style.display = "block";
-            setTimeout(() => { popup.style.display = "none"; }, 3000);
+        // Toast notification function
+        function showToast(message, duration = 3000) {
+            const toast = document.getElementById("toast-popup");
+            toast.textContent = message;
+            toast.style.display = "block";
+            setTimeout(() => { toast.style.display = "none"; }, duration);
+        }
+
+        // Modal functions
+        function showModal(title, content, buttons) {
+            const modalOverlay = document.getElementById("modal-overlay");
+            const modalTitle = document.getElementById("modal-title");
+            const modalBody = document.getElementById("modal-body");
+            const modalFooter = document.getElementById("modal-footer");
+
+            // Set modal title
+            modalTitle.textContent = title;
+
+            // Set modal content
+            modalBody.innerHTML = content;
+
+            // Set modal buttons
+            modalFooter.innerHTML = "";
+            buttons.forEach(button => {
+                const btn = document.createElement("button");
+                btn.textContent = button.text;
+                btn.className = `btn ${button.class || "btn-secondary"}`;
+                btn.onclick = () => {
+                    if (button.action) button.action();
+                    hideModal();
+                };
+                modalFooter.appendChild(btn);
+            });
+
+            // Show modal
+            modalOverlay.classList.add("active");
+        }
+
+        function hideModal() {
+            const modalOverlay = document.getElementById("modal-overlay");
+            modalOverlay.classList.remove("active");
         }
 
         function generateInviteCode() {
@@ -449,14 +711,14 @@
                     const div = document.createElement("div");
                     div.classList.add("group-card");
                     div.innerHTML = `
-                        <h3>${group.name}</h3>
-                        <p>${group.description}</p>
-                        <p>Type: ${group.type}</p>
-                        ${group.type === "private" ? `<p>Invite Code: <strong>${group.inviteCode}</strong></p>` : ""}
-                        <p>Leader: <strong>${group.leader}</strong></p>
-                        <p id="members-${group.name.replace(/\s+/g, '-')}">Members: ${group.members.join(", ")}</p>
-                        <button onclick="joinGroup('${group._id}', '${group.type}', '${group.inviteCode}')">Join Group →</button>
-                    `;
+                <h3>${group.name}</h3>
+                <p>${group.description}</p>
+                <p>Type: ${group.type}</p>
+                ${group.type === "private" ? `<p>Invite Code: <strong>${group.inviteCode}</strong></p>` : ""}
+                <p>Leader: <strong>${group.leader}</strong></p>
+                <p id="members-${group.name.replace(/\s+/g, '-')}">Members: ${group.members.join(", ")}</p>
+                <button onclick="joinGroup('${group._id}', '${group.type}', '${group.inviteCode}')">Join Group →</button>
+            `;
                     groupList.appendChild(div);
                 });
         }
@@ -464,26 +726,58 @@
         async function createGroup() {
             let currentUser = localStorage.getItem("username");
             if (!currentUser) {
-                alert("⚠️ Please sign in first to create a group!");
+                showModal("Sign In Required",
+                    "<p>Please sign in first to create a group!</p>",
+                    [{ text: "OK", class: "btn-primary" }]);
                 return;
             }
 
-            let groupName = prompt("Enter your study group name:");
-            if (!groupName) return;
+            // Show group creation modal
+            showModal("Create New Study Group", `
+                <p>Enter your study group details:</p>
+                <input type="text" id="group-name" placeholder="Group Name">
+                <div class="radio-group">
+                    <label class="radio-option">
+                        <input type="radio" name="group-type" value="public" checked>
+                        Public Group
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="group-type" value="private">
+                        Private Group
+                    </label>
+                </div>
+            `, [
+                {
+                    text: "Create",
+                    class: "btn-primary",
+                    action: async () => {
+                        const groupName = document.getElementById("group-name").value;
+                        if (!groupName) {
+                            showToast("Please enter a group name");
+                            return;
+                        }
 
-            let groupType = confirm("Make this group private? Click OK for Private, Cancel for Public") ? "private" : "public";
-            let inviteCode = groupType === "private" ? generateInviteCode() : "";
+                        const groupTypeRadios = document.getElementsByName("group-type");
+                        let groupType = "public";
+                        for (const radio of groupTypeRadios) {
+                            if (radio.checked) {
+                                groupType = radio.value;
+                                break;
+                            }
+                        }
 
-            let newGroup = {
-                name: groupName,
-                description: "A collaborative study group.",
-                type: groupType,
-                inviteCode: inviteCode,
-                leader: currentUser,
-                members: [currentUser]
-            };
+                        let inviteCode = groupType === "private" ? generateInviteCode() : "";
 
-            console.log("Creating group with data:", newGroup); // Log the group data being sent
+                        let newGroup = {
+                            name: groupName,
+                            description: "A collaborative study group.",
+                            type: groupType,
+                            inviteCode: inviteCode,
+                            leader: currentUser,
+                            members: [currentUser]
+                        };
+
+                        console.log("Creating group with data:", newGroup);
 
             try {
                 let response = await fetch("https://edusphere-c0wr.onrender.com/groups", {
@@ -495,34 +789,37 @@
                     body: JSON.stringify(newGroup)
                 });
 
-                if (response.ok) {
-                    let savedGroup = await response.json(); // Backend se latest group leke aayega
-
-                    // ✅ Local Storage Update Karo
-                    let groups = JSON.parse(localStorage.getItem("groups")) || [];
-                    groups.push(savedGroup.group); // Naya group add karo
-                    localStorage.setItem("groups", JSON.stringify(groups));
-
-                    displayGroups(); // 🔥 UI turant update karo
-                } else {
-                    let errorData = await response.json();
-                    alert("Error creating group: " + errorData.message);
-                }
-            } catch (error) {
-                console.error("Error creating group:", error);
-                alert("Error creating group: " + error.message);
-            }
+                            if (response.ok) {
+                                let savedGroup = await response.json();
+                                let groups = JSON.parse(localStorage.getItem("groups")) || [];
+                                groups.push(savedGroup.group);
+                                localStorage.setItem("groups", JSON.stringify(groups));
+                                displayGroups();
+                                showToast("Group created successfully!");
+                            } else {
+                                let errorData = await response.json();
+                                showToast("Error creating group: " + errorData.message);
+                            }
+                        } catch (error) {
+                            console.error("Error creating group:", error);
+                            showToast("Error creating group: " + error.message);
+                        }
+                    }
+                },
+                { text: "Cancel" }
+            ]);
         }
 
         async function fetchGroups() {
             try {
                 let response = await fetch("https://edusphere-c0wr.onrender.com/groups");
                 let data = await response.json();
-                console.log("Fetched groups from backend:", data); // Log fetched groups
-                localStorage.setItem("groups", JSON.stringify(data)); // Latest data store karo
-                displayGroups(); // 🔥 Turant update karo
+                console.log("Fetched groups from backend:", data);
+                localStorage.setItem("groups", JSON.stringify(data));
+                displayGroups();
             } catch (error) {
                 console.error("Error fetching groups:", error);
+                showToast("Error fetching groups. Please try again later.");
             }
         }
 
@@ -548,28 +845,52 @@
 
                 let selectedGroup = groups.find(group => group._id === id);
                 if (!selectedGroup) {
-                    alert("Group not found! Please refresh and try again.");
+                    showToast("Group not found! Please refresh and try again.");
                     return;
                 }
 
-                // If the group is private, check invite code
+                // Check if user is already a member
+                if (selectedGroup.members.includes(currentUser)) {
+                    // Store selected group in localStorage and redirect
+                    localStorage.setItem("currentGroup", JSON.stringify(selectedGroup));
+                    window.location.href = "group-details.html";
+                    return;
+                }
+
+                // For private groups, show invite code modal
                 if (type === "private") {
-                    let enteredCode = prompt("Enter invite code:");
-                    if (enteredCode !== inviteCode) {
-                        alert("Incorrect invite code!");
-                        return;
-                    }
+                    showModal("Join Private Group", `
+                        <p>This is a private group. Please enter the invite code to join:</p>
+                        <input type="text" id="invite-code-input" placeholder="Enter invite code">
+                    `, [
+                        {
+                            text: "Join",
+                            class: "btn-primary",
+                            action: async () => {
+                                const enteredCode = document.getElementById("invite-code-input").value;
+                                if (enteredCode !== inviteCode) {
+                                    showToast("Incorrect invite code!");
+                                    return;
+                                }
+                                await completeJoinGroup(selectedGroup, currentUser);
+                            }
+                        },
+                        { text: "Cancel" }
+                    ]);
+                } else {
+                    // For public groups, join directly
+                    await completeJoinGroup(selectedGroup, currentUser);
                 }
+            } catch (error) {
+                console.error("Error joining group:", error);
+                showToast("Error joining group. Please try again later.");
+            }
+        }
 
-                // Add user to group members if not already added
-                let currentUser = localStorage.getItem("username");
-                if (!currentUser) {
-                    alert("Please sign in first!");
-                    return;
-                }
-
-                if (!selectedGroup.members.includes(currentUser)) {
-                    selectedGroup.members.push(currentUser);
+        async function completeJoinGroup(selectedGroup, currentUser) {
+            try {
+                // Add user to group members
+                selectedGroup.members.push(currentUser);
 
                     // Send update to backend
                     await fetch(`https://edusphere-c0wr.onrender.com/${selectedGroup._id}/join`, {
@@ -585,13 +906,15 @@
                 // Store selected group in localStorage and redirect
                 localStorage.setItem("currentGroup", JSON.stringify(selectedGroup));
                 window.location.href = "group-details.html";
-
             } catch (error) {
-                console.error("Error joining group:", error);
+                console.error("Error completing join group:", error);
+                showToast("Error joining group. Please try again.");
             }
         }
 
         fetchGroups();
     </script>
+    <script src="navbar.js"></script>
 </body>
+
 </html>

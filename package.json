@@ -1,5 +1,7 @@
 {
+  "type": "module",
   "dependencies": {
+    "@google/generative-ai": "^0.22.0",
     "axios": "^1.7.9",
     "bcrypt": "^5.1.1",
     "bcryptjs": "^3.0.2",
@@ -18,7 +20,11 @@
     "mongoose": "^8.11.0",
     "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.10.0",
+<<<<<<< HEAD
     "nodemon": "^3.1.9",
+=======
+    "openai": "^4.86.1",
+>>>>>>> 8ada2dc10bb811b5d8e48854313ed4193a13ac9d
     "otp-generator": "^4.0.1",
     "passport": "^0.7.0",
     "passport-github2": "^0.1.12",

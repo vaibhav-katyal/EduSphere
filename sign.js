@@ -5,52 +5,52 @@ document.addEventListener("DOMContentLoaded", function () {
     const popup = document.querySelector("#popup");
 
     function showPopup(message) {
-        popup.textContent = message;
-        popup.style.display = "block";
-        setTimeout(() => { popup.style.display = "none"; }, 3000);
+      popup.textContent = message;
+      popup.style.display = "block";
+      setTimeout(() => { popup.style.display = "none"; }, 3000);
     }
 
     function isValidEmail(email) {
-        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     }
 
     function isValidPassword(password) {
-        return password.length >= 6;
+      return password.length >= 6;
     }
 
     toggleAuth.addEventListener("click", function (event) {
-        event.preventDefault();
+      event.preventDefault();
 
-        if (signInForm.style.display === "none") {
-            signInForm.style.display = "block";
-            signUpForm.style.display = "none";
-            toggleAuth.textContent = "Create an Account";
-        } else {
-            signInForm.style.display = "none";
-            signUpForm.style.display = "block";
-            toggleAuth.textContent = "Already have an account? Sign In";
-        }
+      if (signInForm.style.display === "none") {
+        signInForm.style.display = "block";
+        signUpForm.style.display = "none";
+        toggleAuth.textContent = "Create an Account";
+      } else {
+        signInForm.style.display = "none";
+        signUpForm.style.display = "block";
+        toggleAuth.textContent = "Already have an account? Sign In";
+      }
     });
 
     // Signup Functionality
     signUpForm.addEventListener("submit", async function (e) {
-        e.preventDefault();
-        const username = document.querySelector("#signup-username").value.trim();
-        const email = document.querySelector("#signup-email").value.trim();
-        const password = document.querySelector("#signup-password").value.trim();
+      e.preventDefault();
+      const username = document.querySelector("#signup-username").value.trim();
+      const email = document.querySelector("#signup-email").value.trim();
+      const password = document.querySelector("#signup-password").value.trim();
 
-        if (!username || !email || !password) {
-            showPopup("⚠️ Please fill in all fields!");
-            return;
-        }
-        if (!isValidEmail(email)) {
-            showPopup("⚠️ Invalid email format!");
-            return;
-        }
-        if (!isValidPassword(password)) {
-            showPopup("⚠️ Password must be at least 6 characters!");
-            return;
-        }
+      if (!username || !email || !password) {
+        showPopup("⚠️ Please fill in all fields!");
+        return;
+      }
+      if (!isValidEmail(email)) {
+        showPopup("⚠️ Invalid email format!");
+        return;
+      }
+      if (!isValidPassword(password)) {
+        showPopup("⚠️ Password must be at least 6 characters!");
+        return;
+      }
 
         try {
             const response = await fetch("https://edusphere-c0wr.onrender.com/signup", {
@@ -59,29 +59,29 @@ document.addEventListener("DOMContentLoaded", function () {
                 body: JSON.stringify({ username, email, password })
             });
 
-            const data = await response.json();
-            if (response.ok) {
-                showPopup("✅ Account created successfully!");
-                signUpForm.reset();
-                toggleAuth.click(); // Switch to sign-in form
-            } else {
-                showPopup(`⚠️ ${data.message}`);
-            }
-        } catch (error) {
-            showPopup("⚠️ Server error. Please try again.");
+        const data = await response.json();
+        if (response.ok) {
+          showPopup("✅ Account created successfully!");
+          signUpForm.reset();
+          toggleAuth.click(); // Switch to sign-in form
+        } else {
+          showPopup(`⚠️ ${data.message}`);
         }
+      } catch (error) {
+        showPopup("⚠️ Server error. Please try again.");
+      }
     });
 
     // Signin Functionality
     signInForm.addEventListener("submit", async function (e) {
-        e.preventDefault();
-        const email = document.querySelector("#signin-email").value.trim();
-        const password = document.querySelector("#signin-password").value.trim();
+      e.preventDefault();
+      const email = document.querySelector("#signin-email").value.trim();
+      const password = document.querySelector("#signin-password").value.trim();
 
-        if (!email || !password) {
-            showPopup("⚠️ Please fill in all fields!");
-            return;
-        }
+      if (!email || !password) {
+        showPopup("⚠️ Please fill in all fields!");
+        return;
+      }
 
         try {
             const response = await fetch("https://edusphere-c0wr.onrender.com/signin", {
@@ -90,21 +90,21 @@ document.addEventListener("DOMContentLoaded", function () {
                 body: JSON.stringify({ email, password })
             });
 
-            const data = await response.json();
-            if (response.ok) {
-                localStorage.setItem("username", data.username); // Store username
-                localStorage.setItem("token", data.token); // Store JWT token
-                showPopup("✅ Sign-in successful!");
+        const data = await response.json();
+        if (response.ok) {
+          localStorage.setItem("username", data.username); // Store username
+          localStorage.setItem("token", data.token); // Store JWT token
+          showPopup("✅ Sign-in successful!");
 
-                setTimeout(() => {
-                    window.location.href = 'index.html'; // Redirect
-                }, 1000);
-            } else {
-                showPopup(`⚠️ ${data.message}`);
-            }
-        } catch (error) {
-            showPopup("⚠️ Server error. Please try again.");
+          setTimeout(() => {
+            window.location.href = 'index.html'; // Redirect
+          }, 1000);
+        } else {
+          showPopup(`⚠️ ${data.message}`);
         }
+      } catch (error) {
+        showPopup("⚠️ Server error. Please try again.");
+      }
     });
 });
 
