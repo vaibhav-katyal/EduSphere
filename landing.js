@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             authNav.innerHTML = `
                 <a href="landing.html"><li>Home</li></a>
                 <a href="groupPage.html"><li>Group Study</li></a>
-                <a href="library.html"><li>Library</li></a>
+                <a href="ai summarize\library.html"><li>Library</li></a>
                 <a href="quiz.html"><li>Quiz</li></a>
                 <a href="feedback.html"><li>Contact Us</li></a>
                 <li class="profile-container">
