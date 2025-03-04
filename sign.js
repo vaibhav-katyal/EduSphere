@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
         try {
-            const response = await fetch("https://edusphere-c0wr.onrender.com/signup", {
+            const response = await fetch("https://edusphere-4-b7uo.onrender.com/signup", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ username, email, password })
@@ -84,7 +84,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
         try {
-            const response = await fetch("https://edusphere-c0wr.onrender.com/signin", {
+            const response = await fetch("https://edusphere-4-b7uo.onrender.com/signin", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email, password })
@@ -109,7 +109,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
-fetch("https://edusphere-c0wr.onrender.com/signin", {
+fetch("https://edusphere-4-b7uo.onrender.com/signin", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password }),

@@ -780,7 +780,7 @@
                         console.log("Creating group with data:", newGroup);
 
             try {
-                let response = await fetch("https://edusphere-c0wr.onrender.com/groups", {
+                let response = await fetch("https://edusphere-4-b7uo.onrender.com/groups", {
                     method: "POST",
                     headers: { 
                         "Content-Type": "application/json",
@@ -812,7 +812,7 @@
 
         async function fetchGroups() {
             try {
-                let response = await fetch("https://edusphere-c0wr.onrender.com/groups");
+                let response = await fetch("https://edusphere-4-b7uo.onrender.com/groups");
                 let data = await response.json();
                 console.log("Fetched groups from backend:", data);
                 localStorage.setItem("groups", JSON.stringify(data));
@@ -840,7 +840,7 @@
 
         async function joinGroup(id, type, inviteCode) {
             try {
-                let response = await fetch("https://edusphere-c0wr.onrender.com/groups");
+                let response = await fetch("https://edusphere-4-b7uo.onrender.com/groups");
                 let groups = await response.json(); // Get fresh group list
 
                 let selectedGroup = groups.find(group => group._id === id);
@@ -893,7 +893,7 @@
                 selectedGroup.members.push(currentUser);
 
                     // Send update to backend
-                    await fetch(`https://edusphere-c0wr.onrender.com/${selectedGroup._id}/join`, {
+                    await fetch(`https://edusphere-4-b7uo.onrender.com/${selectedGroup._id}/join`, {
                         method: "POST",
                         headers: { 
                             "Content-Type": "application/json",

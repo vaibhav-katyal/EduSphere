@@ -16,6 +16,14 @@ const __dirname = dirname(__filename);
 
 const app = express();
 
+
+
+// Determine environment
+const isProduction = process.env.NODE_ENV === 'production';
+const CALLBACK_URL = isProduction 
+  ? "https://edusphere-4-b7uo.onrender.com/auth/google/callback"
+  : "http://localhost:3000/auth/google/callback";
+
 // Nodemailer setup for sending emails
 async function sendSignupEmail(userEmail, userName) {
     try {
@@ -37,7 +45,7 @@ BOOM! 💥 You're officially a part of EduSphere! 🚀
 
 You just unlocked a world of next-level learning, exclusive study groups, and top-tier knowledge! 🤩
 
-🎯 What’s Next? 
+🎯 What's Next? 
 - Join study groups & meet legends like you! 
 - Access premium notes & resources! 
 - Win challenges & flex your skills! 
@@ -48,14 +56,14 @@ You just unlocked a world of next-level learning, exclusive study groups, and to
 See you inside, champ! 😎🔥  
 
 - EduSphere Team  
-(P.S. Legends don’t wait! 😏)  
+(P.S. Legends don't wait! 😏)  
 `,
             html: `
                 <div style="font-family: Arial, sans-serif; color: #333; text-align: center;">
-                    <h1 style="color: #ff4747;">🚀 BOOM! YOU’RE IN! 🔥</h1>
+                    <h1 style="color: #ff4747;">🚀 BOOM! YOU'RE IN! 🔥</h1>
                     <p>Hey <b>${userName}</b>, welcome to <b>EduSphere</b>! You just unlocked a world of **learning, community, and exclusive opportunities!** 😍</p>
                     
-                    <h3>🎯 What’s Next?</h3>
+                    <h3>🎯 What's Next?</h3>
                     <ul style="list-style: none; padding: 0;">
                         <li> Join study groups & meet legends like you! ✅</li>
                         <li> Access premium notes & resources! 📚</li>
@@ -67,7 +75,7 @@ See you inside, champ! 😎🔥
                     <a href="https://edusphere.com/dashboard" style="background: #ff4747; color: white; padding: 12px 20px; text-decoration: none; border-radius: 5px; font-size: 18px; font-weight: bold; display: inline-block;"> LET'S GOOO! </a>
                     
                     <p style="margin-top: 20px;">See you inside, champ! 😎🔥<br><b>- EduSphere Team</b></p>
-                    <p style="font-size: 12px; color: #888;">P.S. Legends don’t wait! 😏</p>
+                    <p style="font-size: 12px; color: #888;">P.S. Legends don't wait! 😏</p>
                 </div>
             `
         };
@@ -81,7 +89,11 @@ See you inside, champ! 😎🔥
 
 
 // CORS setup
-const allowedOrigins = ["http://localhost:3000", "http://127.0.0.1:5500"];
+const allowedOrigins = [
+    "http://localhost:3000", 
+    "http://127.0.0.1:5500",
+    "https://edusphere-4-b7uo.onrender.com"
+];
 
 app.use(cors({
     origin: function (origin, callback) {
@@ -100,7 +112,12 @@ app.use(express.json());
 app.use(session({ 
     secret: "your_secret_key", 
     resave: false, 
-    saveUninitialized: true 
+    saveUninitialized: false,
+    cookie: {
+        secure: isProduction, // Use secure cookies in production
+        httpOnly: true,
+        maxAge: 24 * 60 * 60 * 1000 // 24 hours
+    }
 }));
 
 app.use(passport.initialize());
@@ -141,7 +158,7 @@ const Group = mongoose.model("Group", groupSchema);
 passport.use(new GoogleStrategy({
     clientID: "7499225439-vfj5ihd30lgij33dt9in319fqhsgudf4.apps.googleusercontent.com",
     clientSecret: "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",
-    callbackURL: "http://localhost:3000/auth/google/callback"
+    callbackURL: CALLBACK_URL
 }, async (accessToken, refreshToken, profile, done) => {
     try {
         let user = await User.findOne({ email: profile.emails[0].value });
@@ -205,6 +222,15 @@ app.get("/auth/google/callback",
         }
     }
 );
+
+// User info endpoint for Google auth
+app.get("/auth/user", (req, res) => {
+    if (req.user) {
+        res.json({ email: req.user.email, username: req.user.username });
+    } else {
+        res.status(401).json({ message: "Not authenticated" });
+    }
+});
 
 // Signup Route
 app.post("/signup", async (req, res) => {
@@ -283,10 +309,8 @@ app.post("/signin", async (req, res) => {
         res.status(200).json({ 
             message: "Login Successful!", 
             token, 
-            user: {
-                username: user.username,
-                email: user.email
-            }
+            username: user.username,
+            email: user.email
         });
     } catch (error) {
         console.error("❌ Error during login:", error);
