@@ -10,7 +10,9 @@ import nodemailer from 'nodemailer';
 import dotenv from 'dotenv';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
-import connectMongo from './connectMongo.js'; // Import the MongoDB connection script
+import mongoose from 'mongoose'; // Ensure mongoose is imported
+import connectMongo from 'connect-mongo'; // Import connect-mongo for session store
+import connectMongoDB from './connectMongo.js'; // Import the MongoDB connection script
 
 dotenv.config();
 
@@ -108,7 +110,9 @@ app.use(cors({
 
 app.use(express.json());
 
-// Session setup
+// Session setup with connect-mongo
+const MongoStore = connectMongo(session);
+
 app.use(session({ 
     secret: process.env.SESSION_SECRET, 
     resave: false, 
@@ -117,7 +121,8 @@ app.use(session({
         secure: isProduction, // Use secure cookies in production
         httpOnly: true,
         maxAge: 24 * 60 * 60 * 1000 // 24 hours
-    }
+    },
+    store: new MongoStore({ mongooseConnection: mongoose.connection }) // Use MongoStore for session storage
 }));
 
 app.use(passport.initialize());
@@ -126,7 +131,7 @@ app.use(passport.session());
 const JWT_SECRET = process.env.JWT_SECRET;
 
 // MongoDB Connection
-connectMongo();
+connectMongoDB();
 
 // User Schema
 const userSchema = new mongoose.Schema({
