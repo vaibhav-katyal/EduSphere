@@ -1,4 +1,5 @@
 import express from 'express';
+import mongoose from 'mongoose';
 import cors from 'cors';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
@@ -7,24 +8,20 @@ import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import path from 'path';
 import nodemailer from 'nodemailer';
-import dotenv from 'dotenv';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
-import mongoose from 'mongoose'; // Ensure mongoose is imported
-import connectMongo from 'connect-mongo'; // Import connect-mongo for session store
-import connectMongoDB from './connectMongo.js'; // Import the MongoDB connection script
-
-dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const app = express();
 
+
+
 // Determine environment
 const isProduction = process.env.NODE_ENV === 'production';
 const CALLBACK_URL = isProduction 
-  ? process.env.GOOGLE_CALLBACK_URL
+  ? "https://edusphere-4-b7uo.onrender.com/auth/google/callback"
   : "http://localhost:3000/auth/google/callback";
 
 // Nodemailer setup for sending emails
@@ -33,13 +30,13 @@ async function sendSignupEmail(userEmail, userName) {
         let transporter = nodemailer.createTransport({
             service: "gmail",
             auth: {
-                user: process.env.EMAIL_USER,
-                pass: process.env.EMAIL_PASS
+                user: "adityasharma.5672@gmail.com",
+                pass: "ezun hhkb oaye phsr"
             }
         });
 
         let mailOptions = {
-            from: '"EduSphere Team" <' + process.env.EMAIL_USER + '>',
+            from: '"EduSphere Team" <adityasharma.5672@gmail.com>',
             to: userEmail,
             subject: "🚀 Welcome Aboard, Genius!",
             text: `Hey ${userName}, 
@@ -90,6 +87,7 @@ See you inside, champ! 😎🔥
     }
 }
 
+
 // CORS setup
 const allowedOrigins = [
     "http://localhost:3000", 
@@ -110,28 +108,30 @@ app.use(cors({
 
 app.use(express.json());
 
-// Session setup with connect-mongo
-const MongoStore = connectMongo(session);
-
+// Session setup
 app.use(session({ 
-    secret: process.env.SESSION_SECRET, 
+    secret: "your_secret_key", 
     resave: false, 
     saveUninitialized: false,
     cookie: {
         secure: isProduction, // Use secure cookies in production
         httpOnly: true,
         maxAge: 24 * 60 * 60 * 1000 // 24 hours
-    },
-    store: new MongoStore({ mongooseConnection: mongoose.connection }) // Use MongoStore for session storage
+    }
 }));
 
 app.use(passport.initialize());
 app.use(passport.session());
 
-const JWT_SECRET = process.env.JWT_SECRET;
+const JWT_SECRET = "902d22ae459df3cef67d662f3b637feb8f149eb451362aa6e40596f9c6503dac2de98d1c3d5fa1ac61d6e545f4e46bac84d5a60937602c146ee0bc2e80e5b1b9";
 
 // MongoDB Connection
-connectMongoDB();
+mongoose.connect("mongodb+srv://adityasharma08093:Lakshya9780@groupstudy.yl0qi.mongodb.net/?retryWrites=true&w=majority&appName=groupstudy", { 
+    useNewUrlParser: true, 
+    useUnifiedTopology: true 
+})
+.then(() => console.log("✅ MongoDB Connected"))
+.catch(err => console.log("❌ MongoDB Error:", err));
 
 // User Schema
 const userSchema = new mongoose.Schema({
@@ -156,8 +156,8 @@ const Group = mongoose.model("Group", groupSchema);
 
 // Google OAuth Strategy
 passport.use(new GoogleStrategy({
-    clientID: process.env.GOOGLE_CLIENT_ID,
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    clientID: "7499225439-vfj5ihd30lgij33dt9in319fqhsgudf4.apps.googleusercontent.com",
+    clientSecret: "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",
     callbackURL: CALLBACK_URL
 }, async (accessToken, refreshToken, profile, done) => {
     try {
@@ -368,30 +368,9 @@ app.post("/groups", async (req, res) => {
     }
 });
 
-app.post("/:groupId/join", async (req, res) => {
-    try {
-        const { groupId } = req.params;
-        const { username } = req.body;
-        const group = await Group.findById(groupId);
-        if (!group) {
-            return res.status(404).json({ message: "Group not found." });
-        }
-
-        if (!group.members.includes(username)) {
-            group.members.push(username);
-            await group.save();
-            res.status(200).json({ message: "Joined group successfully." });
-        } else {
-            res.status(400).json({ message: "Already a member of the group." });
-        }
-    } catch (error) {
-        console.error('Error joining group:', error);
-        res.status(500).json({ message: "Error joining group.", error: error.message });
-    }
-});
-
 // Start server
 const PORT = process.env.PORT || 3000;
+
 app.listen(PORT, () => {
     console.log(`✅ Server running on port ${PORT}`);
 });
