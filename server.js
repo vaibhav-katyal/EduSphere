@@ -16,8 +16,6 @@ const __dirname = dirname(__filename);
 
 const app = express();
 
-
-
 // Determine environment
 const isProduction = process.env.NODE_ENV === 'production';
 const CALLBACK_URL = isProduction 
@@ -86,7 +84,6 @@ See you inside, champ! 😎🔥
         console.error("❌ Error sending email:", error);
     }
 }
-
 
 // CORS setup
 const allowedOrigins = [
@@ -368,9 +365,30 @@ app.post("/groups", async (req, res) => {
     }
 });
 
+app.post("/:groupId/join", async (req, res) => {
+    try {
+        const { groupId } = req.params;
+        const { username } = req.body;
+        const group = await Group.findById(groupId);
+        if (!group) {
+            return res.status(404).json({ message: "Group not found." });
+        }
+
+        if (!group.members.includes(username)) {
+            group.members.push(username);
+            await group.save();
+            res.status(200).json({ message: "Joined group successfully." });
+        } else {
+            res.status(400).json({ message: "Already a member of the group." });
+        }
+    } catch (error) {
+        console.error('Error joining group:', error);
+        res.status(500).json({ message: "Error joining group.", error: error.message });
+    }
+});
+
 // Start server
 const PORT = process.env.PORT || 3000;
-
 app.listen(PORT, () => {
     console.log(`✅ Server running on port ${PORT}`);
 });
