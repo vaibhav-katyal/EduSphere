@@ -1,5 +1,4 @@
 import express from 'express';
-import mongoose from 'mongoose';
 import cors from 'cors';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
@@ -8,8 +7,12 @@ import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import path from 'path';
 import nodemailer from 'nodemailer';
+import dotenv from 'dotenv';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import connectMongo from './connectMongo.js'; // Import the MongoDB connection script
+
+dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -19,7 +22,7 @@ const app = express();
 // Determine environment
 const isProduction = process.env.NODE_ENV === 'production';
 const CALLBACK_URL = isProduction 
-  ? "https://edusphere-4-b7uo.onrender.com/auth/google/callback"
+  ? process.env.GOOGLE_CALLBACK_URL
   : "http://localhost:3000/auth/google/callback";
 
 // Nodemailer setup for sending emails
@@ -28,13 +31,13 @@ async function sendSignupEmail(userEmail, userName) {
         let transporter = nodemailer.createTransport({
             service: "gmail",
             auth: {
-                user: "adityasharma.5672@gmail.com",
-                pass: "ezun hhkb oaye phsr"
+                user: process.env.EMAIL_USER,
+                pass: process.env.EMAIL_PASS
             }
         });
 
         let mailOptions = {
-            from: '"EduSphere Team" <adityasharma.5672@gmail.com>',
+            from: '"EduSphere Team" <' + process.env.EMAIL_USER + '>',
             to: userEmail,
             subject: "🚀 Welcome Aboard, Genius!",
             text: `Hey ${userName}, 
@@ -107,7 +110,7 @@ app.use(express.json());
 
 // Session setup
 app.use(session({ 
-    secret: "your_secret_key", 
+    secret: process.env.SESSION_SECRET, 
     resave: false, 
     saveUninitialized: false,
     cookie: {
@@ -120,15 +123,10 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-const JWT_SECRET = "902d22ae459df3cef67d662f3b637feb8f149eb451362aa6e40596f9c6503dac2de98d1c3d5fa1ac61d6e545f4e46bac84d5a60937602c146ee0bc2e80e5b1b9";
+const JWT_SECRET = process.env.JWT_SECRET;
 
 // MongoDB Connection
-mongoose.connect("mongodb+srv://adityasharma08093:Lakshya9780@groupstudy.yl0qi.mongodb.net/?retryWrites=true&w=majority&appName=groupstudy", { 
-    useNewUrlParser: true, 
-    useUnifiedTopology: true 
-})
-.then(() => console.log("✅ MongoDB Connected"))
-.catch(err => console.log("❌ MongoDB Error:", err));
+connectMongo();
 
 // User Schema
 const userSchema = new mongoose.Schema({
@@ -153,8 +151,8 @@ const Group = mongoose.model("Group", groupSchema);
 
 // Google OAuth Strategy
 passport.use(new GoogleStrategy({
-    clientID: "7499225439-vfj5ihd30lgij33dt9in319fqhsgudf4.apps.googleusercontent.com",
-    clientSecret: "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",
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     callbackURL: CALLBACK_URL
 }, async (accessToken, refreshToken, profile, done) => {
     try {
