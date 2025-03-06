@@ -10,6 +10,9 @@ import path from 'path';
 import nodemailer from 'nodemailer';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -24,7 +27,7 @@ const CALLBACK_URL = isProduction
 
 // MongoDB Connection with improved error handling and reconnection logic
 const connectToMongoDB = async () => {
-  const MONGODB_URI = "mongodb+srv://adityasharma08093:Lakshya9780@groupstudy.yl0qi.mongodb.net/?retryWrites=true&w=majority&appName=groupstudy";
+  const MONGODB_URI = process.env.MONGO_URI;
   
   try {
     // Connection options
