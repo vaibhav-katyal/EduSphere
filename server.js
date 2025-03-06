@@ -16,13 +16,50 @@ const __dirname = dirname(__filename);
 
 const app = express();
 
-
-
 // Determine environment
 const isProduction = process.env.NODE_ENV === 'production';
 const CALLBACK_URL = isProduction 
   ? "https://edusphere-4-b7uo.onrender.com/auth/google/callback"
   : "http://localhost:3000/auth/google/callback";
+
+// MongoDB Connection with improved error handling and reconnection logic
+const connectToMongoDB = async () => {
+  const MONGODB_URI = "mongodb+srv://adityasharma08093:Lakshya9780@groupstudy.yl0qi.mongodb.net/?retryWrites=true&w=majority&appName=groupstudy";
+  
+  try {
+    // Connection options
+    const options = { 
+      useNewUrlParser: true, 
+      useUnifiedTopology: true,
+      serverSelectionTimeoutMS: 5000, // Timeout after 5s instead of 30s
+      socketTimeoutMS: 45000, // Close sockets after 45s of inactivity
+      family: 4 // Use IPv4, skip trying IPv6
+    };
+    
+    await mongoose.connect(MONGODB_URI, options);
+    console.log("✅ MongoDB Connected");
+    return true;
+  } catch (err) {
+    console.error("❌ MongoDB Connection Error:", err);
+    return false;
+  }
+};
+
+// Initial connection attempt
+connectToMongoDB();
+
+// Handle connection errors
+mongoose.connection.on('error', err => {
+  console.error('MongoDB connection error:', err);
+  console.log('Attempting to reconnect to MongoDB...');
+  setTimeout(connectToMongoDB, 5000); // Try to reconnect after 5 seconds
+});
+
+// Handle disconnection
+mongoose.connection.on('disconnected', () => {
+  console.log('MongoDB disconnected. Attempting to reconnect...');
+  setTimeout(connectToMongoDB, 5000);
+});
 
 // Nodemailer setup for sending emails
 async function sendSignupEmail(userEmail, userName) {
@@ -87,8 +124,7 @@ See you inside, champ! 😎🔥
     }
 }
 
-
-// CORS setup
+// CORS setup with improved configuration
 const allowedOrigins = [
     "http://localhost:3000", 
     "http://127.0.0.1:5500",
@@ -97,16 +133,22 @@ const allowedOrigins = [
 
 app.use(cors({
     origin: function (origin, callback) {
+        // Allow requests with no origin (like mobile apps or curl requests)
         if (!origin || allowedOrigins.includes(origin)) {
             callback(null, true);
         } else {
+            console.log("Blocked by CORS:", origin);
             callback(new Error("Not allowed by CORS"));
         }
     },
-    credentials: true
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
+// Body parser middleware
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Session setup
 app.use(session({ 
@@ -124,14 +166,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 const JWT_SECRET = "902d22ae459df3cef67d662f3b637feb8f149eb451362aa6e40596f9c6503dac2de98d1c3d5fa1ac61d6e545f4e46bac84d5a60937602c146ee0bc2e80e5b1b9";
-
-// MongoDB Connection
-mongoose.connect("mongodb+srv://adityasharma08093:Lakshya9780@groupstudy.yl0qi.mongodb.net/?retryWrites=true&w=majority&appName=groupstudy", { 
-    useNewUrlParser: true, 
-    useUnifiedTopology: true 
-})
-.then(() => console.log("✅ MongoDB Connected"))
-.catch(err => console.log("❌ MongoDB Error:", err));
 
 // User Schema
 const userSchema = new mongoose.Schema({
@@ -202,6 +236,17 @@ passport.deserializeUser(async (id, done) => {
 // Static file serving
 app.use(express.static(__dirname));
 app.use(express.static(path.join(__dirname, "public")));
+
+// Health check endpoint for Render
+app.get("/health", (req, res) => {
+    const dbStatus = mongoose.connection.readyState === 1 ? "connected" : "disconnected";
+    res.json({ 
+        status: "ok", 
+        timestamp: new Date().toISOString(),
+        environment: process.env.NODE_ENV || "development",
+        database: dbStatus
+    });
+});
 
 // Auth Routes
 app.get("/auth/google", passport.authenticate("google", { scope: ["profile", "email"] }));
@@ -368,9 +413,44 @@ app.post("/groups", async (req, res) => {
     }
 });
 
-// Start server
+// Error handling middleware
+app.use((err, req, res, next) => {
+    console.error("Server Error:", err);
+    res.status(500).json({ 
+        message: "Server Error", 
+        error: process.env.NODE_ENV === 'production' ? 'An unexpected error occurred' : err.message 
+    });
+});
+
+// Start server with connection verification
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
-    console.log(`✅ Server running on port ${PORT}`);
+// Check database connection before starting server
+const startServer = async () => {
+    // Verify MongoDB connection
+    if (mongoose.connection.readyState !== 1) {
+        console.log("Waiting for MongoDB connection before starting server...");
+        await connectToMongoDB();
+    }
+    
+    app.listen(PORT, () => {
+        console.log(`✅ Server running on port ${PORT}`);
+        console.log(`✅ Environment: ${process.env.NODE_ENV || "development"}`);
+        console.log(`✅ MongoDB Status: ${mongoose.connection.readyState === 1 ? "Connected" : "Disconnected"}`);
+    });
+};
+
+startServer();
+
+// Handle graceful shutdown
+process.on('SIGINT', async () => {
+    console.log('Gracefully shutting down...');
+    try {
+        await mongoose.connection.close();
+        console.log('MongoDB connection closed');
+        process.exit(0);
+    } catch (err) {
+        console.error('Error during shutdown:', err);
+        process.exit(1);
+    }
 });
