@@ -16,10 +16,8 @@ const __dirname = dirname(__filename);
 
 const app = express();
 
-// run `node index.js` in the terminal
-
 // MongoDB Connection with better error handling
-const MONGO_URI = process.env.MONGO_URI || "mongodb+srv://adityasharma08093:Lakshya9780@groupstudy.yl0qi.mongodb.net/?retryWrites=true&w=majority&appName=groupstudy";
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb+srv://adityasharma08093:Lakshya9780@groupstudy.yl0qi.mongodb.net/?retryWrites=true&w=majority&appName=groupstudy";
 
 mongoose.connection.on('connected', () => {
     console.log('✅ MongoDB Connected Successfully');
@@ -47,9 +45,18 @@ const connectDB = async () => {
     }
 };
 
-connectDB();
+// Connect to MongoDB before setting up the rest of the application
+await connectDB();
 
-console.log(`Hello Node.js v${process.versions.node}!`);
+// Rest of your server code...
+// (Include all your existing routes and middleware here)
+
+// Start server
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+    console.log(`✅ Server running on port ${PORT}`);
+});
 
 // Determine environment
 const isProduction = process.env.NODE_ENV === 'production';
@@ -402,7 +409,7 @@ app.post("/groups", async (req, res) => {
 });
 
 // Start server
-const PORT = process.env.PORT || 3000;
+// const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
     console.log(`✅ Server running on port ${PORT}`);
